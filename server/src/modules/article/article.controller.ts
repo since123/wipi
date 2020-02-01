@@ -7,11 +7,10 @@ import {
   Delete,
   Patch,
   Param,
-  Query,
   Body,
-  UseInterceptors,
-  ClassSerializerInterceptor,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ArticleService } from './article.service';
 import { Article } from './article.entity';
 
@@ -24,6 +23,7 @@ export class ArticleController {
    * @param article
    */
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Body() article) {
     return this.articleService.create(article);
   }
@@ -68,6 +68,7 @@ export class ArticleController {
    * @param article
    */
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   updateById(@Param('id') id, @Body() article) {
     return this.articleService.updateById(id, article);
   }
@@ -77,6 +78,7 @@ export class ArticleController {
    * @param id
    */
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteById(@Param('id') id) {
     return this.articleService.deleteById(id);
   }

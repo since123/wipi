@@ -52,4 +52,12 @@ export class UserService {
 
     return existUser;
   }
+
+  /**
+   * 获取指定标签
+   * @param id
+   */
+  async findById(id): Promise<User> {
+    return this.userRepository.findOne(id);
+  }
 }

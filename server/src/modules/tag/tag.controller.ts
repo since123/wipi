@@ -6,7 +6,9 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TagService } from './tag.service';
 import { Tag } from './tag.entity';
 
@@ -19,6 +21,7 @@ export class TagController {
    * @param tag
    */
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Body() tag) {
     return this.tagService.create(tag);
   }
@@ -55,6 +58,7 @@ export class TagController {
    * @param tag
    */
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   updateById(@Param('id') id, @Body() tag) {
     return this.tagService.updateById(id, tag);
   }
@@ -64,6 +68,7 @@ export class TagController {
    * @param id
    */
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteById(@Param('id') id) {
     return this.tagService.deleteById(id);
   }

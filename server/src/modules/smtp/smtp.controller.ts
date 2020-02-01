@@ -2,11 +2,12 @@ import {
   Controller,
   Get,
   Post,
-  Patch,
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { SMTPService } from './smtp.service';
 import { SMTP } from './smtp.entity';
 
@@ -19,6 +20,7 @@ export class SMTPController {
    * @param data
    */
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Body() data) {
     return this.smtpService.create(data);
   }
@@ -27,6 +29,7 @@ export class SMTPController {
    * 获取所有邮件记录
    */
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll(): Promise<SMTP[]> {
     return this.smtpService.findAll();
   }
@@ -36,6 +39,7 @@ export class SMTPController {
    * @param id
    */
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteById(@Param('id') id) {
     return this.smtpService.deleteById(id);
   }

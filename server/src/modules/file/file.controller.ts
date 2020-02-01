@@ -6,7 +6,9 @@ import {
   Param,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 
@@ -20,6 +22,7 @@ export class FileController {
    */
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(JwtAuthGuard)
   uploadFile(@UploadedFile() file) {
     return this.fileService.uploadFile(file);
   }
@@ -46,6 +49,7 @@ export class FileController {
    * @param id
    */
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteById(@Param('id') id) {
     return this.fileService.deleteById(id);
   }

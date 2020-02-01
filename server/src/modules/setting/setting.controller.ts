@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { SettingService } from './setting.service';
 import { Setting } from './setting.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('setting')
 export class SettingController {
@@ -11,6 +12,7 @@ export class SettingController {
    * @param tag
    */
   @Post()
+  @UseGuards(JwtAuthGuard)
   update(@Body() setting) {
     return this.settingService.update(setting);
   }

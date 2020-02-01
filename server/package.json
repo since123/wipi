@@ -22,7 +22,9 @@
   "dependencies": {
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
+    "@nestjs/jwt": "^6.1.1",
     "@nestjs/microservices": "^6.10.14",
+    "@nestjs/passport": "^6.1.1",
     "@nestjs/platform-express": "^6.11.5",
     "@nestjs/typeorm": "^6.2.0",
     "ali-oss": "^6.5.1",
@@ -37,6 +39,8 @@
     "node-summary": "^1.2.0",
     "nodemailer": "^6.4.2",
     "nuid": "^1.1.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "react-helmet": "^5.2.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",

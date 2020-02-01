@@ -6,7 +6,9 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CommentService } from './comment.service';
 import { Comment } from './comment.entity';
 
@@ -55,6 +57,7 @@ export class CommentController {
    * @param tag
    */
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   updateById(@Param('id') id, @Body() data) {
     return this.commentService.updateById(id, data);
   }
@@ -64,6 +67,7 @@ export class CommentController {
    * @param id
    */
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   deleteById(@Param('id') id) {
     return this.commentService.deleteById(id);
   }
