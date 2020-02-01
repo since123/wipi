@@ -5,11 +5,11 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors();
   app.useGlobalInterceptors(new TransformInterceptor()); // 正常情况下，响应值统一
   app.useGlobalFilters(new HttpExceptionFilter()); // 异常情况下，响应值统一
 
-  await app.listen(3000);
+  await app.listen(4000);
 }
 
 bootstrap();
