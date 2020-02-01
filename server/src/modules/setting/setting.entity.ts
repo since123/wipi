@@ -44,6 +44,21 @@ export class Setting {
   @Column({ type: 'text', default: null })
   ossBucket: string; // 阿里云 bucket
 
+  @Column({ type: 'text', default: null })
+  smtpHost: string; // SMTP 地址
+
+  @Column({ type: 'text', default: null })
+  smtpPort: string; // SMTP 端口
+
+  @Column({ type: 'text', default: null })
+  smtpUser: string; // SMTP 用户
+
+  @Column({ type: 'text', default: null })
+  smtpPass: string; // SMTP 授权码
+
+  @Column({ type: 'text', default: null })
+  smtpFromUser: string; // SMTP 地址
+
   @CreateDateColumn({
     type: 'datetime',
     comment: '创建时间',
