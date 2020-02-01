@@ -1,3 +1,10 @@
+interface IUser {
+  name: string;
+  avatar: string;
+  mail: string;
+  token: string;
+}
+
 interface IFile {
   id: string;
   originalname: string;

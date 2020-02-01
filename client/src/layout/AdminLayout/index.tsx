@@ -1,7 +1,8 @@
-import React from "react";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
+import React, { useState, useEffect } from "react";
+import { Layout, Menu, Breadcrumb, Icon, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Login } from "@components/Login";
 import style from "./index.module.scss";
 
 const { Header, Content, Footer } = Layout;
@@ -81,14 +82,21 @@ interface IAdminLayoutProps {
   padding?: any;
 }
 
+export let showLogin = () => {};
+
 export const AdminLayout: React.FC<IAdminLayoutProps> = ({
   children,
   background = "#fff",
   padding = 24
 }) => {
   const router = useRouter();
+  const [loginVisible, setLoginVisible] = useState(false);
   const { pathname } = router;
   const breadcrumbs = resolveBreadcrumbs(pathname);
+
+  useEffect(() => {
+    showLogin = () => setLoginVisible(true);
+  }, []);
 
   return (
     <Layout className={style.wrapper}>
@@ -165,6 +173,16 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
           {children}
         </div>
       </Content>
+      <Login
+        visible={loginVisible}
+        onClose={() => {
+          setLoginVisible(false);
+        }}
+        onLogin={() => {
+          message.success("已重新登录");
+          setLoginVisible(false);
+        }}
+      />
       <Footer style={{ textAlign: "center" }}>
         <p>Copyright &copy; 2019-{new Date().getFullYear()} 行文过活</p>
       </Footer>
