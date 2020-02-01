@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   HttpStatus,
   HttpCode,
   Post,
@@ -18,6 +17,7 @@ export class AuthController {
    * 用户登录
    * @param user
    */
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() user) {

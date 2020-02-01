@@ -31,15 +31,4 @@ export class UserController {
   async register(@Body() user: Partial<User>): Promise<User> {
     return await this.userService.createUser(user);
   }
-
-  /**
-   * 用户登录
-   * @param user
-   */
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Post('login')
-  @HttpCode(HttpStatus.OK)
-  async login(@Body() user: Partial<User>): Promise<User> {
-    return await this.userService.login(user);
-  }
 }
