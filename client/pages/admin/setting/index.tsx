@@ -7,6 +7,7 @@ import { SettingProvider } from "@/providers/setting";
 import { SystemSetting } from "@/components/admin/Setting/SystemSetting";
 import { SEOSetting } from "@/components/admin/Setting/SEOSetting";
 import { OSSSetting } from "@/components/admin/Setting/OSSSetting";
+import { SMTPSetting } from "@/components/admin/Setting/SMTPSetting";
 
 interface IProps {
   setting: any;
@@ -34,7 +35,7 @@ const Setting: NextPage<IProps> = ({ setting, type: defaultType }) => {
     },
     {
       label: "SMTP 服务",
-      content: 1
+      content: <SMTPSetting setting={setting} />
     }
   ];
 
