@@ -21,6 +21,10 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  /**
+   * 用户注册
+   * @param user
+   */
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
@@ -28,6 +32,10 @@ export class UserController {
     return await this.userService.createUser(user);
   }
 
+  /**
+   * 用户登录
+   * @param user
+   */
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
   @HttpCode(HttpStatus.OK)

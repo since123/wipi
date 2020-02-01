@@ -20,7 +20,7 @@ export class User {
     return bcrypt.compareSync(password0, password1);
   }
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ length: 500 })
