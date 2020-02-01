@@ -30,6 +30,12 @@ export class User {
   @Column({ length: 500 })
   password: string;
 
+  @Column({ length: 500 })
+  avatar: string; // 头像
+
+  @Column({ length: 500 })
+  mail: string; // 邮箱
+
   @CreateDateColumn({
     type: 'datetime',
     comment: '创建时间',
