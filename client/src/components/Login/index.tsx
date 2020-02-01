@@ -5,7 +5,7 @@ import { UserProvider } from "@providers/user";
 
 interface ILoginProps extends FormComponentProps {
   visible: boolean;
-  onLogin: () => void;
+  onLogin: (arg: any) => void;
   onClose: () => void;
 }
 
@@ -16,8 +16,8 @@ const _Login: React.FC<ILoginProps> = ({ form, visible, onLogin, onClose }) => {
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        UserProvider.login(values).then(() => {
-          onLogin();
+        UserProvider.login(values).then(userInfo => {
+          onLogin(userInfo);
         });
       }
     });

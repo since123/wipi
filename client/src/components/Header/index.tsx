@@ -67,8 +67,9 @@ export const Header = () => {
               <Login
                 visible={visible}
                 onClose={() => setVisible(false)}
-                onLogin={() => {
+                onLogin={userInfo => {
                   setVisible(false);
+                  sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
                   window.open("/admin");
                 }}
               />
