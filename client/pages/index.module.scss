@@ -1,0 +1,46 @@
+.tagItem {
+  color: #333;
+  font-weight: 600;
+  padding: 12px 16px;
+  margin-left: -12px;
+  width: 140px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  .icon {
+    width: 35px;
+    text-align: center;
+    color: #999;
+  }
+
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+  }
+
+  &.active {
+    background: #1890ff;
+    color: #fff;
+
+    img {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.tagTitle {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+
+  h5 {
+    font-size: 16px;
+    height: 20px;
+    line-height: 20px;
+  }
+}

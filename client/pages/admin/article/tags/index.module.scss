@@ -1,0 +1,46 @@
+.wrapper {
+  .avatar {
+    display: inline-block;
+  }
+
+  .btns {
+    margin-top: 16px;
+
+    button + button {
+      margin-left: 16px;
+    }
+
+    &.isEdit {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .tag {
+    color: #333;
+    font-weight: 600;
+    padding-right: 24px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 1px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+
+    + .tag {
+      margin-left: 16px;
+    }
+
+    .icon {
+      width: 35px;
+      text-align: center;
+      color: #999;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

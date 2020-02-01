@@ -1,0 +1,31 @@
+@media (min-width: 768px) {
+  .wrapper {
+    width: 768px;
+  }
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .wrapper {
+    width: 1140px;
+  }
+}
+
+main {
+  padding-bottom: 16px;
+
+  .wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 30px;
+
+    min-height: calc(100vh - 64px - 153px);
+  }
+}

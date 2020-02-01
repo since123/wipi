@@ -1,0 +1,33 @@
+.wrapper {
+  .formItem {
+    margin-top: 16px;
+  }
+
+  :global {
+    .CodeMirror {
+      height: 300px !important;
+    }
+  }
+
+  .operation {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 56px;
+    line-height: 56px;
+    padding: 0 50px;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+    background: #fff;
+    border-top: 1px solid #e8e8e8;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button + button {
+      margin-left: 16px;
+    }
+  }
+}
