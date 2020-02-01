@@ -18,6 +18,9 @@ import { Comment } from './modules/comment/comment.entity';
 // 系统模块
 import { SettingModule } from './modules/setting/setting.module';
 import { Setting } from './modules/setting/setting.entity';
+// 邮件模块
+import { SMTPModule } from './modules/smtp/smtp.module';
+import { SMTP } from './modules/smtp/smtp.entity';
 
 @Module({
   imports: [
@@ -28,7 +31,7 @@ import { Setting } from './modules/setting/setting.entity';
       username: 'root',
       password: 'root',
       database: 'wipi',
-      entities: [User, File, Tag, Article, Comment, Setting],
+      entities: [User, File, Tag, Article, Comment, Setting, SMTP],
       synchronize: true,
     }),
     UserModule,
@@ -37,6 +40,7 @@ import { Setting } from './modules/setting/setting.entity';
     ArticleModule,
     CommentModule,
     SettingModule,
+    SMTPModule,
   ],
   controllers: [],
   providers: [],

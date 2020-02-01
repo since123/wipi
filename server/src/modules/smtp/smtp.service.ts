@@ -1,0 +1,59 @@
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SettingService } from '../setting/setting.service';
+import { SMTP } from './smtp.entity';
+import { sendEmail } from './mail.util';
+
+@Injectable()
+export class SMTPService {
+  constructor(
+    @InjectRepository(SMTP)
+    private readonly smtpRepository: Repository<SMTP>,
+    private readonly settingService: SettingService
+  ) {}
+
+  /**
+   * 添加邮件，发送邮件并保存
+   * @param SMTP
+   */
+  async create(data: Partial<SMTP>): Promise<SMTP> {
+    const {
+      smtpHost,
+      smtpPort,
+      smtpUser,
+      smtpPass,
+      smtpFromUser,
+    } = await this.settingService.findAll();
+    Object.assign(data, {
+      from: smtpFromUser,
+    });
+    await sendEmail(data, {
+      host: smtpHost,
+      port: smtpPort,
+      user: smtpUser,
+      pass: smtpPass,
+    }).catch(() => {
+      throw new HttpException('邮件发送失败', HttpStatus.BAD_REQUEST);
+    });
+    const newSMTP = await this.smtpRepository.create(data);
+    await this.smtpRepository.save(newSMTP);
+    return newSMTP;
+  }
+
+  /**
+   * 获取所有邮件
+   */
+  async findAll(): Promise<SMTP[]> {
+    return this.smtpRepository.find();
+  }
+
+  /**
+   * 删除邮件
+   * @param id
+   */
+  async deleteById(id) {
+    const SMTP = await this.smtpRepository.findOne(id);
+    return this.smtpRepository.remove(SMTP);
+  }
+}
