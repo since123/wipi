@@ -6,12 +6,14 @@ import { SettingProvider } from "@providers/setting";
 export const SystemSetting = ({ setting }) => {
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState("logo");
+  const [systemUrl, setSystemUrl] = useState(null);
   const [systemTitle, setSystemTitle] = useState(null);
   const [systemLogo, setSystemLogo] = useState(null);
   const [systemFavicon, setSystemFavicon] = useState(null);
   const [systemFooterInfo, setSystemFooterInfo] = useState(null);
 
   useEffect(() => {
+    setSystemUrl((setting && setting.systemUrl) || null);
     setSystemTitle((setting && setting.systemTitle) || null);
     setSystemLogo((setting && setting.systemLogo) || null);
     setSystemFavicon((setting && setting.systemFavicon) || null);
@@ -20,6 +22,7 @@ export const SystemSetting = ({ setting }) => {
 
   const save = () => {
     const data = {
+      systemUrl,
       systemTitle,
       systemLogo,
       systemFavicon,
@@ -32,6 +35,15 @@ export const SystemSetting = ({ setting }) => {
 
   return (
     <div>
+      <Form.Item label="系统地址">
+        <Input
+          placeholder="请输入系统地址"
+          value={systemUrl}
+          onChange={e => {
+            setSystemUrl(e.target.value);
+          }}
+        />
+      </Form.Item>
       <Form.Item label="系统标题">
         <Input
           placeholder="请输入系统标题，将作为 head.title 显示"
