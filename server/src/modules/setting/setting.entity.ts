@@ -12,6 +12,9 @@ export class Setting {
   id: string;
 
   @Column({ type: 'text', default: null })
+  systemUrl: string; // 系统地址
+
+  @Column({ type: 'text', default: null })
   systemTitle: string; // 系统标题
 
   @Column({ type: 'text', default: null })
