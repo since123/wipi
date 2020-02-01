@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Form, Input, Button, message } from "antd";
 import { SettingProvider } from "@providers/setting";
+import { SMTPProvider } from "@providers/smtp";
 
 export const SMTPSetting = ({ setting }) => {
   const [smtpHost, setsmtpHost] = useState(null);
@@ -30,6 +31,16 @@ export const SMTPSetting = ({ setting }) => {
     });
   };
 
+  const test = useCallback(() => {
+    SMTPProvider.testSendMail(smtpFromUser)
+      .then(() => {
+        message.success("邮件发送成功");
+      })
+      .catch(() => {
+        message.error("邮件发送失败");
+      });
+  }, [smtpFromUser]);
+
   return (
     <div>
       <Form.Item label="SMTP 地址">
@@ -41,7 +52,7 @@ export const SMTPSetting = ({ setting }) => {
           }}
         />
       </Form.Item>
-      <Form.Item label="SMTP 端口">
+      <Form.Item label="SMTP 端口（注意强制使用 SSL 连接）">
         <Input
           placeholder="请输入SMTP 端口"
           value={smtpPort}
@@ -79,6 +90,9 @@ export const SMTPSetting = ({ setting }) => {
       </Form.Item>
       <Button type="primary" onClick={save}>
         保存
+      </Button>
+      <Button style={{ marginLeft: 16 }} onClick={test}>
+        测试
       </Button>
     </div>
   );
