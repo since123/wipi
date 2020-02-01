@@ -91,7 +91,7 @@ export class CommentService {
     const data = await this.commentRepository
       .createQueryBuilder('comment')
       .where('comment.articleId=:articleId')
-      .where('comment.pass=:pass')
+      .andWhere('comment.pass=:pass')
       .setParameter('articleId', articleId)
       .setParameter('pass', true)
       .getMany();
