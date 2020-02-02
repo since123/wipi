@@ -10,14 +10,16 @@ import {
   Form,
   Input,
   Button,
-  Tabs
+  Tabs,
+  message
 } from "antd";
-import { AdminLayout } from "@/layout/AdminLayout";
+import { AdminLayout, showLogin } from "@/layout/AdminLayout";
 import { FileSelectDrawer } from "@components/admin/FileSelectDrawer";
 import { ArticleProvider } from "@providers/article";
 import { CommentProvider } from "@providers/comment";
 import { TagProvider } from "@/providers/tag";
 import { FileProvider } from "@/providers/file";
+import { UserProvider } from "@providers/user";
 
 interface IOwnspaceProps {
   articles: IArticle[];
@@ -42,6 +44,9 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
   ];
   const [visible, setVisible] = useState<boolean>(false);
   const [user, setUser] = useState<IUser | null>(null);
+  const [oldPassword, setOldPassword] = useState(null);
+  const [newPassword1, setNewPassword1] = useState(null);
+  const [newPassword2, setNewPassword2] = useState(null);
 
   useEffect(() => {
     let info = window.sessionStorage.getItem("userInfo");
@@ -52,8 +57,35 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
   }, []);
 
   const save = useCallback(() => {
-    console.log(user);
+    UserProvider.update(user).then(res => {
+      setUser(res);
+      window.sessionStorage.setItem("userInfo", JSON.stringify(res));
+      message.success("用户信息已保存");
+    });
   }, [user]);
+
+  const changePassword = () => {
+    if (!oldPassword || !newPassword1 || !newPassword2) {
+      return;
+    }
+
+    if (newPassword1 !== newPassword2) {
+      message.error("两次密码不一致");
+      return;
+    }
+
+    if (newPassword2.length <= 8) {
+      message.error("密码长度过短");
+      return;
+    }
+
+    const data = { ...user, oldPassword, newPassword: newPassword2 };
+    UserProvider.updatePassword(data).then(() => {
+      message.success("密码已更新，请重新登录");
+      window.sessionStorage.clear();
+      showLogin();
+    });
+  };
 
   return (
     <AdminLayout background="transparent" padding={0}>
@@ -107,7 +139,7 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
                   <Form.Item label="用户名">
                     <Input
                       placeholder="请输入用户名"
-                      value={user.name}
+                      defaultValue={user.name}
                       onChange={e => {
                         let value = e.target.value;
                         setUser(user => {
@@ -120,9 +152,10 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
                   <Form.Item label="邮箱">
                     <Input
                       placeholder="请输入邮箱"
-                      value={user.mail}
+                      defaultValue={user.mail}
                       onChange={e => {
                         let value = e.target.value;
+                        console.log(value);
                         setUser(user => {
                           user.mail = value;
                           return user;
@@ -136,34 +169,37 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
                 </TabPane>
                 <TabPane tab="更新密码" key="2">
                   <Form.Item label="原密码">
-                    <Input
+                    <Input.Password
                       placeholder="请输入原密码"
-                      value={user.name}
+                      value={oldPassword}
                       onChange={e => {
                         let value = e.target.value;
+                        setOldPassword(value);
                       }}
                     />
                   </Form.Item>
                   <Form.Item label="新密码">
-                    <Input
+                    <Input.Password
                       placeholder="请输入新密码"
-                      value={user.mail}
+                      value={newPassword1}
                       onChange={e => {
                         let value = e.target.value;
+                        setNewPassword1(value);
                       }}
                     />
                   </Form.Item>
                   <Form.Item label="确认密码">
-                    <Input
+                    <Input.Password
                       placeholder="请确认新密码"
-                      value={user.mail}
+                      value={newPassword2}
                       onChange={e => {
                         let value = e.target.value;
+                        setNewPassword2(value);
                       }}
                     />
                   </Form.Item>
-                  <Button type="primary" onClick={save}>
-                    保存
+                  <Button type="primary" onClick={changePassword}>
+                    更新
                   </Button>
                 </TabPane>
               </Tabs>
@@ -176,10 +212,13 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
 };
 
 Ownspace.getInitialProps = async () => {
-  const articles = await ArticleProvider.getArticles();
-  const tags = await TagProvider.getTags();
-  const files = await FileProvider.getFiles();
-  const comments = await CommentProvider.getComments();
+  const [articles, tags, files, comments] = await Promise.all([
+    ArticleProvider.getArticles(),
+    TagProvider.getTags(),
+    FileProvider.getFiles(),
+    CommentProvider.getComments()
+  ]);
+
   return { articles, tags, files, comments };
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, Dropdown, Avatar } from "antd";
+import Router from "next/router";
+import { Menu, Dropdown, Avatar, message } from "antd";
 
 export const UserInfo = () => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -11,6 +12,11 @@ export const UserInfo = () => {
       info = JSON.parse(info);
       setUser(info as any);
     } catch (e) {}
+
+    if (!info) {
+      message.error("异常登录");
+      Router.replace("/");
+    }
   }, []);
 
   const menu = () => {
@@ -40,11 +46,11 @@ export const UserInfo = () => {
           cursor: "pointer"
         }}
       >
-        <Avatar
-          style={{ backgroundColor: "#87d068" }}
-          size={"small"}
-          icon="user"
-        />
+        {user && user.avatar ? (
+          <Avatar src={user.avatar} />
+        ) : (
+          <Avatar icon="user" />
+        )}
         {user ? <span style={{ marginLeft: 8 }}>Hi, {user.name}</span> : null}
       </div>
     </Dropdown>

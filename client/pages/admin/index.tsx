@@ -108,10 +108,13 @@ const Home: NextPage<IHomeProps> = ({
 };
 
 Home.getInitialProps = async () => {
-  const articles = await ArticleProvider.getArticles();
-  const tags = await TagProvider.getTags();
-  const files = await FileProvider.getFiles();
-  const comments = await CommentProvider.getComments();
+  const [articles, tags, files, comments] = await Promise.all([
+    ArticleProvider.getArticles(),
+    TagProvider.getTags(),
+    FileProvider.getFiles(),
+    CommentProvider.getComments()
+  ]);
+
   return { articles, tags, files, comments };
 };
 
