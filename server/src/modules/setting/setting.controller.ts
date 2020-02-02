@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { SettingService } from './setting.service';
 import { Setting } from './setting.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -20,8 +27,9 @@ export class SettingController {
   /**
    * 获取设置
    */
-  @Get()
-  findAll(): Promise<Setting> {
-    return this.settingService.findAll();
+  @Post('/get')
+  @HttpCode(HttpStatus.OK)
+  findAll(@Body() user): Promise<Setting> {
+    return this.settingService.findAll(user);
   }
 }

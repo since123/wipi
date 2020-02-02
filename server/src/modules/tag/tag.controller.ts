@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TagService } from './tag.service';
@@ -48,8 +49,8 @@ export class TagController {
    * @param id
    */
   @Get(':id/article')
-  getArticleById(@Param('id') id) {
-    return this.tagService.getArticleById(id);
+  getArticleById(@Param('id') id, @Query('status') status) {
+    return this.tagService.getArticleById(id, status);
   }
 
   /**

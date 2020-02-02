@@ -1,21 +1,48 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.entity';
 import { Setting } from './setting.entity';
 
 @Injectable()
 export class SettingService {
   constructor(
     @InjectRepository(Setting)
-    private readonly settingRepository: Repository<Setting>
+    private readonly settingRepository: Repository<Setting>,
+    private readonly userService: UserService
   ) {}
 
   /**
    * 获取系统设置
    */
-  async findAll(): Promise<Setting> {
+  async findAll(user?: User): Promise<Setting> {
     const data = await this.settingRepository.find();
-    return data[0];
+    const res = data[0];
+
+    const filterRes = [
+      'systemUrl',
+      'systemTitle',
+      'systemLogo',
+      'systemFavicon',
+      'systemFooterInfo',
+      'seoKeyword',
+      'seoDesc',
+    ].reduce((a, c) => {
+      a[c] = res[c];
+      return a;
+    }, {}) as Setting;
+
+    if (user) {
+      const ret = await this.userService.findById(user.id);
+      if (ret) {
+        return res;
+      } else {
+        return filterRes;
+      }
+    } else {
+      return filterRes;
+    }
   }
 
   /**

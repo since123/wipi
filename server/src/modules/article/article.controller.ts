@@ -7,6 +7,7 @@ import {
   Delete,
   Patch,
   Param,
+  Query,
   Body,
   UseGuards,
 } from '@nestjs/common';
@@ -32,8 +33,16 @@ export class ArticleController {
    * 获取所有文章
    */
   @Get()
-  findAll(): Promise<Article[]> {
-    return this.articleService.findAll();
+  findAll(@Query('status') status): Promise<Article[]> {
+    return this.articleService.findAll(status);
+  }
+
+  /**
+   * 获取所有文章归档
+   */
+  @Get('/archives')
+  getArchives(): Promise<{ [key: string]: Article[] }> {
+    return this.articleService.getArchives();
   }
 
   /**
@@ -41,8 +50,8 @@ export class ArticleController {
    * @param id
    */
   @Get(':id')
-  findById(@Param('id') id) {
-    return this.articleService.findById(id);
+  findById(@Param('id') id, @Query('status') status) {
+    return this.articleService.findById(id, status);
   }
 
   /**

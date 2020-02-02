@@ -100,7 +100,9 @@ export class CommentService {
    * 额外添加文章信息
    */
   async findAll(): Promise<Comment[]> {
-    const data = await this.commentRepository.find();
+    const data = await this.commentRepository.find({
+      order: { createAt: 'DESC' },
+    });
     for (let d of data) {
       const article = await this.articleService.findById(d.articleId);
       Object.assign(d, { article });

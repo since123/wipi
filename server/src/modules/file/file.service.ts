@@ -56,7 +56,7 @@ export class FileService {
    * 获取所有文件
    */
   async findAll(): Promise<File[]> {
-    return this.fileRepository.find();
+    return this.fileRepository.find({ order: { createAt: 'DESC' } });
   }
 
   /**

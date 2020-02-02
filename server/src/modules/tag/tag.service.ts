@@ -31,7 +31,7 @@ export class TagService {
    * 获取所有标签
    */
   async findAll(): Promise<Tag[]> {
-    return this.tagRepository.find();
+    return this.tagRepository.find({ order: { createAt: 'DESC' } });
   }
 
   /**
@@ -46,14 +46,21 @@ export class TagService {
    * 获取指定标签信息，包含相关文章
    * @param id
    */
-  async getArticleById(id): Promise<Tag> {
-    return this.tagRepository
+  async getArticleById(id, status = null): Promise<Tag> {
+    const data = await this.tagRepository
       .createQueryBuilder('tag')
       .leftJoinAndSelect('tag.articles', 'articles')
       .where('tag.id=:id')
       .orWhere('tag.label=:id')
       .setParameter('id', id)
       .getOne();
+
+    if (status) {
+      data.articles = data.articles.filter(a => a.status === status);
+      return data;
+    } else {
+      return data;
+    }
   }
 
   async findByIds(ids): Promise<Array<Tag>> {

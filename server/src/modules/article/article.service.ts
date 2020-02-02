@@ -57,24 +57,57 @@ export class ArticleService {
   /**
    * 获取所有文章
    */
-  async findAll(): Promise<Article[]> {
-    return this.articleRepository
+  async findAll(status = null): Promise<Article[]> {
+    const query = this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.tags', 'tags')
-      .getMany();
+      .orderBy('publishAt', 'DESC');
+
+    if (status) {
+      query.andWhere('article.status=:status').setParameter('status', status);
+    }
+
+    return query.getMany();
+  }
+
+  /**
+   * 获取文章归档
+   */
+  async getArchives(): Promise<{ [key: string]: Article[] }> {
+    const data = await this.articleRepository.find({ status: 'publish' });
+    let ret = {};
+
+    data.forEach(d => {
+      const year = new Date(d.createAt).getFullYear();
+
+      if (!ret[year]) {
+        ret[year] = [];
+      }
+
+      ret[year].push(d);
+    });
+
+    return ret;
   }
 
   /**
    * 获取指定文章信息
    * @param id
    */
-  async findById(id): Promise<Article> {
-    return this.articleRepository
+  async findById(id, status = null): Promise<Article> {
+    const query = this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.tags', 'tags')
       .where('article.id=:id')
+      .orWhere('article.title=:title')
       .setParameter('id', id)
-      .getOne();
+      .setParameter('title', id);
+
+    if (status) {
+      query.andWhere('article.status=:status').setParameter('status', status);
+    }
+
+    return query.getOne();
   }
 
   /**
