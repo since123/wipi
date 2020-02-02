@@ -16,9 +16,13 @@ export class SettingService {
   /**
    * 获取系统设置
    */
-  async findAll(user?: User): Promise<Setting> {
+  async findAll(user?: User, innerInvoke = false): Promise<Setting> {
     const data = await this.settingRepository.find();
     const res = data[0];
+
+    if (innerInvoke) {
+      return res;
+    }
 
     const filterRes = [
       'systemUrl',
