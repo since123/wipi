@@ -7,6 +7,7 @@ import { SMTP } from './smtp.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SMTP]), SettingModule],
+  exports: [SMTPService],
   controllers: [SMTPController],
   providers: [SMTPService],
 })

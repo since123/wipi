@@ -20,6 +20,10 @@ export class User {
     return bcrypt.compareSync(password0, password1);
   }
 
+  static encryptPassword(password) {
+    return bcrypt.hashSync(password, 10);
+  }
+
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
@@ -54,7 +58,7 @@ export class User {
    * 插入数据前，对密码进行加密
    */
   @BeforeInsert()
-  async encryptPassword() {
+  encrypt() {
     this.password = bcrypt.hashSync(this.password, 10);
   }
 }

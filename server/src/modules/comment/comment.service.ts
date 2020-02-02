@@ -1,7 +1,10 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { SMTPService } from '../smtp/smtp.service';
 import { ArticleService } from '../article/article.service';
+import { SettingService } from '../setting/setting.service';
+import { UserService } from '../user/user.service';
 import { marked } from '../article/markdown.util';
 import { Comment } from './comment.entity';
 
@@ -40,7 +43,10 @@ export class CommentService {
   constructor(
     @InjectRepository(Comment)
     private readonly commentRepository: Repository<Comment>,
-    private readonly articleService: ArticleService
+    private readonly articleService: ArticleService,
+    private readonly smtpService: SMTPService,
+    private readonly settingService: SettingService,
+    private readonly userService: UserService
   ) {}
 
   /**
@@ -59,6 +65,33 @@ export class CommentService {
     comment.pass = false;
     const newComment = await this.commentRepository.create(comment);
     await this.commentRepository.save(newComment);
+
+    // 发送通知邮件
+    const {
+      smtpFromUser: from,
+      systemUrl,
+    } = await this.settingService.findAll();
+    const user = await this.userService.findAll();
+    let to;
+    if (user && user[0] && user[0].mail) {
+      to = user[0].mail;
+    } else {
+      to = from;
+    }
+    const emailMessage = {
+      from,
+      to,
+      subject: '新评论通知',
+      html: `
+        <div>
+          <p>评论人：${comment.contact}</p>
+          <p>评论内容：${comment.content}</p>
+          <a href="${systemUrl}/admin/comment" target="_blank">前往审核</a>
+        </div>
+      `,
+    };
+    await this.smtpService.create(emailMessage);
+
     return newComment;
   }
 
@@ -109,7 +142,6 @@ export class CommentService {
    * @param tag
    */
   async updateById(id, data: Partial<Comment>): Promise<Comment> {
-    console.log(id, data);
     const old = await this.commentRepository.findOne(id);
     const newData = await this.commentRepository.merge(old, data);
     return this.commentRepository.save(newData);

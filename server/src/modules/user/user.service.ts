@@ -54,10 +54,47 @@ export class UserService {
   }
 
   /**
-   * 获取指定标签
+   * 获取指定用户
    * @param id
    */
   async findById(id): Promise<User> {
     return this.userRepository.findOne(id);
+  }
+
+  /**
+   * 更新指定用户
+   * @param id
+   */
+  async updateById(id, user): Promise<User> {
+    const oldUser = await this.userRepository.findOne(id);
+    delete user.password;
+    const newUser = await this.userRepository.merge(oldUser, user);
+    return this.userRepository.save(newUser);
+  }
+
+  /**
+   * 更新指定用户密码
+   * @param id
+   */
+  async updatePassword(id, user): Promise<User> {
+    const existUser = await this.userRepository.findOne(id);
+    const { oldPassword, newPassword } = user;
+
+    if (
+      !existUser ||
+      !(await User.comparePassword(oldPassword, existUser.password))
+    ) {
+      throw new HttpException(
+        '用户名或密码错误',
+        // tslint:disable-next-line: trailing-comma
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    let hashNewPassword = User.encryptPassword(newPassword);
+    const newUser = await this.userRepository.merge(existUser, {
+      password: hashNewPassword,
+    });
+    return this.userRepository.save(newUser);
   }
 }
