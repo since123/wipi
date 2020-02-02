@@ -20,6 +20,10 @@ export class SettingService {
     const data = await this.settingRepository.find();
     const res = data[0];
 
+    if (!res) {
+      return {} as Setting;
+    }
+
     if (innerInvoke) {
       return res;
     }
