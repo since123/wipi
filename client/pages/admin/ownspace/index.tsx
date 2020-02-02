@@ -155,7 +155,6 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
                       defaultValue={user.mail}
                       onChange={e => {
                         let value = e.target.value;
-                        console.log(value);
                         setUser(user => {
                           user.mail = value;
                           return user;
