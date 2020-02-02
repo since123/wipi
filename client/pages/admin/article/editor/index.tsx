@@ -37,17 +37,25 @@ const Editor: NextPage<IProps> = ({ articles = [] }) => {
     article.status = "draft";
 
     if (id) {
-      ArticleProvider.updateArticle(id, article).then(res => {
+      return ArticleProvider.updateArticle(id, article).then(res => {
         setId(res.id);
         message.success("文章已保存");
       });
     } else {
-      ArticleProvider.addArticle(article).then(res => {
+      return ArticleProvider.addArticle(article).then(res => {
         setId(res.id);
         message.success("文章已保存");
       });
     }
   }, [article, id]);
+
+  const preview = useCallback(() => {
+    if (id) {
+      window.open("/article/" + id);
+    } else {
+      message.warn("请先保存");
+    }
+  }, [id]);
 
   const publish = useCallback(() => {
     let canPublish = true;
@@ -146,6 +154,7 @@ const Editor: NextPage<IProps> = ({ articles = [] }) => {
             文件库
           </Button>
           <Button onClick={save}>保存</Button>
+          <Button onClick={preview}>预览</Button>
           <Button type="primary" onClick={publish}>
             发布
           </Button>

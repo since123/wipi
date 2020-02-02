@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { NextPage } from "next";
 import Router from "next/router";
 import Link from "next/link";
 import { Row, Col, Anchor, Modal, Form, Input, message } from "antd";
+import * as dayjs from "dayjs";
+import hljs from "highlight.js";
+import "highlight.js/styles/monokai-sublime.css";
 import { Layout } from "@/layout/Layout";
 import { MyComment } from "@/components/Comment";
 import { RecentArticles } from "@components/RecentArticles";
@@ -14,6 +17,7 @@ interface IProps {
 }
 
 const Article: NextPage<IProps> = ({ article }) => {
+  const ref = useRef(null);
   const [tocs, setTocs] = useState([]);
   const [password, setPassword] = useState(null);
   const [shouldCheckPassWord, setShouldCheckPassword] = useState(
@@ -57,9 +61,18 @@ const Article: NextPage<IProps> = ({ article }) => {
     setTocs(tocs);
   }, []);
 
+  // 更新阅读量
   useEffect(() => {
     if (!shouldCheckPassWord) {
       ArticleProvider.updateArticleViews(article.id);
+    }
+  }, [shouldCheckPassWord]);
+
+  // 高亮
+  useEffect(() => {
+    if (!shouldCheckPassWord) {
+      hljs.initHighlightingOnLoad();
+      hljs.highlightBlock(ref.current);
     }
   }, [shouldCheckPassWord]);
 
@@ -95,8 +108,19 @@ const Article: NextPage<IProps> = ({ article }) => {
             <div className={style.content}>
               <img className={style.cover} src={article.cover} alt="文章封面" />
               <h1 className={style.title}>{article.title}</h1>
+              <p className={style.desc}>
+                <span>
+                  发布于{" "}
+                  {dayjs
+                    .default(article.createAt)
+                    .format("YYYY-MM-DD HH:mm:ss")}
+                </span>
+                <span> • </span>
+                <span>阅读量 {article.views}</span>
+              </p>
               <div
-                className={style.markdown}
+                ref={ref}
+                className={"markdown"}
                 dangerouslySetInnerHTML={{ __html: article.html }}
               ></div>
 
@@ -120,7 +144,7 @@ const Article: NextPage<IProps> = ({ article }) => {
               {/* S 评论 */}
               {article.isCommentable && (
                 <div className={style.comments}>
-                  {/* <p className={style.title}>评论</p> */}
+                  <p className={style.title}>评论</p>
                   <div className={style.commentContainer}>
                     <MyComment articleId={article.id} />
                   </div>

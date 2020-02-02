@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Icon, message } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { FileSelectDrawer } from "@components/admin/FileSelectDrawer";
 import { SettingProvider } from "@providers/setting";
 

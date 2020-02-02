@@ -4,16 +4,37 @@ export class ArticleProvider {
   /**
    * 获取所有文章
    */
-  static async getArticles(): Promise<IArticle[]> {
-    return httpProvider.get("/article");
+  static async getArticles(needFilter = false): Promise<IArticle[]> {
+    return httpProvider.get(
+      "/article",
+      needFilter
+        ? {
+            params: { status: "publish" }
+          }
+        : {}
+    );
+  }
+
+  /**
+   * 获取所有文章归档
+   */
+  static async getArchives(): Promise<{ [key: string]: IArticle[] }> {
+    return httpProvider.get("/article/archives");
   }
 
   /**
    * 获取指定文章
    * @param id
    */
-  static async getArticle(id): Promise<IArticle> {
-    return httpProvider.get(`/article/${id}`);
+  static async getArticle(id, needFilter = false): Promise<IArticle> {
+    return httpProvider.get(
+      `/article/${id}`,
+      needFilter
+        ? {
+            params: { status: "publish" }
+          }
+        : {}
+    );
   }
 
   /**

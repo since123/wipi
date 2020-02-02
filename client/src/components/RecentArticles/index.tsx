@@ -7,7 +7,7 @@ export const RecentArticles = () => {
   const [articles, setArticles] = useState<IArticle[]>([]);
 
   useEffect(() => {
-    ArticleProvider.getArticles().then(res => {
+    ArticleProvider.getArticles(true).then(res => {
       setArticles(res);
     });
   }, []);

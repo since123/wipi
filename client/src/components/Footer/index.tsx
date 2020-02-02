@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "antd";
-import { SettingProvider } from "@providers/setting";
 import { RecentArticles } from "@components/RecentArticles";
 import { Tags } from "@components/Tags";
 import style from "./index.module.scss";
 
-export const Footer = () => {
-  const [setting, setSetting] = useState<any>({});
-
-  useEffect(() => {
-    SettingProvider.getSetting().then(res => {
-      setSetting(res);
-    });
-  }, []);
-
-  return setting && setting.systemFooterInfo ? (
+export const Footer = ({ setting }) => {
+  return (
     <footer>
       <div className={style.info}>
         <Row gutter={16}>
@@ -30,12 +21,14 @@ export const Footer = () => {
           </Col>
         </Row>
       </div>
-      <div
-        className={style.copyright}
-        dangerouslySetInnerHTML={{
-          __html: setting.systemFooterInfo
-        }}
-      ></div>
+      {setting && setting.systemFooterInfo && (
+        <div
+          className={style.copyright}
+          dangerouslySetInnerHTML={{
+            __html: setting.systemFooterInfo
+          }}
+        ></div>
+      )}
     </footer>
-  ) : null;
+  );
 };

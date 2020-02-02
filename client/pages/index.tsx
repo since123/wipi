@@ -29,7 +29,7 @@ const Home: NextPage<IHomeProps> = ({
   // 标签发生变化后重新拉取文章列表
   useMemo(() => {
     if (routerTag) {
-      TagProvider.getTagWithArticles(routerTag).then(res => {
+      TagProvider.getTagWithArticles(routerTag, true).then(res => {
         setArticles(res.articles || []);
       });
     } else {
@@ -51,7 +51,7 @@ const Home: NextPage<IHomeProps> = ({
                   routerTag == null ? style.active : false
                 )}
               >
-                <Link href="/">
+                <Link href="/" shallow>
                   <a>
                     <img
                       src="http://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-01/CHRKH77JJNS9OEL8DKPXPF/all.png"
@@ -70,7 +70,7 @@ const Home: NextPage<IHomeProps> = ({
                       routerTag === tag.label ? style.active : false
                     )}
                   >
-                    <Link href={"/?tag=" + tag.label}>
+                    <Link href={"/?tag=" + tag.label} shallow>
                       <a>
                         <img src={tag.icon} alt="icon" />
                         <span>{tag.label}</span>
@@ -105,12 +105,12 @@ Home.getInitialProps = async ctx => {
   const { tag } = ctx.query;
   const [articles, tags] = await Promise.all([
     tag
-      ? TagProvider.getTagWithArticles(tag)
+      ? TagProvider.getTagWithArticles(tag, true)
           .then(res => res.articles)
           .catch(() => {
             return [] as any;
           })
-      : ArticleProvider.getArticles(),
+      : ArticleProvider.getArticles(true),
     TagProvider.getTags()
   ]);
 

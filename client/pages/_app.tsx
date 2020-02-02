@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { SettingProvider } from "@providers/setting";
 import "antd/dist/antd.css";
 import "@/theme/reset.scss";
+import "@/theme/markdown.scss";
 
 class MyApp extends App {
   state: {

@@ -49,6 +49,14 @@ const Editor: NextPage<IProps> = ({ article: defaultArticle = {} }) => {
     }
   }, [article, id]);
 
+  const preview = useCallback(() => {
+    if (id) {
+      window.open("/article/" + id);
+    } else {
+      message.warn("请先保存");
+    }
+  }, [id]);
+
   const publish = useCallback(() => {
     let canPublish = true;
     void [
@@ -148,6 +156,7 @@ const Editor: NextPage<IProps> = ({ article: defaultArticle = {} }) => {
             文件库
           </Button>
           <Button onClick={save}>保存</Button>
+          <Button onClick={preview}>预览</Button>
           <Button type="primary" onClick={publish}>
             发布
           </Button>

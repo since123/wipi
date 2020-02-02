@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
@@ -10,15 +10,29 @@ import { OSSSetting } from "@/components/admin/Setting/OSSSetting";
 import { SMTPSetting } from "@/components/admin/Setting/SMTPSetting";
 
 interface IProps {
-  setting: any;
   type: string;
 }
 
 const { TabPane } = Tabs;
 
-const Setting: NextPage<IProps> = ({ setting, type: defaultType }) => {
+const Setting: NextPage<IProps> = ({ type: defaultType }) => {
   const router = useRouter();
   const [type, setType] = useState(defaultType);
+  const [setting, setSetting] = useState(null);
+
+  useEffect(() => {
+    let info = window.sessionStorage.getItem("userInfo");
+    try {
+      info = JSON.parse(info);
+      SettingProvider.getSetting(info).then(res => {
+        setSetting(res);
+      });
+    } catch (e) {
+      SettingProvider.getSetting().then(res => {
+        setSetting(res);
+      });
+    }
+  }, []);
 
   const tabs = [
     {
@@ -41,31 +55,32 @@ const Setting: NextPage<IProps> = ({ setting, type: defaultType }) => {
 
   return (
     <AdminLayout>
-      <Tabs
-        activeKey={type}
-        onChange={key => {
-          setType(key);
-          router.push(`/admin/setting`, `/admin/setting?type=` + key, {
-            shallow: true
-          });
-        }}
-      >
-        {tabs.map(tab => {
-          return (
-            <TabPane tab={tab.label} key={tab.label}>
-              {tab.content}
-            </TabPane>
-          );
-        })}
-      </Tabs>
+      {setting && (
+        <Tabs
+          activeKey={type}
+          onChange={key => {
+            setType(key);
+            router.push(`/admin/setting`, `/admin/setting?type=` + key, {
+              shallow: true
+            });
+          }}
+        >
+          {tabs.map(tab => {
+            return (
+              <TabPane tab={tab.label} key={tab.label}>
+                {tab.content}
+              </TabPane>
+            );
+          })}
+        </Tabs>
+      )}
     </AdminLayout>
   );
 };
 
 Setting.getInitialProps = async ctx => {
   const { type } = ctx.query;
-  const setting = await SettingProvider.getSetting();
-  return { setting, type: "" + (type || "系统设置") };
+  return { type: "" + (type || "系统设置") };
 };
 
 export default Setting;

@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { Row, Col, Input, Button } from "antd";
-import { SettingProvider } from "@providers/setting";
+import { useRouter } from "next/router";
+import cls from "classnames";
+import { Row, Col, Button } from "antd";
 import { Login } from "../Login";
 import style from "./index.module.scss";
 
-const { Search } = Input;
+const menus = [
+  {
+    label: "首页",
+    path: "/"
+  },
 
-const menus = [];
+  {
+    label: "归档",
+    path: "/archives"
+  }
+];
 
-export const Header = () => {
+export const Header = ({ setting }) => {
+  const router = useRouter();
+  const pathname = router.pathname;
   const [visible, setVisible] = useState(false);
-  const [setting, setSetting] = useState<any>({});
-
-  useEffect(() => {
-    SettingProvider.getSetting().then(res => {
-      setSetting(res);
-    });
-  }, []);
 
   return (
     <header>
       <div className={style.wrapper}>
         <Row>
-          <Col md={4}>
+          <Col md={2}>
             <div className={style.logo}>
               {/^http/.test(setting.systemLogo) ? (
                 <Link href="/">
@@ -40,26 +44,25 @@ export const Header = () => {
               )}
             </div>
           </Col>
-          <Col md={14}>
+          <Col md={16}>
             <nav>
               <ul>
                 {menus.map(menu => (
-                  <li key={menu.label}>
+                  <li
+                    key={menu.label}
+                    className={cls({
+                      [style.active]: pathname === menu.path
+                    })}
+                  >
                     <Link href={menu.path}>
                       <a>{menu.label}</a>
                     </Link>
                   </li>
                 ))}
               </ul>
-              {/* <div className={style.search}>
-                <Search
-                  onSearch={value => console.log(value)}
-                  style={{ width: 200 }}
-                />
-              </div> */}
             </nav>
           </Col>
-          <Col md={6}>
+          <Col md={6} xs={0}>
             <div className={style.login}>
               <Button type="link" onClick={() => setVisible(true)}>
                 立即登录

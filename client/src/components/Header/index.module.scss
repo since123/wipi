@@ -34,6 +34,7 @@ header {
   .logo {
     height: $height;
     line-height: $height;
+    text-align: center;
   }
 
   nav {
@@ -46,24 +47,21 @@ header {
         display: inline-flex;
         padding: 0;
         vertical-align: middle;
-        color: #666;
-        font-size: 16px;
         line-height: 64px;
         padding: 0 12px;
-        font-weight: 500;
 
         &:first-of-type {
           padding-left: 0;
+        }
+
+        &.active {
+          color: $primaryColor;
         }
 
         a {
           color: inherit;
         }
       }
-    }
-
-    .search {
-      margin-left: 20px;
     }
   }
 
@@ -75,6 +73,16 @@ header {
 
     button {
       color: $primaryColor;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .login {
+      display: none;
+    }
+
+    nav {
+      justify-content: center;
     }
   }
 }

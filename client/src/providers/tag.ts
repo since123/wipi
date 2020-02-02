@@ -12,8 +12,15 @@ export class TagProvider {
    * 获取指定标签下文章
    * @param id
    */
-  static async getTagWithArticles(id): Promise<ITag> {
-    return httpProvider.get(`/tag/${id}/article`);
+  static async getTagWithArticles(id, needFilter = false): Promise<ITag> {
+    return httpProvider.get(
+      `/tag/${id}/article`,
+      needFilter
+        ? {
+            params: { status: "publish" }
+          }
+        : {}
+    );
   }
 
   /**
