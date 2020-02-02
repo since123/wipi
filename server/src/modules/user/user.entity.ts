@@ -34,10 +34,10 @@ export class User {
   @Column({ length: 500 })
   password: string;
 
-  @Column({ length: 500 })
+  @Column({ length: 500, default: null })
   avatar: string; // 头像
 
-  @Column({ length: 500 })
+  @Column({ length: 500, default: null })
   mail: string; // 邮箱
 
   @CreateDateColumn({
