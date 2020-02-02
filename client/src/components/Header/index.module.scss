@@ -1,3 +1,5 @@
+@import "../../theme/var.scss";
+
 @media (min-width: 768px) {
   .wrapper {
     width: 768px;
@@ -70,5 +72,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    button {
+      color: $primaryColor;
+    }
   }
 }

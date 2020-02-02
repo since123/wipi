@@ -1,3 +1,5 @@
+@import "../../theme/var.scss";
+
 .wrapper {
   padding: 1.5rem;
   border-radius: 4px;
@@ -20,7 +22,7 @@
     margin: 5px 0;
 
     &:hover {
-      color: #3273dc;
+      color: $primaryColor;
     }
   }
 

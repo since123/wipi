@@ -42,25 +42,39 @@ httpProvider.interceptors.response.use(
     return res.data;
   },
   err => {
-    if (err.response.status == 504 || err.response.status == 404) {
-      message.error("服务器被吃了⊙﹏⊙∥");
-    } else if (err.response.status == 403 || err.response.status == 401) {
-      if (typeof window !== "undefined") {
-        let href = window.location.href;
+    if (err && err.response && err.response.status) {
+      const status = err.response.status;
 
-        if (/admin/.test(href)) {
-          message.info("请重新登录");
-          showLogin();
-        }
-      } else {
-        message.error("权限不足!");
+      switch (status) {
+        case 504:
+        case 404:
+          message.error("服务器异常");
+          break;
+
+        case 403:
+        case 401:
+          {
+            if (typeof window !== "undefined") {
+              let href = window.location.href;
+
+              if (/admin/.test(href)) {
+                message.info("请重新登录");
+                showLogin();
+              }
+            } else {
+              message.error("权限不足!");
+            }
+          }
+          break;
+
+        default:
+          message.error(
+            (err.response && err.response.data && err.response.data.msg) ||
+              "未知错误!"
+          );
       }
-    } else {
-      message.error(
-        (err.response && err.response.data && err.response.data.msg) ||
-          "未知错误!"
-      );
     }
+
     return Promise.reject(err);
   }
 );

@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { Row, Col } from "antd";
 import cls from "classnames";
 import { Layout } from "@/layout/Layout";
@@ -21,40 +22,44 @@ const Home: NextPage<IHomeProps> = ({
   tags = []
 }) => {
   const router = useRouter();
-  const [currentTag, setTag] = useState<string | null>(defaultCurrentTag);
+  const { tag: routerTag } = router.query;
   const [articles, setArticles] = useState<IArticle[]>(defaultArticles);
 
+  // 监听路由变化
   // 标签发生变化后重新拉取文章列表
   useMemo(() => {
-    if (currentTag) {
-      TagProvider.getTagWithArticles(currentTag).then(res => {
+    if (routerTag) {
+      TagProvider.getTagWithArticles(routerTag).then(res => {
         setArticles(res.articles || []);
       });
     } else {
       setArticles(defaultArticles);
     }
-  }, [currentTag]);
+  }, [routerTag]);
 
   return (
     <Layout backgroundColor="#fff">
       <Row>
-        <Col md={4}>
+        <Col md={4} sm={24}>
           <aside>
             {/* S 标签列表 */}
-            <ul>
+            <ul className={style.tagContainer}>
               <li
                 key={"all"}
                 className={cls(
                   style.tagItem,
-                  currentTag === null ? style.active : false
+                  routerTag == null ? style.active : false
                 )}
-                onClick={() => setTag(null)}
               >
-                <img
-                  src="http://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-01/CHRKH77JJNS9OEL8DKPXPF/all.png"
-                  alt=""
-                />
-                <span>全部</span>
+                <Link href="/">
+                  <a>
+                    <img
+                      src="http://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-01/CHRKH77JJNS9OEL8DKPXPF/all.png"
+                      alt=""
+                    />
+                    <span>全部</span>
+                  </a>
+                </Link>
               </li>
               {tags.map(tag => {
                 return (
@@ -62,15 +67,15 @@ const Home: NextPage<IHomeProps> = ({
                     key={tag.id}
                     className={cls(
                       style.tagItem,
-                      currentTag === tag.label ? style.active : false
+                      routerTag === tag.label ? style.active : false
                     )}
-                    onClick={() => {
-                      router.push("/", "/?tag=" + tag.label, { shallow: true });
-                      setTag(tag.label);
-                    }}
                   >
-                    <img src={tag.icon} alt="icon" />
-                    <span>{tag.label}</span>
+                    <Link href={"/?tag=" + tag.label}>
+                      <a>
+                        <img src={tag.icon} alt="icon" />
+                        <span>{tag.label}</span>
+                      </a>
+                    </Link>
                   </li>
                 );
               })}
@@ -78,10 +83,10 @@ const Home: NextPage<IHomeProps> = ({
             {/* E 标签列表 */}
           </aside>
         </Col>
-        <Col md={20}>
-          {currentTag && (
+        <Col md={20} sm={24}>
+          {routerTag && (
             <div className={style.tagTitle}>
-              <h5>{currentTag}</h5>
+              <h5>{routerTag}</h5>
             </div>
           )}
           <div>
@@ -98,10 +103,17 @@ const Home: NextPage<IHomeProps> = ({
 // 服务端预取数据
 Home.getInitialProps = async ctx => {
   const { tag } = ctx.query;
-  const articles = tag
-    ? await TagProvider.getTagWithArticles(tag).then(res => res.articles)
-    : await ArticleProvider.getArticles();
-  const tags = await TagProvider.getTags();
+  const [articles, tags] = await Promise.all([
+    tag
+      ? TagProvider.getTagWithArticles(tag)
+          .then(res => res.articles)
+          .catch(() => {
+            return [] as any;
+          })
+      : ArticleProvider.getArticles(),
+    TagProvider.getTags()
+  ]);
+
   return { articles, tags, currentTag: tag as string };
 };
 

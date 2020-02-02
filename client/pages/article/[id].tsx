@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Row, Col, Anchor, Modal, Form, Input, message } from "antd";
 import { Layout } from "@/layout/Layout";
 import { MyComment } from "@/components/Comment";
+import { RecentArticles } from "@components/RecentArticles";
 import { ArticleProvider } from "@providers/article";
 import style from "./index.module.scss";
 
@@ -37,9 +38,22 @@ const Article: NextPage<IProps> = ({ article }) => {
 
   useEffect(() => {
     let tocs = JSON.parse(article.toc);
-    if (typeof tocs === "string") {
-      tocs = JSON.parse(tocs);
-    }
+    let i = 0;
+    let max = 10; // 最大尝试次数
+    const handle = () => {
+      i++;
+      try {
+        tocs = JSON.parse(tocs);
+      } catch (e) {
+        i = max + 1;
+      }
+
+      if (typeof tocs === "string" && i < max) {
+        handle();
+      }
+    };
+
+    handle();
     setTocs(tocs);
   }, []);
 
@@ -50,7 +64,7 @@ const Article: NextPage<IProps> = ({ article }) => {
   }, [shouldCheckPassWord]);
 
   return (
-    <Layout>
+    <Layout backgroundColor="#fff">
       {/* S 密码检验 */}
       <Modal
         title="文章受保护，请输入访问密码"
@@ -77,7 +91,7 @@ const Article: NextPage<IProps> = ({ article }) => {
         </>
       ) : (
         <Row gutter={16}>
-          <Col sm={18}>
+          <Col sm={16}>
             <div className={style.content}>
               <img className={style.cover} src={article.cover} alt="文章封面" />
               <h1 className={style.title}>{article.title}</h1>
@@ -87,14 +101,14 @@ const Article: NextPage<IProps> = ({ article }) => {
               ></div>
 
               <div className={style.tags}>
-                <p>标签</p>
+                {/* <p>标签</p> */}
                 <div>
+                  <span>标签：</span>
                   {article.tags.map(tag => {
                     return (
                       <div className={style.tag}>
                         <Link href={"/?tag=" + tag.label}>
                           <a>
-                            <img src={tag.icon} alt="icon" />
                             <span>{tag.label}</span>
                           </a>
                         </Link>
@@ -106,32 +120,44 @@ const Article: NextPage<IProps> = ({ article }) => {
               {/* S 评论 */}
               {article.isCommentable && (
                 <div className={style.comments}>
-                  <p className={style.title}>评论</p>
-                  <MyComment articleId={article.id} />
+                  {/* <p className={style.title}>评论</p> */}
+                  <div className={style.commentContainer}>
+                    <MyComment articleId={article.id} />
+                  </div>
                 </div>
               )}
               {/* E 评论 */}
             </div>
           </Col>
-          {/* S 文章目录 */}
-          <Col sm={6}>
-            {Array.isArray(tocs) && (
-              <div>
-                <Anchor targetOffset={32} offsetTop={32}>
-                  {tocs.map(toc => {
-                    return (
-                      <Anchor.Link
-                        key={toc[2]}
-                        href={"#" + toc[1]}
-                        title={toc[2]}
-                      ></Anchor.Link>
-                    );
-                  })}
-                </Anchor>
-              </div>
-            )}
+          <Col sm={8}>
+            <Row>
+              <Col>
+                <div className={style.widget}>
+                  <RecentArticles />
+                </div>
+              </Col>
+
+              {/* S 文章目录 */}
+              <Col>
+                {Array.isArray(tocs) && (
+                  <div className={style.anchorWidget}>
+                    <Anchor targetOffset={32} offsetTop={32}>
+                      {tocs.map(toc => {
+                        return (
+                          <Anchor.Link
+                            key={toc[2]}
+                            href={"#" + toc[1]}
+                            title={toc[2]}
+                          ></Anchor.Link>
+                        );
+                      })}
+                    </Anchor>
+                  </div>
+                )}
+              </Col>
+              {/* E 文章目录 */}
+            </Row>
           </Col>
-          {/* E 文章目录 */}
         </Row>
       )}
     </Layout>

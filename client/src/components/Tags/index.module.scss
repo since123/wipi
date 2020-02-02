@@ -1,0 +1,41 @@
+@import "../../theme/var.scss";
+
+.wrapper {
+  text-align: left;
+
+  .title {
+    position: relative;
+    margin-top: 0;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 21px;
+    position: relative;
+    font-size: 20px;
+
+    &::after {
+      content: "";
+      width: 90px;
+      height: 1px;
+      background: $primaryColor;
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+    }
+  }
+
+  li {
+    padding: 2px 7px;
+    color: #959595;
+    line-height: 1.5em;
+    display: inline-block;
+    margin: 0 7px 7px 0;
+    border: 1px solid #808080;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      background-color: $primaryColor;
+      color: #fff;
+      border: 1px solid $primaryColor;
+    }
+  }
+}

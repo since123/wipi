@@ -1,0 +1,36 @@
+@import "../../theme/var.scss";
+
+.wrapper {
+  text-align: left;
+
+  .title {
+    position: relative;
+    margin-top: 0;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 21px;
+    position: relative;
+    font-size: 20px;
+
+    &::after {
+      content: "";
+      width: 90px;
+      height: 1px;
+      background: $primaryColor;
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+    }
+  }
+
+  li {
+    border-bottom: 1px dashed #808080;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    font-size: 14px;
+
+    &:hover {
+      color: $primaryColor;
+    }
+  }
+}

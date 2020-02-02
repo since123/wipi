@@ -1,34 +1,46 @@
 @media (min-width: 768px) {
-  .wrapper {
+  .info {
     width: 768px;
   }
 }
 
 @media (min-width: 992px) {
-  .wrapper {
+  .info {
     width: 970px;
   }
 }
 
 @media (min-width: 1200px) {
-  .wrapper {
+  .info {
     width: 1140px;
   }
 }
 
 footer {
   border-top: 1px solid #eee;
-  padding: 40px 0;
   color: #888;
   line-height: 1.6;
   vertical-align: top;
+  background: #404040;
+  text-align: center;
 }
 
-.wrapper {
+.info {
+  padding: 35px 0;
+  color: #e5e5e5;
+  margin: 0 auto;
+}
+
+.copyright {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-
+  background: #111111;
   text-align: center;
+  color: #ffffff;
+  padding-top: 28px;
+  padding-bottom: 5px;
+  border-top: 1px solid #303030;
+  font-size: 16px;
 }

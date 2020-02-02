@@ -1,14 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Comment,
-  Avatar,
-  Form,
-  Button,
-  List,
-  Input,
-  Icon,
-  message
-} from "antd";
+import { Comment, Avatar, Button, Input, Icon, message } from "antd";
 import * as dayjs from "dayjs";
 import { CommentProvider } from "@providers/comment";
 import style from "./index.module.scss";
@@ -93,12 +84,7 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
           {dayjs.default(comment.createAt).format("YYYY-MM-DD HH:mm:ss")}
         </a>
       }
-      avatar={
-        <Avatar
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
-        />
-      }
+      avatar={<Avatar icon="user" />}
       content={
         <div>
           <div dangerouslySetInnerHTML={{ __html: comment.html }}></div>
@@ -187,12 +173,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
   return (
     <div>
       <Comment
-        avatar={
-          <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="匿名用户"
-          />
-        }
+        avatar={<Avatar icon="user" />}
         content={
           <div>
             <Input

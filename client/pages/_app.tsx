@@ -1,9 +1,8 @@
 import App, { Container } from "next/app";
-import "normalize.css";
-import "antd/dist/antd.css";
 import { Helmet } from "react-helmet";
 import { SettingProvider } from "@providers/setting";
-import "./reset.scss";
+import "antd/dist/antd.css";
+import "@/theme/reset.scss";
 
 class MyApp extends App {
   state: {
@@ -34,6 +33,10 @@ class MyApp extends App {
           <meta name="keyword" content={seoKeyword} />
           <meta name="description" content={seoDesc} />
           <link rel="shortcut icon" href={systemFavicon} />
+          <link
+            href="//fonts.googleapis.com/css?family=Nunito:400,400i,700,700i&amp;display=swap"
+            rel="stylesheet"
+          ></link>
         </Helmet>
         <Component {...pageProps} />
       </Container>
