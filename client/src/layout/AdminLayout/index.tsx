@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Menu, Breadcrumb, Icon, message } from "antd";
+import { Layout, Row, Col, Menu, Breadcrumb, Icon, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Login } from "@components/Login";
+import { UserInfo } from "@components/admin/UserInfo";
 import style from "./index.module.scss";
 
 const { Header, Content, Footer } = Layout;
@@ -101,50 +102,57 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
   return (
     <Layout className={style.wrapper}>
       <Header>
-        <div className={style.logo}>管理后台</div>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[pathname]}
-          style={{ lineHeight: "64px" }}
-        >
-          {menus.map(menu => {
-            if (menu.children) {
-              return (
-                <SubMenu
-                  key={menu.label}
-                  title={
-                    <span>
-                      <Icon type={menu.icon} />
-                      {menu.label}
-                    </span>
-                  }
-                >
-                  {menu.children.map(subMenu => {
-                    return (
-                      <Menu.Item key={subMenu.path}>
-                        <Link href={subMenu.path}>
-                          <a>{subMenu.label}</a>
-                        </Link>
-                      </Menu.Item>
-                    );
-                  })}
-                </SubMenu>
-              );
-            } else {
-              return (
-                <Menu.Item key={menu.path}>
-                  <Link href={menu.path}>
-                    <a>
-                      <Icon type={menu.icon} />
-                      {menu.label}
-                    </a>
-                  </Link>
-                </Menu.Item>
-              );
-            }
-          })}
-        </Menu>
+        <Row>
+          <Col span={20}>
+            <div className={style.logo}>管理后台</div>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              selectedKeys={[pathname]}
+              style={{ lineHeight: "64px" }}
+            >
+              {menus.map(menu => {
+                if (menu.children) {
+                  return (
+                    <SubMenu
+                      key={menu.label}
+                      title={
+                        <span>
+                          <Icon type={menu.icon} />
+                          {menu.label}
+                        </span>
+                      }
+                    >
+                      {menu.children.map(subMenu => {
+                        return (
+                          <Menu.Item key={subMenu.path}>
+                            <Link href={subMenu.path}>
+                              <a>{subMenu.label}</a>
+                            </Link>
+                          </Menu.Item>
+                        );
+                      })}
+                    </SubMenu>
+                  );
+                } else {
+                  return (
+                    <Menu.Item key={menu.path}>
+                      <Link href={menu.path}>
+                        <a>
+                          <Icon type={menu.icon} />
+                          {menu.label}
+                        </a>
+                      </Link>
+                    </Menu.Item>
+                  );
+                }
+              })}
+            </Menu>
+          </Col>
+          <Col span={4} style={{ textAlign: "right" }}>
+            <UserInfo />
+          </Col>
+        </Row>
       </Header>
       <Content
         style={{ padding: "0 50px", minHeight: "calc(100vh - 64px - 83px)" }}

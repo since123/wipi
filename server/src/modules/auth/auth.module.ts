@@ -14,7 +14,7 @@ const passModule = PassportModule.register({ defaultStrategy: 'jwt' });
     passModule,
     JwtModule.register({
       secret: 'wipi',
-      signOptions: { expiresIn: '600s' },
+      signOptions: { expiresIn: '4h' },
     }),
   ],
   providers: [AuthService, JwtStrategy],
