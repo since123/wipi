@@ -106,10 +106,10 @@ export class CommentService {
     const data = await this.commentRepository.find({
       order: { createAt: 'DESC' },
     });
-    for (let d of data) {
-      const article = await this.articleService.findById(d.articleId);
-      Object.assign(d, { article });
-    }
+    // for (let d of data) {
+    //   const article = await this.articleService.findById(d.articleId);
+    //   Object.assign(d, { article });
+    // }
     return data;
   }
 
