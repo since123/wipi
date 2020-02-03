@@ -21,7 +21,7 @@ const Article: NextPage<IProps> = ({ article }) => {
   const [tocs, setTocs] = useState([]);
   const [password, setPassword] = useState(null);
   const [shouldCheckPassWord, setShouldCheckPassword] = useState(
-    !!article.password
+    article.needPassword
   );
 
   // 检查文章密码
