@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Row, Col } from "antd";
+import { Row, Col, message } from "antd";
 import cls from "classnames";
 import { Layout } from "@/layout/Layout";
 import { ArticleProvider } from "@providers/article";
@@ -16,6 +16,26 @@ interface IHomeProps {
   tags: ITag[];
 }
 
+let hideLoading: any = () => {};
+
+function isEqual(_arr1, _arr2) {
+  if (
+    !Array.isArray(_arr1) ||
+    !Array.isArray(_arr2) ||
+    _arr1.length !== _arr2.length
+  )
+    return false;
+
+  var arr1 = _arr1.concat().sort();
+  var arr2 = _arr2.concat().sort();
+
+  for (var i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+
+  return true;
+}
+
 const Home: NextPage<IHomeProps> = ({
   articles: defaultArticles = [],
   currentTag: defaultCurrentTag = null,
@@ -23,17 +43,58 @@ const Home: NextPage<IHomeProps> = ({
 }) => {
   const router = useRouter();
   const { tag: routerTag } = router.query;
+  const [loading, setLoaing] = useState<boolean>(false);
   const [articles, setArticles] = useState<IArticle[]>(defaultArticles);
+
+  const handleClickTag = path => {
+    if (loading) {
+      return;
+    }
+
+    router.push(path);
+  };
+
+  useEffect(() => {
+    if (loading) {
+      hideLoading = message.loading("文章加载中", 0);
+    } else {
+      hideLoading && hideLoading();
+    }
+  }, [loading]);
 
   // 监听路由变化
   // 标签发生变化后重新拉取文章列表
-  useMemo(() => {
+  useEffect(() => {
     if (routerTag) {
-      TagProvider.getTagWithArticles(routerTag, true).then(res => {
-        setArticles(res.articles || []);
-      });
+      setLoaing(true);
+
+      TagProvider.getTagWithArticles(routerTag, true)
+        .then(res => {
+          setArticles(res.articles || []);
+          setLoaing(false);
+        })
+        .catch(err => setLoaing(false));
     } else {
-      setArticles(defaultArticles);
+      let isSame =
+        articles &&
+        defaultArticles &&
+        isEqual(
+          articles.map(a => a.id),
+          defaultArticles.map(a => a.id)
+        );
+
+      if (isSame) {
+        return;
+      }
+
+      setLoaing(true);
+
+      ArticleProvider.getArticles(true)
+        .then(res => {
+          setArticles(res);
+          setLoaing(false);
+        })
+        .catch(err => setLoaing(false));
     }
   }, [routerTag]);
 
@@ -51,15 +112,19 @@ const Home: NextPage<IHomeProps> = ({
                   routerTag == null ? style.active : false
                 )}
               >
-                <Link href="/" shallow>
-                  <a>
-                    <img
-                      src="http://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-01/CHRKH77JJNS9OEL8DKPXPF/all.png"
-                      alt=""
-                    />
-                    <span>全部</span>
-                  </a>
-                </Link>
+                <a
+                  href="/"
+                  onClick={e => {
+                    e.preventDefault();
+                    handleClickTag("/");
+                  }}
+                >
+                  <img
+                    src="http://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-01/CHRKH77JJNS9OEL8DKPXPF/all.png"
+                    alt=""
+                  />
+                  <span>全部</span>
+                </a>
               </li>
               {tags.map(tag => {
                 return (
@@ -70,12 +135,18 @@ const Home: NextPage<IHomeProps> = ({
                       routerTag === tag.label ? style.active : false
                     )}
                   >
-                    <Link href={"/?tag=" + tag.label} shallow>
-                      <a>
-                        <img src={tag.icon} alt="icon" />
-                        <span>{tag.label}</span>
-                      </a>
-                    </Link>
+                    {/* <Link href={"/?tag=" + tag.label} shallow> */}
+                    <a
+                      href={"/?tag=" + tag.label}
+                      onClick={e => {
+                        e.preventDefault();
+                        handleClickTag("/?tag=" + tag.label);
+                      }}
+                    >
+                      <img src={tag.icon} alt="icon" />
+                      <span>{tag.label}</span>
+                    </a>
+                    {/* </Link> */}
                   </li>
                 );
               })}
@@ -89,7 +160,7 @@ const Home: NextPage<IHomeProps> = ({
               <h5>{routerTag}</h5>
             </div>
           )}
-          <div>
+          <div className={style.articleContainer}>
             {articles.map(article => (
               <ArticleListItem key={article.id} article={article} />
             ))}

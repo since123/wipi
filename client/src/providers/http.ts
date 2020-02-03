@@ -3,7 +3,10 @@ import { message } from "antd";
 import { showLogin } from "@/layout/AdminLayout";
 
 export const httpProvider = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:4000"
+      : "http://106.12.7.11:4000",
   timeout: 5000
 });
 

@@ -2,6 +2,7 @@
   .markdown {
     color: #5f5f6f !important;
     background-color: #fff !important;
+    overflow-x: hidden;
 
     h1,
     h2,
@@ -60,6 +61,10 @@
       font-size: 17.5px;
       border-left: 4px solid #f16334;
       font-style: italic;
+
+      p {
+        margin: 0;
+      }
     }
 
     pre {

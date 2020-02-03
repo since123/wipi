@@ -27,7 +27,7 @@ export const Header = ({ setting }) => {
     <header>
       <div className={style.wrapper}>
         <Row>
-          <Col md={2}>
+          <Col md={3}>
             <div className={style.logo}>
               {/^http/.test(setting.systemLogo) ? (
                 <Link href="/">
@@ -62,7 +62,7 @@ export const Header = ({ setting }) => {
               </ul>
             </nav>
           </Col>
-          <Col md={6} xs={0}>
+          <Col md={5} xs={0}>
             <div className={style.login}>
               <Button type="link" onClick={() => setVisible(true)}>
                 立即登录

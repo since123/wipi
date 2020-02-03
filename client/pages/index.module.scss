@@ -56,6 +56,10 @@
   }
 }
 
+.articleContainer {
+  padding-bottom: 2rem;
+}
+
 @media (max-width: 768px) {
   .tagContainer {
     display: flex;
@@ -67,6 +71,10 @@
   .tagItem {
     width: auto;
     margin-left: 0;
+
+    > a {
+      margin-left: 0;
+    }
 
     > span {
       white-space: nowrap;

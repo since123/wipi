@@ -106,7 +106,13 @@ const Article: NextPage<IProps> = ({ article }) => {
         <Row gutter={16}>
           <Col sm={16}>
             <div className={style.content}>
-              <img className={style.cover} src={article.cover} alt="文章封面" />
+              {article.cover && (
+                <img
+                  className={style.cover}
+                  src={article.cover}
+                  alt="文章封面"
+                />
+              )}
               <h1 className={style.title}>{article.title}</h1>
               <p className={style.desc}>
                 <span>

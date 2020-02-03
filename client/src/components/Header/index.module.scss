@@ -34,7 +34,11 @@ header {
   .logo {
     height: $height;
     line-height: $height;
-    text-align: center;
+    text-align: left;
+
+    img {
+      width: 32px;
+    }
   }
 
   nav {
@@ -77,6 +81,10 @@ header {
   }
 
   @media (max-width: 768px) {
+    .logo {
+      text-align: center;
+    }
+
     .login {
       display: none;
     }
