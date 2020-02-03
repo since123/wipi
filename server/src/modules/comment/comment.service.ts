@@ -67,10 +67,10 @@ export class CommentService {
     await this.commentRepository.save(newComment);
 
     // 发送通知邮件
-    const {
-      smtpFromUser: from,
-      systemUrl,
-    } = await this.settingService.findAll();
+    const { smtpFromUser: from, systemUrl } = await this.settingService.findAll(
+      null,
+      true
+    );
     const user = await this.userService.findAll();
     let to;
     if (user && user[0] && user[0].mail) {
@@ -90,7 +90,10 @@ export class CommentService {
         </div>
       `,
     };
-    await this.smtpService.create(emailMessage);
+
+    this.smtpService.create(emailMessage).catch(() => {
+      console.log('收到新评论，但发送邮件通知失败');
+    });
 
     return newComment;
   }

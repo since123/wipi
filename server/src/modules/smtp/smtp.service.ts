@@ -24,7 +24,7 @@ export class SMTPService {
       smtpUser,
       smtpPass,
       smtpFromUser,
-    } = await this.settingService.findAll();
+    } = await this.settingService.findAll(null, true);
     Object.assign(data, {
       from: smtpFromUser,
     });

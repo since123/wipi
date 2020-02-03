@@ -1,6 +1,11 @@
 const nodemailer = require('nodemailer');
 
 export const sendEmail = (message, { host, port, user, pass }) => {
+  if (!host || !port || !user || !pass) {
+    console.log('邮箱配置不正确，无法发送邮件');
+    return;
+  }
+
   let transport = nodemailer.createTransport({
     host,
     port,
