@@ -62,11 +62,10 @@ const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
       title: "评论文章",
       dataIndex: "articleId",
       key: "articleId",
-      render: (_, record) => {
-        const article = record.article;
-        return article ? (
-          <Link href={`/article/` + article.id}>
-            <a>{article.title}</a>
+      render: articleId => {
+        return articleId ? (
+          <Link href={`/article/` + articleId}>
+            <a>前往查看</a>
           </Link>
         ) : (
           "文章不存在，可能已经被删除"
