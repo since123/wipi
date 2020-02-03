@@ -13,7 +13,7 @@ const resolvePath = (dir, filename) =>
   join(__dirname, LOG_DIR_NAME, dir, filename);
 
 const commonCinfig = {
-  type: 'DateFile',
+  type: 'dateFile',
   pattern: '-yyyy-MM-dd.log',
   alwaysIncludePattern: true,
 };
