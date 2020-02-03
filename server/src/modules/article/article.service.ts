@@ -33,6 +33,7 @@ export class ArticleService {
       html,
       toc: JSON.stringify(toc),
       tags,
+      needPassword: !!article.password,
     });
     await this.articleRepository.save(newArticle);
     return newArticle;
@@ -50,6 +51,7 @@ export class ArticleService {
       .andWhere('article.password=:password')
       .setParameter('id', id)
       .setParameter('password', password)
+
       .getOne();
     return { pass: !!data };
   }
@@ -127,6 +129,7 @@ export class ArticleService {
       ...article,
       html,
       toc: JSON.stringify(toc),
+      needPassword: !!article.password,
     };
 
     if (tags) {

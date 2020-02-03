@@ -48,8 +48,11 @@ export class Article {
   @Column({ type: 'int', default: 0 })
   views: number; // 阅读量
 
-  @Column({ type: 'text', default: null })
+  @Column({ type: 'text', default: null, select: false })
   password: string;
+
+  @Column({ type: 'boolean', default: false })
+  needPassword: boolean;
 
   @Column({ type: 'boolean', default: true })
   isCommentable: boolean;
@@ -57,14 +60,14 @@ export class Article {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   publishAt: Date; // 发布日期
 
-  @CreateDateColumn({
+  @Column({
     type: 'datetime',
     comment: '创建时间',
     name: 'create_at',
   })
   createAt: Date;
 
-  @UpdateDateColumn({
+  @Column({
     type: 'datetime',
     comment: '更新时间',
     name: 'update_at',
