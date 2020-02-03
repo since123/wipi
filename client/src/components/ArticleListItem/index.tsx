@@ -14,7 +14,7 @@ export const ArticleListItem: React.FC<IArticleListItemProps> = ({
   return (
     <article className={style.wrapper}>
       <div className={style.meta}>
-        {dayjs.default(article.createAt).format("YYYY-MM-DD HH:mm:ss")}
+        {dayjs.default(article.publishAt).format("YYYY-MM-DD HH:mm:ss")}
       </div>
       <p className={style.title}>
         <Link href={`/article/` + article.id}>
