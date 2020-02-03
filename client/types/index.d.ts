@@ -26,6 +26,7 @@ interface IArticle {
   views: number;
   tags?: [any];
   password?: string; // 访问密码
+  needPassword: boolean;
   isCommentable?: boolean; // 是否可评论
   createAt: string;
   publishAt: string;
