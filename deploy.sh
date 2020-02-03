@@ -1,24 +1,23 @@
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
+#  https://github.com/nodesource/distributions
 node -v
 npm -v
 
 npm config set registry http://registry.npmjs.org 
 
 npm install pm2 -g
+npm i -g @nestjs/cli
 
 cd client
-npm install --production
+npm install
 npm run build
 pm2 start npm --name client -- start
 
 cd ../
 
 cd server
-npm install --production
+npm install
 npm run build
-pm2 start npm --name server -- start:prod
+pm2 start npm --name server -- run start:prod
 
 pm2 startup
 pm2 save
