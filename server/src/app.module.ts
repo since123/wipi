@@ -28,8 +28,8 @@ import { SMTP } from './modules/smtp/smtp.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
+      host: '0.0.0.0',
+      port: 33271,
       username: 'root',
       password: 'root',
       database: 'wipi',

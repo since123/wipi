@@ -60,14 +60,14 @@ export class Article {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   publishAt: Date; // 发布日期
 
-  @Column({
+  @CreateDateColumn({
     type: 'datetime',
     comment: '创建时间',
     name: 'create_at',
   })
   createAt: Date;
 
-  @Column({
+  @UpdateDateColumn({
     type: 'datetime',
     comment: '更新时间',
     name: 'update_at',

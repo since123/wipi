@@ -31,6 +31,7 @@
     "bcrypt": "^3.0.7",
     "class-transformer": "^0.2.3",
     "dayjs": "^1.8.19",
+    "express-rate-limit": "^5.0.0",
     "fs-extra": "^8.1.0",
     "highlight.js": "^9.18.0",
     "log4js": "^6.1.0",
