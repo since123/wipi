@@ -92,7 +92,9 @@ const Home: NextPage<IHomeProps> = ({
                   <List.Item.Meta
                     title={
                       <Link href={`/admin/comment/`}>
-                        <a>{comment.contact}</a>
+                        <a>
+                          {comment.name} - {comment.email}
+                        </a>
                       </Link>
                     }
                     description={comment.content}
