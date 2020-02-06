@@ -25,26 +25,41 @@ const menus = [
         path: "/admin/article"
       },
       {
-        label: "写文章",
+        label: "新建文章",
         path: "/admin/article/editor"
       },
       {
-        label: "标签",
+        label: "标签管理",
         path: "/admin/article/tags"
       }
     ]
   },
 
   {
-    icon: "folder-open",
-    label: "文件",
-    path: "/admin/file"
+    icon: "form",
+    label: "页面",
+    children: [
+      {
+        label: "所有页面",
+        path: "/admin/page"
+      },
+      {
+        label: "新建页面",
+        path: "/admin/page/editor"
+      }
+    ]
   },
 
   {
     icon: "message",
     label: "评论",
     path: "/admin/comment"
+  },
+
+  {
+    icon: "folder-open",
+    label: "文件",
+    path: "/admin/file"
   },
 
   {

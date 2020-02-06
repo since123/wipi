@@ -39,11 +39,24 @@ interface ITag {
   articles?: IArticle[];
 }
 
+interface IPage {
+  id: string;
+  name: string;
+  path: string;
+  content: string;
+  html: string;
+  toc: string;
+  status: string;
+  createAt: string;
+  publishAt: string;
+}
+
 interface IComment {
   id: string;
   articleId: string;
   parentCommentId: string;
-  contact: string;
+  name: string;
+  email: string;
   content: string;
   html: string;
   pass: boolean;
