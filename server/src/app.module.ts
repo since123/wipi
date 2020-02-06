@@ -31,7 +31,7 @@ import { Page } from './modules/page/page.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost', //0.0.0.0
+      host: '0.0.0.0',
       port: 32771,
       username: 'root',
       password: 'root',
