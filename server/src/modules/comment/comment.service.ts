@@ -53,10 +53,12 @@ export class CommentService {
    * 创建评论
    * @param comment
    */
-  async create(comment: Partial<Comment>): Promise<Comment> {
-    const { articleId, contact, content } = comment;
+  async create(
+    comment: Partial<Comment> & { reply?: string }
+  ): Promise<Comment> {
+    const { articleId, name, email, content, reply } = comment;
 
-    if (!articleId || !contact || !content) {
+    if (!articleId || !name || !email || !content) {
       throw new HttpException('缺失参数', HttpStatus.BAD_REQUEST);
     }
 
@@ -71,24 +73,49 @@ export class CommentService {
       null,
       true
     );
-    const user = await this.userService.findAll();
-    let to;
-    if (user && user[0] && user[0].mail) {
-      to = user[0].mail;
+
+    let to = null;
+
+    if (reply) {
+      // 回复邮件
+      to = reply;
     } else {
-      to = from;
+      const user = await this.userService.findAll();
+      if (user && user[0] && user[0].mail) {
+        to = user[0].mail;
+      } else {
+        to = from;
+      }
     }
+
     const emailMessage = {
       from,
       to,
-      subject: '新评论通知',
-      html: `
+      ...(reply
+        ? {
+            subject: '评论回复通知',
+            html: `
         <div>
-          <p>评论人：${comment.contact}</p>
+          <p>您的评论已被回复。</p>
+          <p>前往以下链接查看：</p>
+          <div>
+          ${systemUrl + 'article/' + articleId}
+          <br />
+          ${systemUrl + 'page/' + articleId}
+          </div>
+        </div>
+      `,
+          }
+        : {
+            subject: '新评论通知',
+            html: `
+        <div>
+          <p>评论人：${comment.name}</p>
           <p>评论内容：${comment.content}</p>
           <a href="${systemUrl}/admin/comment" target="_blank">前往审核</a>
         </div>
       `,
+          }),
     };
 
     this.smtpService.create(emailMessage).catch(() => {

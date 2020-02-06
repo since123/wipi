@@ -18,7 +18,10 @@ export class Comment {
   parentCommentId: string; // 父级评论 id
 
   @Column()
-  contact: string; // 联系方式
+  name: string; // 联系方式
+
+  @Column()
+  email: string; // 联系方式
 
   @Column({ type: 'text', default: null }) // 评论内容
   content: string;
