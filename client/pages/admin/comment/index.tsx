@@ -1,18 +1,25 @@
 import React, { useState, useCallback } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
-import { Table, Divider, Badge, Popconfirm, message } from "antd";
+import { Table, Divider, Badge, Popconfirm, Modal, Input, message } from "antd";
 import * as dayjs from "dayjs";
 import { AdminLayout } from "@/layout/AdminLayout";
 import { CommentProvider } from "@/providers/comment";
+import { SettingProvider } from "@/providers/setting";
 import style from "./index.module.scss";
 
 interface IProps {
   comments: IComment[];
+  setting: any;
 }
 
-const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
+const Comment: NextPage<IProps> = ({
+  comments: defaultComments = [],
+  setting
+}) => {
   const [comments, setComments] = useState<IComment[]>(defaultComments);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [replyContent, setReplyContent] = useState(null);
 
   // 获取评论
   const getComments = useCallback(() => {
@@ -29,6 +36,34 @@ const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
     });
   }, []);
 
+  // 回复评论
+  const replayComment = useCallback(comment => {
+    setSelectedComment(comment);
+  }, []);
+
+  const reply = useCallback(() => {
+    if (!replyContent) {
+      return;
+    }
+
+    const userInfo = JSON.parse(window.sessionStorage.getItem("userInfo"));
+
+    const reply = selectedComment.email;
+    const data = {
+      reply,
+      parentCommentId: selectedComment.id,
+      articleId: selectedComment.articleId,
+      name: userInfo.name || "作者",
+      email: userInfo.mail || (setting && setting.smtpFromUser),
+      content: replyContent
+    };
+    CommentProvider.addComment(data).then(() => {
+      setSelectedComment(null);
+      message.success("回复成功");
+      getComments();
+    });
+  }, [selectedComment, replyContent]);
+
   // 删除评论
   const deleteComment = useCallback(id => {
     CommentProvider.deleteComment(id).then(() => {
@@ -39,9 +74,14 @@ const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
 
   const columns = [
     {
+      title: "称呼",
+      dataIndex: "name",
+      key: "name"
+    },
+    {
       title: "联系方式",
-      dataIndex: "contact",
-      key: "contact"
+      dataIndex: "email",
+      key: "email"
     },
     {
       title: "内容",
@@ -55,7 +95,7 @@ const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
       key: "parentCommentId",
       render: id => {
         const target = comments.find(c => c.id === id);
-        return (target && target.contact) || "无";
+        return (target && target.name) || "无";
       }
     },
     {
@@ -100,6 +140,8 @@ const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
         <Divider type="vertical" />
         <a onClick={() => updateComment(record, false)}>拒绝</a>
         <Divider type="vertical" />
+        <a onClick={() => replayComment(record)}>回复</a>
+        <Divider type="vertical" />
         <Popconfirm
           title="确认删除这个评论？"
           onConfirm={() => deleteComment(record.id)}
@@ -120,14 +162,33 @@ const Comment: NextPage<IProps> = ({ comments: defaultComments = [] }) => {
           dataSource={comments}
           rowKey={"id"}
         />
+        <Modal
+          title={"回复评论"}
+          visible={selectedComment}
+          cancelText={"取消"}
+          okText={"回复"}
+          onOk={reply}
+          onCancel={() => setSelectedComment(null)}
+        >
+          <Input.TextArea
+            value={replyContent}
+            onChange={e => {
+              let val = e.target.value;
+              setReplyContent(val);
+            }}
+          ></Input.TextArea>
+        </Modal>
       </div>
     </AdminLayout>
   );
 };
 
 Comment.getInitialProps = async () => {
-  const comments = await CommentProvider.getComments();
-  return { comments };
+  const [comments, setting] = await Promise.all([
+    CommentProvider.getComments(),
+    SettingProvider.getSetting()
+  ]);
+  return { comments, setting };
 };
 
 export default Comment;
