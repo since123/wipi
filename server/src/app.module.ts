@@ -23,17 +23,20 @@ import { Setting } from './modules/setting/setting.entity';
 // 邮件模块
 import { SMTPModule } from './modules/smtp/smtp.module';
 import { SMTP } from './modules/smtp/smtp.entity';
+// 页面模块
+import { PageModule } from './modules/page/page.module';
+import { Page } from './modules/page/page.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '0.0.0.0',
-      port: 33271,
+      host: 'localhost', //0.0.0.0
+      port: 32771,
       username: 'root',
       password: 'root',
       database: 'wipi',
-      entities: [User, File, Tag, Article, Comment, Setting, SMTP],
+      entities: [User, File, Tag, Article, Comment, Setting, SMTP, Page],
       synchronize: true,
     }),
     UserModule,
@@ -44,6 +47,7 @@ import { SMTP } from './modules/smtp/smtp.entity';
     SettingModule,
     SMTPModule,
     AuthModule,
+    PageModule,
   ],
   controllers: [],
   providers: [],
