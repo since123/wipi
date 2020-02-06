@@ -99,9 +99,9 @@ export class CommentService {
           <p>您的评论已被回复。</p>
           <p>前往以下链接查看：</p>
           <div>
-          ${systemUrl + 'article/' + articleId}
+          ${systemUrl + '/article/' + articleId}
           <br />
-          ${systemUrl + 'page/' + articleId}
+          ${systemUrl + '/page/' + articleId}
           </div>
         </div>
       `,

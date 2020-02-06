@@ -32,7 +32,7 @@ import { Page } from './modules/page/page.entity';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '0.0.0.0',
-      port: 32771,
+      port: 33271,
       username: 'root',
       password: 'root',
       database: 'wipi',
