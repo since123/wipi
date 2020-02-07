@@ -8,7 +8,7 @@ export const Footer = ({ setting }) => {
   return (
     <footer>
       <div className={style.info}>
-        <Row gutter={16}>
+        <Row>
           <Col md={12} sm={24}>
             <div style={{ padding: "16px 32px" }}>
               <RecentArticles />

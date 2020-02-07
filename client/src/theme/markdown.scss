@@ -2,7 +2,7 @@
   .markdown {
     color: #5f5f6f !important;
     background-color: #fff !important;
-    overflow-x: hidden;
+    overflow: hidden !important;
 
     h1,
     h2,
@@ -12,7 +12,6 @@
     h6 {
       font-weight: 700;
       color: #303030;
-      margin-top: 48px;
 
       > * {
         color: inherit !important;
@@ -67,7 +66,28 @@
       }
     }
 
+    ul,
+    ol {
+      line-height: 1.6em;
+      margin: 1.2em 0 -1.2em;
+      padding-bottom: 1.2em;
+      padding-left: 1.5em;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    ul {
+      list-style: outside;
+    }
+
+    ol {
+      list-style: symbols();
+    }
+
     pre {
+      position: relative;
+
       display: block;
       padding: 9.5px;
       margin: 0 0 10px;
@@ -86,10 +106,9 @@
       font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 
       code {
-        position: relative;
         display: block;
         overflow-x: auto;
-        padding: 0.5em;
+        padding: 1.4em;
         color: #abb2bf;
         background: #282c34;
       }

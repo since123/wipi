@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { NextPage } from "next";
 import Router from "next/router";
 import Link from "next/link";
+import cls from "classnames";
 import { Row, Col, Anchor, Modal, Form, Input, message } from "antd";
 import * as dayjs from "dayjs";
 import hljs from "highlight.js";
@@ -110,7 +111,7 @@ const Article: NextPage<IProps> = ({ article }) => {
           <Helmet>
             <title>{article.title + " - " + setting.systemTitle}</title>
           </Helmet>
-          <Col sm={16}>
+          <Col md={16} sm={24} xs={24}>
             <div className={style.content}>
               {article.cover && (
                 <img
@@ -132,7 +133,7 @@ const Article: NextPage<IProps> = ({ article }) => {
               </p>
               <div
                 ref={ref}
-                className={"markdown"}
+                className={cls("markdown", style.markdown)}
                 dangerouslySetInnerHTML={{ __html: article.html }}
               ></div>
 
@@ -165,7 +166,7 @@ const Article: NextPage<IProps> = ({ article }) => {
               {/* E 评论 */}
             </div>
           </Col>
-          <Col sm={8}>
+          <Col md={8} sm={24} xs={24}>
             <Row>
               <Col>
                 <div className={style.widget}>
