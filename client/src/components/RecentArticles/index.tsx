@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { ArticleProvider } from "@providers/article";
 import style from "./index.module.scss";
 
+let cache = null;
+
 export const RecentArticles = () => {
-  const [articles, setArticles] = useState<IArticle[]>([]);
+  const articles = useRef(cache || []);
+  const [, setUpdate] = useState(false);
 
   useEffect(() => {
+    if (cache) {
+      return;
+    }
+
     ArticleProvider.getArticles(true).then(res => {
-      setArticles(res);
+      articles.current = res;
+      cache = res;
+      setUpdate(true);
     });
   }, []);
 
@@ -16,7 +25,7 @@ export const RecentArticles = () => {
     <div className={style.wrapper}>
       <div className={style.title}>最新文章</div>
       <ul>
-        {articles.slice(0, 5).map(article => (
+        {articles.current.slice(0, 5).map(article => (
           <li key={article.id}>
             <Link href={`/article/` + article.id}>
               <a>{article.title}</a>
