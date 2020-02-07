@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { Helmet } from "react-helmet";
 import { NextPage } from "next";
 import Router from "next/router";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { Row, Col, Anchor, Modal, Form, Input, message } from "antd";
 import * as dayjs from "dayjs";
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
+import { useSetting } from "@/hooks/useSetting";
 import { Layout } from "@/layout/Layout";
 import { MyComment } from "@/components/Comment";
 import { RecentArticles } from "@components/RecentArticles";
@@ -17,6 +19,7 @@ interface IProps {
 }
 
 const Article: NextPage<IProps> = ({ article }) => {
+  const setting = useSetting();
   const ref = useRef(null);
   const [tocs, setTocs] = useState([]);
   const [password, setPassword] = useState(null);
@@ -104,6 +107,9 @@ const Article: NextPage<IProps> = ({ article }) => {
         </>
       ) : (
         <Row gutter={16}>
+          <Helmet>
+            <title>{article.title + " - " + setting.systemTitle}</title>
+          </Helmet>
           <Col sm={16}>
             <div className={style.content}>
               {article.cover && (
