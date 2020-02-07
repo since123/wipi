@@ -3,36 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import cls from "classnames";
 import { Row, Col, Button } from "antd";
-import { PageProvider } from "@providers/page";
+import { useMenus } from "@/hooks/useMenus";
 import { Login } from "../Login";
 import style from "./index.module.scss";
 
-const defaultMenus = [
-  {
-    label: "首页",
-    path: "/"
-  },
-
-  {
-    label: "归档",
-    path: "/archives"
-  }
-];
-
 export const Header = ({ setting }) => {
   const router = useRouter();
-  const pathname = router.pathname;
+  const pathname = router.asPath;
   const [visible, setVisible] = useState(false);
-  const [menus, setMenus] = useState<any>(defaultMenus);
-
-  useEffect(() => {
-    PageProvider.getAllPublisedPages().then(res => {
-      setMenus([
-        ...defaultMenus,
-        ...res.map(r => ({ path: `/page/` + r.path, label: r.name }))
-      ]);
-    });
-  }, []);
+  const menus = useMenus();
 
   return (
     <header>

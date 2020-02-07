@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NextPage } from "next";
-import Router from "next/router";
-import Link from "next/link";
-import { Row, Col, Anchor, Modal, Form, Input, message } from "antd";
-import * as dayjs from "dayjs";
+import { Row, Col, Anchor } from "antd";
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
 import { Layout } from "@/layout/Layout";
@@ -19,10 +16,6 @@ interface IProps {
 const Page: NextPage<IProps> = ({ page }) => {
   const ref = useRef(null);
   const [tocs, setTocs] = useState([]);
-
-  const back = useCallback(() => {
-    Router.push("/");
-  }, []);
 
   useEffect(() => {
     if (!page) {
