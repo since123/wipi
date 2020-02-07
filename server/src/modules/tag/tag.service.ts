@@ -31,7 +31,7 @@ export class TagService {
    * 获取所有标签
    */
   async findAll(): Promise<Tag[]> {
-    return this.tagRepository.find({ order: { createAt: 'DESC' } });
+    return this.tagRepository.find({ order: { createAt: 'ASC' } });
   }
 
   /**
