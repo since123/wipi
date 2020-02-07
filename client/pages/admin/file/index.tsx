@@ -116,6 +116,7 @@ const File: NextPage<IFileProps> = ({ files: defaultFiles = [] }) => {
             xxl: 6
           }}
           dataSource={files}
+          pagination={{ pageSize: 12 }}
           renderItem={file => (
             <List.Item>
               <Card
