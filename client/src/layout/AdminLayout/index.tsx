@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Row, Col, Menu, Breadcrumb, Icon, message } from "antd";
 import Link from "next/link";
+import { Helmet } from "react-helmet";
+import { useSetting } from "@/hooks/useSetting";
 import { useRouter } from "next/router";
 import { Login } from "@components/Login";
 import { UserInfo } from "@components/admin/UserInfo";
@@ -66,6 +68,12 @@ const menus = [
     icon: "setting",
     label: "系统设置",
     path: "/admin/setting"
+  },
+
+  {
+    label: "个人中心",
+    icon: "user",
+    path: "/admin/ownspace"
   }
 ];
 
@@ -105,6 +113,7 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
   background = "#fff",
   padding = 24
 }) => {
+  const setting = useSetting();
   const router = useRouter();
   const [loginVisible, setLoginVisible] = useState(false);
   const { pathname } = router;
@@ -116,6 +125,16 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
 
   return (
     <Layout className={style.wrapper}>
+      <Helmet>
+        <title>{"管理后台 - " + setting.systemTitle}</title>
+        <meta name="keyword" content={setting.seoKeyword} />
+        <meta name="description" content={setting.seoDesc} />
+        <link rel="shortcut icon" href={setting.systemFavicon} />
+        <link
+          href="//fonts.googleapis.com/css?family=Nunito:400,400i,700,700i&amp;display=swap"
+          rel="stylesheet"
+        ></link>
+      </Helmet>
       <Header>
         <Row>
           <Col span={20}>

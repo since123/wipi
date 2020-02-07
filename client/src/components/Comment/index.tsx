@@ -12,6 +12,17 @@ interface ICommemtItemProps {
   getComments: () => void;
 }
 
+const colors = [
+  "#eb2f96",
+  "#fadb14",
+  "#52c41a",
+  "#722ed1",
+  "#eb2f96",
+  "#faad14",
+  "#a0d911",
+  "pink"
+];
+
 const CommentItem: React.FC<ICommemtItemProps> = ({
   children,
   articleId,
@@ -92,7 +103,17 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
           {dayjs.default(comment.createAt).format("YYYY-MM-DD HH:mm:ss")}
         </a>
       }
-      avatar={<Avatar icon="user" />}
+      avatar={
+        <Avatar
+          style={{
+            backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+            verticalAlign: "middle"
+          }}
+          size="small"
+        >
+          {comment.name.charAt(0).toUpperCase()}
+        </Avatar>
+      }
       content={
         <div>
           <div dangerouslySetInnerHTML={{ __html: comment.html }}></div>

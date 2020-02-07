@@ -7,7 +7,7 @@ export const httpProvider = axios.create({
     process.env.NODE_ENV === "development"
       ? "http://localhost:4000"
       : "http://106.12.7.11:4000",
-  timeout: 5000
+  timeout: 10000
 });
 
 httpProvider.interceptors.request.use(

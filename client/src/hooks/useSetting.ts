@@ -9,7 +9,6 @@ export const useSetting = () => {
 
   useEffect(() => {
     if (!cache) {
-      console.log(111);
       SettingProvider.getSetting().then(res => {
         value.current = res;
         cache = res;

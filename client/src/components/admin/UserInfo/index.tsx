@@ -27,12 +27,6 @@ export const UserInfo = () => {
             <a>个人中心</a>
           </Link>
         </Menu.Item>
-
-        <Menu.Item>
-          <Link href="/admin">
-            <a>退出</a>
-          </Link>
-        </Menu.Item>
       </Menu>
     );
   };
