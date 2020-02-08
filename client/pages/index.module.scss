@@ -87,6 +87,20 @@
   }
 }
 
+@media (min-width: 1600px) {
+  .listContainer {
+    :global {
+      .ant-row {
+        > div {
+          &:nth-of-type(n + 5) {
+            margin-top: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (min-width: 992px) {
   .listContainer {
     :global {
