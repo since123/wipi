@@ -238,7 +238,12 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          <p>Copyright &copy; 2019-{new Date().getFullYear()} 行文过活</p>
+          <div
+            className={style.copyright}
+            dangerouslySetInnerHTML={{
+              __html: setting.systemFooterInfo
+            }}
+          ></div>
         </Footer>
       </Layout>
     </Layout>
