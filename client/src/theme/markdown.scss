@@ -37,7 +37,6 @@
     }
 
     p {
-      margin: 0 0 30px;
       line-height: 1.75rem;
 
       code {
@@ -103,7 +102,6 @@
     ul,
     ol {
       line-height: 1.6em;
-      margin: 1.2em 0 -1.2em;
       padding-bottom: 1.2em;
       padding-left: 1.5em;
 
@@ -159,6 +157,8 @@
       code.language-nginx:before,
       code.language-javascript:before,
       code.language-typescript:before,
+      code.language-js:before,
+      code.language-ts:before,
       code.language-shell:before,
       code.language-stylus:before,
       code.language-python:before,
@@ -223,11 +223,13 @@
         content: "HTML";
       }
 
-      code.language-javascript:before {
+      code.language-javascript:before,
+      code.language-js:before {
         content: "JS";
       }
 
-      code.language-typescript:before {
+      code.language-typescript:before,
+      code.language-ts:before {
         content: "TS";
       }
 
