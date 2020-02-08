@@ -138,19 +138,7 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
         collapsed={collapsed}
         collapsedWidth="0"
       >
-        <div className={style.logo}>
-          {/^http/.test(setting.systemLogo) ? (
-            <Link href="/">
-              <a>
-                <img src={setting.systemLogo} alt="" />
-              </a>
-            </Link>
-          ) : (
-            <Link href="/">
-              <a dangerouslySetInnerHTML={{ __html: setting.systemLogo }}></a>
-            </Link>
-          )}
-        </div>
+        <div className={style.logo}>管理后台</div>
         <Menu
           theme="dark"
           mode="vertical"

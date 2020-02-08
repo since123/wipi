@@ -92,6 +92,7 @@ export const SystemSetting = ({ setting }) => {
       <Form.Item label="页脚信息">
         <Input.TextArea
           placeholder="请输入页脚信息"
+          rows={6}
           value={systemFooterInfo}
           onChange={e => {
             setSystemFooterInfo(e.target.value);
