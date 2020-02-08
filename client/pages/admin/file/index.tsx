@@ -226,6 +226,7 @@ const File: NextPage<IFileProps> = ({ files: defaultFiles = [] }) => {
               关闭
             </Button>
             <Popconfirm
+              placement="topRight"
               title="确认删除这个文件？"
               onConfirm={() => deleteFile(currentFile && currentFile.id)}
               okText="确认"
