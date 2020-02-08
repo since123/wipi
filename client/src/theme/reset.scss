@@ -27,11 +27,11 @@ body {
 
 :global {
   .ant-anchor-link-active > .ant-anchor-link-title {
-    color: $primaryColor !important;
+    color: $feMainColor !important;
   }
 
   .ant-anchor-ink-ball {
-    border-color: $primaryColor !important;
+    border-color: $feMainColor !important;
   }
 
   .ant-input {
@@ -40,13 +40,13 @@ body {
 
   .ant-input:hover,
   .ant-input:focus {
-    border-color: $primaryColor !important;
+    border-color: $feMainColor !important;
     box-shadow: none !important;
   }
 
   .ant-btn-primary {
-    background-color: $primaryColor !important;
-    border-color: $primaryColor !important;
+    background-color: $feMainColor !important;
+    border-color: $feMainColor !important;
     color: #fff;
   }
 
@@ -61,12 +61,12 @@ body {
   .ant-menu-item-selected {
     background-color: transparent !important;
     > a {
-      color: $primaryColor !important;
+      color: $feMainColor !important;
     }
   }
 
   .ant-timeline-item-head-blue {
-    color: $primaryColor !important;
-    border-color: $primaryColor !important;
+    color: $feMainColor !important;
+    border-color: $feMainColor !important;
   }
 }

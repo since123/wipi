@@ -104,15 +104,16 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
         </a>
       }
       avatar={
-        <Avatar
-          style={{
-            backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-            verticalAlign: "middle"
-          }}
-          size="small"
-        >
-          {comment.name.charAt(0).toUpperCase()}
-        </Avatar>
+        null
+        // <Avatar
+        //   style={{
+        //     backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+        //     verticalAlign: "middle"
+        //   }}
+        //   size="small"
+        // >
+        //   {comment.name.charAt(0).toUpperCase()}
+        // </Avatar>
       }
       content={
         <div>
@@ -224,7 +225,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
   return (
     <div>
       <Comment
-        avatar={<Avatar icon="user" />}
+        avatar={null}
         content={
           <div>
             <Row gutter={16}>

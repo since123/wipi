@@ -25,28 +25,28 @@ const Home: NextPage<IHomeProps> = ({
   return (
     <AdminLayout background="transparent" padding={0}>
       <Row gutter={16}>
-        <Col span={6}>
+        <Col xs={12} sm={6}>
           <Statistic
             className={style.listItem}
             title="文章数量"
             value={articles.length}
           />
         </Col>
-        <Col span={6}>
+        <Col xs={12} sm={6}>
           <Statistic
             className={style.listItem}
             title="标签数量"
             value={tags.length}
           />
         </Col>
-        <Col span={6}>
+        <Col xs={12} sm={6}>
           <Statistic
             className={style.listItem}
             title="评论数量"
             value={comments.length}
           />
         </Col>
-        <Col span={6}>
+        <Col xs={12} sm={6}>
           <Statistic
             className={style.listItem}
             title="文件数量"
@@ -55,7 +55,7 @@ const Home: NextPage<IHomeProps> = ({
         </Col>
       </Row>
       <Row gutter={16} style={{ marginTop: 16 }}>
-        <Col span={16}>
+        <Col xs={24} sm={16}>
           <Card title="最新文章" bordered={false}>
             <List
               itemLayout="horizontal"
@@ -82,7 +82,7 @@ const Home: NextPage<IHomeProps> = ({
           </Card>
         </Col>
 
-        <Col span={8}>
+        <Col xs={24} sm={8}>
           <Card title="最新评论" bordered={false}>
             <List
               itemLayout="horizontal"

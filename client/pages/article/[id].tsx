@@ -11,7 +11,7 @@ import "highlight.js/styles/monokai-sublime.css";
 import { useSetting } from "@/hooks/useSetting";
 import { Layout } from "@/layout/Layout";
 import { MyComment } from "@/components/Comment";
-import { RecentArticles } from "@components/RecentArticles";
+// import { RecentArticles } from "@components/RecentArticles";
 import { ArticleProvider } from "@providers/article";
 import style from "./index.module.scss";
 
@@ -111,90 +111,72 @@ const Article: NextPage<IProps> = ({ article }) => {
           <Helmet>
             <title>{article.title + " - " + setting.systemTitle}</title>
           </Helmet>
-          <Col md={16} sm={24} xs={24}>
-            <div className={style.content}>
-              {article.cover && (
-                <img
-                  className={style.cover}
-                  src={article.cover}
-                  alt="文章封面"
-                />
-              )}
-              <h1 className={style.title}>{article.title}</h1>
-              <p className={style.desc}>
-                <span>
-                  发布于{" "}
-                  {dayjs
-                    .default(article.createAt)
-                    .format("YYYY-MM-DD HH:mm:ss")}
-                </span>
-                <span> • </span>
-                <span>阅读量 {article.views}</span>
-              </p>
-              <div
-                ref={ref}
-                className={cls("markdown", style.markdown)}
-                dangerouslySetInnerHTML={{ __html: article.html }}
-              ></div>
+          <div className={style.meta}>
+            {article.cover && (
+              <img className={style.cover} src={article.cover} alt="文章封面" />
+            )}
+            <h1 className={style.title}>{article.title}</h1>
+            <p className={style.desc}>
+              <span>
+                发布于{" "}
+                {dayjs.default(article.createAt).format("YYYY-MM-DD HH:mm:ss")}
+              </span>
+              <span> • </span>
+              <span>阅读量 {article.views}</span>
+            </p>
+          </div>
 
-              <div className={style.tags}>
-                {/* <p>标签</p> */}
-                <div>
-                  <span>标签：</span>
-                  {article.tags.map(tag => {
-                    return (
-                      <div className={style.tag}>
-                        <Link href={"/?tag=" + tag.label}>
-                          <a>
-                            <span>{tag.label}</span>
-                          </a>
-                        </Link>
-                      </div>
-                    );
-                  })}
+          <div className={style.content}>
+            <div
+              ref={ref}
+              className={cls("markdown", style.markdown)}
+              dangerouslySetInnerHTML={{ __html: article.html }}
+            ></div>
+            <div className={style.tags}>
+              <div>
+                <span>标签：</span>
+                {article.tags.map(tag => {
+                  return (
+                    <div className={style.tag}>
+                      <Link href={"/?tag=" + tag.label}>
+                        <a>
+                          <span>{tag.label}</span>
+                        </a>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            {/* S 评论 */}
+            {article.isCommentable && (
+              <div className={style.comments}>
+                <p className={style.title}>评论</p>
+                <div className={style.commentContainer}>
+                  <MyComment articleId={article.id} />
                 </div>
               </div>
-              {/* S 评论 */}
-              {article.isCommentable && (
-                <div className={style.comments}>
-                  <p className={style.title}>评论</p>
-                  <div className={style.commentContainer}>
-                    <MyComment articleId={article.id} />
-                  </div>
-                </div>
-              )}
-              {/* E 评论 */}
-            </div>
-          </Col>
-          <Col md={8} sm={24} xs={24}>
-            <Row>
-              <Col>
-                <div className={style.widget}>
-                  <RecentArticles />
-                </div>
-              </Col>
+            )}
+            {/* E 评论 */}
+          </div>
 
-              {/* S 文章目录 */}
-              <Col>
-                {Array.isArray(tocs) && (
-                  <div className={style.anchorWidget}>
-                    <Anchor targetOffset={32} offsetTop={32}>
-                      {tocs.map(toc => {
-                        return (
-                          <Anchor.Link
-                            key={toc[2]}
-                            href={"#" + toc[1]}
-                            title={toc[2]}
-                          ></Anchor.Link>
-                        );
-                      })}
-                    </Anchor>
-                  </div>
-                )}
-              </Col>
-              {/* E 文章目录 */}
-            </Row>
-          </Col>
+          {/* S 文章目录 */}
+          {/* {Array.isArray(tocs) && (
+            <div className={style.anchorWidget}>
+              <Anchor targetOffset={32} offsetTop={32}>
+                {tocs.map(toc => {
+                  return (
+                    <Anchor.Link
+                      key={toc[2]}
+                      href={"#" + toc[1]}
+                      title={toc[2]}
+                    ></Anchor.Link>
+                  );
+                })}
+              </Anchor>
+            </div>
+          )} */}
+          {/* E 文章目录 */}
         </Row>
       )}
     </Layout>

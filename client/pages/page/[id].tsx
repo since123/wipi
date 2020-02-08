@@ -57,48 +57,26 @@ const Page: NextPage<IProps> = ({ page }) => {
   ) : (
     <Layout backgroundColor="#fff">
       <Row gutter={16}>
-        <Col sm={16}>
-          <div
-            ref={ref}
-            className={"markdown"}
-            dangerouslySetInnerHTML={{ __html: page.html }}
-          ></div>
+        <Col sm={24} className={style.container}>
+          <div className={style.meta}>
+            {page.cover && (
+              <img className={style.cover} src={page.cover} alt="文章封面" />
+            )}
+          </div>
+          <div className={style.content}>
+            <div
+              ref={ref}
+              className={"markdown"}
+              dangerouslySetInnerHTML={{ __html: page.html }}
+            ></div>
 
-          <div className={style.comments}>
-            <p className={style.title}>评论</p>
-            <div className={style.commentContainer}>
-              <MyComment articleId={page.id} />
+            <div className={style.comments}>
+              <p className={style.title}>评论</p>
+              <div className={style.commentContainer}>
+                <MyComment articleId={page.id} />
+              </div>
             </div>
           </div>
-        </Col>
-        <Col sm={8}>
-          <Row>
-            <Col>
-              <div className={style.widget}>
-                <RecentArticles />
-              </div>
-            </Col>
-
-            {/* S 文章目录 */}
-            <Col>
-              {Array.isArray(tocs) && (
-                <div className={style.anchorWidget}>
-                  <Anchor targetOffset={32} offsetTop={32}>
-                    {tocs.map(toc => {
-                      return (
-                        <Anchor.Link
-                          key={toc[2]}
-                          href={"#" + toc[1]}
-                          title={toc[2]}
-                        ></Anchor.Link>
-                      );
-                    })}
-                  </Anchor>
-                </div>
-              )}
-            </Col>
-            {/* E 文章目录 */}
-          </Row>
         </Col>
       </Row>
     </Layout>

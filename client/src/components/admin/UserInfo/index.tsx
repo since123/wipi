@@ -14,8 +14,8 @@ export const UserInfo = () => {
     } catch (e) {}
 
     if (!info) {
-      message.error("异常登录");
-      Router.replace("/");
+      message.error("请登录");
+      Router.replace("/admin/login");
     }
   }, []);
 
@@ -36,7 +36,6 @@ export const UserInfo = () => {
       <div
         style={{
           display: "inline-block",
-          padding: "0 12px",
           cursor: "pointer"
         }}
       >

@@ -8,7 +8,7 @@ import { Login } from "@components/Login";
 import { UserInfo } from "@components/admin/UserInfo";
 import style from "./index.module.scss";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content, Sider, Footer } = Layout;
 const { SubMenu } = Menu;
 
 const menus = [
@@ -115,16 +115,13 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
 }) => {
   const setting = useSetting();
   const router = useRouter();
+  const [collapsed, setCollapsed] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
   const { pathname } = router;
   const breadcrumbs = resolveBreadcrumbs(pathname);
 
-  useEffect(() => {
-    showLogin = () => setLoginVisible(true);
-  }, []);
-
   return (
-    <Layout className={style.wrapper}>
+    <Layout>
       <Helmet>
         <title>{"管理后台 - " + setting.systemTitle}</title>
         <meta name="keyword" content={setting.seoKeyword} />
@@ -135,99 +132,115 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
           rel="stylesheet"
         ></link>
       </Helmet>
-      <Header>
-        <Row>
-          <Col span={20}>
-            <div className={style.logo}>管理后台</div>
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              selectedKeys={[pathname]}
-              style={{ lineHeight: "64px" }}
-            >
-              {menus.map(menu => {
-                if (menu.children) {
-                  return (
-                    <SubMenu
-                      key={menu.label}
-                      title={
-                        <span>
-                          <Icon type={menu.icon} />
-                          {menu.label}
-                        </span>
-                      }
-                    >
-                      {menu.children.map(subMenu => {
-                        return (
-                          <Menu.Item key={subMenu.path}>
-                            <Link href={subMenu.path}>
-                              <a>{subMenu.label}</a>
-                            </Link>
-                          </Menu.Item>
-                        );
-                      })}
-                    </SubMenu>
-                  );
-                } else {
-                  return (
-                    <Menu.Item key={menu.path}>
-                      <Link href={menu.path}>
-                        <a>
-                          <Icon type={menu.icon} />
-                          {menu.label}
-                        </a>
-                      </Link>
-                    </Menu.Item>
-                  );
-                }
-              })}
-            </Menu>
-          </Col>
-          <Col span={4} style={{ textAlign: "right" }}>
-            <UserInfo />
-          </Col>
-        </Row>
-      </Header>
-      <Content
-        style={{ padding: "0 50px", minHeight: "calc(100vh - 64px - 83px)" }}
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        collapsedWidth="0"
       >
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          {breadcrumbs.map(breadcrumb => {
-            return (
-              <Breadcrumb.Item key={breadcrumb.label}>
-                {breadcrumb.path ? (
-                  <Link href={breadcrumb.path}>
-                    <a>{breadcrumb.label}</a>
-                  </Link>
-                ) : (
-                  breadcrumb.label
-                )}
-              </Breadcrumb.Item>
-            );
-          })}
-        </Breadcrumb>
-        <div
-          style={{
-            background,
-            padding
-          }}
-        >
-          {children}
+        <div className={style.logo}>
+          {/^http/.test(setting.systemLogo) ? (
+            <Link href="/">
+              <a>
+                <img src={setting.systemLogo} alt="" />
+              </a>
+            </Link>
+          ) : (
+            <Link href="/">
+              <a dangerouslySetInnerHTML={{ __html: setting.systemLogo }}></a>
+            </Link>
+          )}
         </div>
-      </Content>
-      <Login
-        visible={loginVisible}
-        onClose={() => {
-          setLoginVisible(false);
-        }}
-        onLogin={() => {
-          message.success("已重新登录");
-          setLoginVisible(false);
-        }}
-      />
-      <Footer style={{ textAlign: "center" }}>
-        <p>Copyright &copy; 2019-{new Date().getFullYear()} 行文过活</p>
-      </Footer>
+        <Menu
+          theme="dark"
+          mode="vertical"
+          selectedKeys={[pathname]}
+          style={{ lineHeight: "64px" }}
+        >
+          {menus.map(menu => {
+            if (menu.children) {
+              return (
+                <SubMenu
+                  key={menu.label}
+                  title={
+                    <span>
+                      <Icon type={menu.icon} />
+                      {menu.label}
+                    </span>
+                  }
+                >
+                  {menu.children.map(subMenu => {
+                    return (
+                      <Menu.Item key={subMenu.path}>
+                        <Link href={subMenu.path}>
+                          <a>{subMenu.label}</a>
+                        </Link>
+                      </Menu.Item>
+                    );
+                  })}
+                </SubMenu>
+              );
+            } else {
+              return (
+                <Menu.Item key={menu.path}>
+                  <Link href={menu.path}>
+                    <a>
+                      <Icon type={menu.icon} />
+                      {menu.label}
+                    </a>
+                  </Link>
+                </Menu.Item>
+              );
+            }
+          })}
+        </Menu>
+      </Sider>
+      <Layout>
+        <Header style={{ background: "#fff", padding: "0 24px" }}>
+          <Row>
+            <Col span={6}>
+              <Icon
+                className="trigger"
+                type={collapsed ? "menu-unfold" : "menu-fold"}
+                onClick={() => setCollapsed(!collapsed)}
+              />
+            </Col>
+            <Col span={18} style={{ textAlign: "right" }}>
+              <UserInfo />
+            </Col>
+          </Row>
+        </Header>
+        <Content
+          style={{ padding: "0 24px", minHeight: "calc(100vh - 64px - 86px)" }}
+        >
+          <Breadcrumb style={{ margin: "16px 0" }}>
+            {breadcrumbs.map(breadcrumb => {
+              return (
+                <Breadcrumb.Item key={breadcrumb.label}>
+                  {breadcrumb.path ? (
+                    <Link href={breadcrumb.path}>
+                      <a>{breadcrumb.label}</a>
+                    </Link>
+                  ) : (
+                    breadcrumb.label
+                  )}
+                </Breadcrumb.Item>
+              );
+            })}
+          </Breadcrumb>
+          <div
+            style={{
+              background,
+              padding
+            }}
+          >
+            {children}
+          </div>
+        </Content>
+        <Footer style={{ textAlign: "center" }}>
+          <p>Copyright &copy; 2019-{new Date().getFullYear()} 行文过活</p>
+        </Footer>
+      </Layout>
     </Layout>
   );
 };

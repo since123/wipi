@@ -1,7 +1,4 @@
-.content {
-  background: #fff;
-  // padding: 32px 24px;
-
+.meta {
   .title {
     margin: 0.67em 0;
     font-size: 2.5rem;
@@ -21,6 +18,13 @@
   .cover {
     max-width: 100%;
   }
+}
+
+.content {
+  background: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  // padding: 32px 24px;
 
   .tags {
     margin-top: 30px;
@@ -64,8 +68,8 @@
     }
 
     .commentContainer {
-      background: #f3f4f3;
-      border: 1px solid #ebebeb;
+      background: #f1f6f9;
+      border-radius: 4px;
       padding: 16px;
       margin-bottom: 35px;
     }

@@ -21,15 +21,19 @@
 $height: 64px;
 
 header {
-  position: sticky;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 16px 0;
 }
 
 .wrapper {
+  position: relative;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .logo {
     height: $height;
@@ -38,6 +42,39 @@ header {
 
     img {
       width: 32px;
+    }
+  }
+
+  .mobileTrigger {
+    display: none;
+
+    .stick {
+      width: 25px;
+      height: 4px;
+      background-color: #ff0064;
+      opacity: 1;
+      border-radius: 5px;
+      transition: all 250ms ease-in-out 0s;
+
+      &:nth-of-type(2) {
+        margin: 5px 0;
+      }
+    }
+
+    &.active {
+      .stick {
+        &:first-of-type {
+          transform: translateY(9px) rotate(45deg);
+        }
+
+        &:nth-of-type(2) {
+          opacity: 0;
+        }
+
+        &:last-of-type {
+          transform: translateY(-9px) rotate(-45deg);
+        }
+      }
     }
   }
 
@@ -59,7 +96,7 @@ header {
         }
 
         &.active {
-          color: $primaryColor;
+          color: $feMainColor;
         }
 
         a {
@@ -69,28 +106,47 @@ header {
     }
   }
 
-  .login {
-    height: $height;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    button {
-      color: $primaryColor;
+  @media (max-width: 768px) {
+    .mobileTrigger {
+      display: block;
     }
   }
 
   @media (max-width: 768px) {
-    .logo {
-      text-align: center;
-    }
-
-    .login {
-      display: none;
-    }
-
     nav {
-      justify-content: center;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+
+      width: 100vw;
+      padding: 0 15px;
+      background-color: #fff;
+
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s;
+
+      &.active {
+        max-height: 100vh;
+        overflow: auto;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+      }
+
+      ul {
+        width: 100%;
+
+        li {
+          display: flex;
+          padding: 0;
+          line-height: 48px;
+
+          // &:first-of-type {
+          //   padding-left: 12px;
+          // }
+        }
+      }
     }
   }
 }

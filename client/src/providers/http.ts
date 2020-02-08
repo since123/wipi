@@ -1,5 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
+import Router from "next/router";
 import { showLogin } from "@/layout/AdminLayout";
 
 export const httpProvider = axios.create({
@@ -56,18 +57,8 @@ httpProvider.interceptors.response.use(
 
         case 403:
         case 401:
-          {
-            if (typeof window !== "undefined") {
-              let href = window.location.href;
-
-              if (/admin/.test(href)) {
-                message.info("请重新登录");
-                showLogin();
-              }
-            } else {
-              message.error("权限不足!");
-            }
-          }
+          message.info("请重新登录");
+          Router.push("/admin/login");
           break;
 
         default:

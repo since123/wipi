@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { NextPage } from "next";
-import { Button, Input, message } from "antd";
+import { Button, Input, Icon, message } from "antd";
 import { AdminLayout } from "@/layout/AdminLayout";
 import { FileSelectDrawer } from "@/components/admin/FileSelectDrawer";
 import { PageProvider } from "@providers/page";
@@ -87,6 +87,26 @@ const Editor: NextPage = () => {
     <AdminLayout>
       <div className={style.wrapper}>
         <Input
+          placeholder="请输入页面封面"
+          addonAfter={
+            <Icon
+              type="file-image"
+              onClick={() => {
+                setFileDrawerVisible(true);
+              }}
+            />
+          }
+          defaultValue={page.cover}
+          onChange={e => {
+            setPage(page => {
+              const value = e.target.value;
+              page.cover = value;
+              return page;
+            });
+          }}
+        />
+        <Input
+          style={{ marginTop: 16 }}
           placeholder="请输入页面名称"
           defaultValue={page.name}
           onChange={e => {

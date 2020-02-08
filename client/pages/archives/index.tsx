@@ -34,7 +34,7 @@ const Archives: NextPage<IProps> = ({ articles }) => {
   return (
     <Layout backgroundColor="#fff">
       <Row>
-        <Col sm={16}>
+        <Col sm={24}>
           <div className={style.content}>
             {Object.keys(articles).map(year => {
               return (
@@ -43,14 +43,14 @@ const Archives: NextPage<IProps> = ({ articles }) => {
             })}
           </div>
         </Col>
-        <Col sm={8}>
+        {/* <Col sm={8}>
           <div className={style.widget}>
             <RecentArticles />
           </div>
           <div className={style.widget}>
             <Tags />
           </div>
-        </Col>
+        </Col> */}
       </Row>
     </Layout>
   );

@@ -1,3 +1,18 @@
+.container {
+  position: relative;
+}
+
+.meta {
+  .cover {
+    max-width: 100%;
+  }
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .comments {
   .title {
     color: #8a9aa9;
@@ -8,8 +23,8 @@
   }
 
   .commentContainer {
-    background: #f3f4f3;
-    border: 1px solid #ebebeb;
+    background: #f1f6f9;
+    border-radius: 4px;
     padding: 16px;
     margin-bottom: 35px;
   }

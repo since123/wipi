@@ -9,50 +9,60 @@ import style from "./index.module.scss";
 
 export const Header = ({ setting }) => {
   const router = useRouter();
-  const pathname = router.asPath;
+  const asPath = router.asPath;
+  const pathname = router.pathname;
   const [visible, setVisible] = useState(false);
   const menus = useMenus();
 
   return (
     <header>
       <div className={style.wrapper}>
-        <Row>
-          <Col md={3}>
-            <div className={style.logo}>
-              {/^http/.test(setting.systemLogo) ? (
-                <Link href="/">
-                  <a>
-                    <img src={setting.systemLogo} alt="" />
-                  </a>
+        <div className={style.logo}>
+          {/^http/.test(setting.systemLogo) ? (
+            <Link href="/">
+              <a>
+                <img src={setting.systemLogo} alt="" />
+              </a>
+            </Link>
+          ) : (
+            <Link href="/">
+              <a dangerouslySetInnerHTML={{ __html: setting.systemLogo }}></a>
+            </Link>
+          )}
+        </div>
+
+        <div
+          className={cls(style.mobileTrigger, visible ? style.active : false)}
+          onClick={() => setVisible(!visible)}
+        >
+          <div className={style.stick}></div>
+          <div className={style.stick}></div>
+          <div className={style.stick}></div>
+        </div>
+
+        <nav className={cls(visible ? style.active : false)}>
+          <ul>
+            {menus.map(menu => (
+              <li
+                key={menu.label}
+                className={cls({
+                  [style.active]: pathname === menu.path || asPath === menu.path
+                })}
+              >
+                <Link href={menu.path}>
+                  <a>{menu.label}</a>
                 </Link>
-              ) : (
-                <Link href="/">
-                  <a
-                    dangerouslySetInnerHTML={{ __html: setting.systemLogo }}
-                  ></a>
-                </Link>
-              )}
-            </div>
-          </Col>
-          <Col md={16}>
-            <nav>
-              <ul>
-                {menus.map(menu => (
-                  <li
-                    key={menu.label}
-                    className={cls({
-                      [style.active]: pathname === menu.path
-                    })}
-                  >
-                    <Link href={menu.path}>
-                      <a>{menu.label}</a>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </Col>
-          <Col md={5} xs={0}>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* <Row> */}
+        {/* <Col md={3}></Col> */}
+        {/* <Col md={21}> */}
+
+        {/* </Col> */}
+        {/* <Col md={5} xs={0}>
             <div className={style.login}>
               <Button type="link" onClick={() => setVisible(true)}>
                 立即登录
@@ -66,8 +76,8 @@ export const Header = ({ setting }) => {
                 }}
               />
             </div>
-          </Col>
-        </Row>
+          </Col> */}
+        {/* </Row> */}
       </div>
     </header>
   );

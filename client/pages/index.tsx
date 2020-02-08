@@ -2,11 +2,12 @@ import React, { useState, useMemo, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Row, Col, message } from "antd";
+import { Row, Col } from "antd";
 import cls from "classnames";
+import * as dayjs from "dayjs";
 import { Layout } from "@/layout/Layout";
 import { ArticleProvider } from "@providers/article";
-import { ArticleListItem } from "@components/ArticleListItem";
+import { Loading } from "@components/Loading";
 import style from "./index.module.scss";
 import { TagProvider } from "@/providers/tag";
 
@@ -15,8 +16,6 @@ interface IHomeProps {
   currentTag: string;
   tags: ITag[];
 }
-
-let hideLoading: any = () => {};
 
 function isEqual(_arr1, _arr2) {
   if (
@@ -38,7 +37,6 @@ function isEqual(_arr1, _arr2) {
 
 const Home: NextPage<IHomeProps> = ({
   articles: defaultArticles = [],
-  currentTag: defaultCurrentTag = null,
   tags = []
 }) => {
   const router = useRouter();
@@ -53,14 +51,6 @@ const Home: NextPage<IHomeProps> = ({
 
     router.push(path);
   };
-
-  useEffect(() => {
-    if (loading) {
-      hideLoading = message.loading("文章加载中", 0);
-    } else {
-      hideLoading && hideLoading();
-    }
-  }, [loading]);
 
   // 监听路由变化
   // 标签发生变化后重新拉取文章列表
@@ -100,72 +90,80 @@ const Home: NextPage<IHomeProps> = ({
 
   return (
     <Layout backgroundColor="#fff">
-      <Row>
-        <Col md={4} sm={24}>
-          <aside>
-            {/* S 标签列表 */}
-            <ul className={style.tagContainer}>
+      {/* <div className={style.banner}></div> */}
+
+      <div className={style.tagList}>
+        {/* S 标签列表 */}
+        <ul>
+          <li
+            key={"all"}
+            className={cls(
+              style.tagItem,
+              routerTag == null ? style.active : false
+            )}
+          >
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault();
+                handleClickTag("/");
+              }}
+            >
+              <span>全部</span>
+            </a>
+          </li>
+          {tags.map(tag => {
+            return (
               <li
-                key={"all"}
+                key={tag.id}
                 className={cls(
                   style.tagItem,
-                  routerTag == null ? style.active : false
+                  routerTag === tag.label ? style.active : false
                 )}
               >
                 <a
-                  href="/"
+                  href={"/?tag=" + tag.label}
                   onClick={e => {
                     e.preventDefault();
-                    handleClickTag("/");
+                    handleClickTag("/?tag=" + tag.label);
                   }}
                 >
-                  <img
-                    src="http://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-01/CHRKH77JJNS9OEL8DKPXPF/all.png"
-                    alt=""
-                  />
-                  <span>全部</span>
+                  <span>{tag.label}</span>
                 </a>
               </li>
-              {tags.map(tag => {
-                return (
-                  <li
-                    key={tag.id}
-                    className={cls(
-                      style.tagItem,
-                      routerTag === tag.label ? style.active : false
-                    )}
-                  >
-                    {/* <Link href={"/?tag=" + tag.label} shallow> */}
-                    <a
-                      href={"/?tag=" + tag.label}
-                      onClick={e => {
-                        e.preventDefault();
-                        handleClickTag("/?tag=" + tag.label);
-                      }}
-                    >
-                      <img src={tag.icon} alt="icon" />
-                      <span>{tag.label}</span>
-                    </a>
-                    {/* </Link> */}
-                  </li>
-                );
-              })}
-            </ul>
-            {/* E 标签列表 */}
-          </aside>
-        </Col>
-        <Col md={20} sm={24}>
-          {routerTag && (
-            <div className={style.tagTitle}>
-              <h5>{routerTag}</h5>
+            );
+          })}
+        </ul>
+        {/* E 标签列表 */}
+      </div>
+
+      <Row gutter={16} className={style.articleList}>
+        {articles.map(article => (
+          <Col
+            md={8}
+            sm={12}
+            xs={24}
+            key={article.id}
+            className={style.articleListItem}
+          >
+            <div>
+              <Link href={`/article/` + article.id}>
+                <a>
+                  {article.cover && <img src={article.cover} alt="" />}
+                  <div className={style.info}>
+                    <p className={style.title}>{article.title}</p>
+                    <p className={style.desc}>{article.summary}</p>
+                    <p className={style.meta}>
+                      {dayjs
+                        .default(article.publishAt)
+                        .format("YYYY-MM-DD HH:mm:ss")}
+                    </p>
+                  </div>
+                </a>
+              </Link>
             </div>
-          )}
-          <div className={style.articleContainer}>
-            {articles.map(article => (
-              <ArticleListItem key={article.id} article={article} />
-            ))}
-          </div>
-        </Col>
+          </Col>
+        ))}
       </Row>
     </Layout>
   );

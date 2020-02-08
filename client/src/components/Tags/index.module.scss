@@ -16,7 +16,7 @@
       content: "";
       width: 90px;
       height: 1px;
-      background: $primaryColor;
+      background: $feMainColor;
       position: absolute;
       left: 0;
       bottom: -1px;
@@ -33,9 +33,9 @@
     transition: all ease-in-out 0.2s;
 
     &:hover {
-      background-color: $primaryColor;
+      background-color: $feMainColor;
       color: #fff;
-      border: 1px solid $primaryColor;
+      border: 1px solid $feMainColor;
     }
   }
 }

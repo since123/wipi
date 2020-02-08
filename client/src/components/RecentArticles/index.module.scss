@@ -16,7 +16,7 @@
       content: "";
       width: 90px;
       height: 1px;
-      background: $primaryColor;
+      background: $feMainColor;
       position: absolute;
       left: 0;
       bottom: -1px;
@@ -30,7 +30,7 @@
     font-size: 14px;
 
     &:hover {
-      color: $primaryColor;
+      color: $feMainColor;
     }
   }
 }

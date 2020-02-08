@@ -43,6 +43,7 @@ interface IPage {
   id: string;
   name: string;
   path: string;
+  cover?: string;
   content: string;
   html: string;
   toc: string;
