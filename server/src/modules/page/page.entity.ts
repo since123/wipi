@@ -11,6 +11,9 @@ export class Page {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ default: null })
+  cover: string; // 页面封面
+
   @Column()
   name: string; // 页面名
 
