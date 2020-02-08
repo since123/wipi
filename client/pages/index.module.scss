@@ -74,6 +74,7 @@
   ul {
     display: inline-flex;
     justify-content: center;
+    overflow-x: auto;
   }
 
   li {
@@ -81,6 +82,7 @@
     align-items: center;
     font-size: 14px;
     padding: 4px 24px;
+    white-space: nowrap;
 
     + li {
       margin-left: 1.2em;
@@ -147,6 +149,11 @@
 }
 
 @media (max-width: 768px) {
+  .tagList {
+    ul {
+      justify-content: flex-start;
+    }
+  }
   .articleListItem + .articleListItem {
     margin-top: 1.5rem;
   }
