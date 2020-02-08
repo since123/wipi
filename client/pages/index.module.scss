@@ -1,65 +1,5 @@
 @import "../src/theme/var.scss";
 
-// .tagItem {
-//   > a {
-//     display: inline-flex;
-//     align-items: center;
-//     text-decoration: none;
-
-//     color: #333;
-//     font-weight: 600;
-//     padding: 12px 16px;
-//     margin-left: -12px;
-//     width: 140px;
-//     height: 34px;
-
-//     margin-bottom: 1px;
-//     border-radius: 4px;
-//   }
-
-//   .icon {
-//     width: 35px;
-//     text-align: center;
-//     color: #999;
-//   }
-
-//   img {
-//     width: 16px;
-//     height: 16px;
-//     margin-right: 12px;
-//   }
-
-//   span {
-//     line-height: 27px;
-//   }
-
-//   &.active {
-//     > a {
-//       background: $primaryColor;
-//       color: #fff;
-
-//       img {
-//         filter: brightness(0) invert(1);
-//       }
-//     }
-//   }
-// }
-
-// .tagTitle {
-//   margin-bottom: 15px;
-//   border-bottom: 1px solid #ddd;
-
-//   h5 {
-//     font-size: 16px;
-//     height: 20px;
-//     line-height: 20px;
-//   }
-// }
-
-// .articleContainer {
-//   padding-bottom: 2rem;
-// }
-
 .banner {
   background: url(https://thrive.app/images/titles/title-blog-index.svg)
     no-repeat center center;
@@ -74,7 +14,6 @@
   ul {
     width: 100%;
     display: inline-flex;
-    justify-content: center;
     overflow-x: auto;
   }
 
@@ -150,11 +89,6 @@
 }
 
 @media (max-width: 768px) {
-  .tagList {
-    ul {
-      justify-content: flex-start;
-    }
-  }
   .articleListItem + .articleListItem {
     margin-top: 1.5rem;
   }
