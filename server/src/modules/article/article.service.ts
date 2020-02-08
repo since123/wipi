@@ -76,7 +76,10 @@ export class ArticleService {
    * 获取文章归档
    */
   async getArchives(): Promise<{ [key: string]: Article[] }> {
-    const data = await this.articleRepository.find({ status: 'publish' });
+    const data = await this.articleRepository.find({
+      status: 'publish',
+      order: { updateAt: 'DESC' },
+    } as any);
     let ret = {};
 
     data.forEach(d => {

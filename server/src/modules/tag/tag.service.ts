@@ -50,6 +50,7 @@ export class TagService {
     const data = await this.tagRepository
       .createQueryBuilder('tag')
       .leftJoinAndSelect('tag.articles', 'articles')
+      .orderBy('articles.updateAt', 'DESC')
       .where('tag.id=:id')
       .orWhere('tag.label=:id')
       .setParameter('id', id)
