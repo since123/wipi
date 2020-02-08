@@ -69,4 +69,12 @@ body {
     color: $feMainColor !important;
     border-color: $feMainColor !important;
   }
+
+  .ant-pagination-item-active {
+    border-color: $feMainColor !important;
+  }
+
+  .ant-pagination-item-active a {
+    color: $feMainColor !important;
+  }
 }

@@ -1,4 +1,6 @@
 .meta {
+  text-align: center;
+
   .title {
     margin: 0.67em 0;
     font-size: 2.5rem;
@@ -11,11 +13,12 @@
   .desc {
     font-style: italic;
     color: #929292;
-    margin: 14px 0 0px;
+    margin-bottom: 0.67em;
     text-align: center;
   }
 
   .cover {
+    display: inline-block;
     max-width: 100%;
   }
 }

@@ -8,13 +8,12 @@
 }
 
 .tagList {
-  // text-align: center;
-  padding-bottom: 1.5rem;
-
   ul {
     width: 100%;
     display: inline-flex;
     overflow-x: auto;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   li {
@@ -76,7 +75,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
       }
 
@@ -88,7 +87,47 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 992px) {
+  .listContainer {
+    :global {
+      .ant-row {
+        > div {
+          &:nth-of-type(n + 4) {
+            margin-top: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 992px) {
+  .listContainer {
+    :global {
+      .ant-row {
+        > div {
+          &:nth-of-type(n + 3) {
+            margin-top: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .listContainer {
+    :global {
+      .ant-row {
+        > div {
+          + div {
+            margin-top: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
   .articleListItem + .articleListItem {
     margin-top: 1.5rem;
   }

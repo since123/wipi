@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Row, Col } from "antd";
+import { Row, Col, List } from "antd";
 import cls from "classnames";
 import * as dayjs from "dayjs";
 import { Layout } from "@/layout/Layout";
@@ -137,33 +137,46 @@ const Home: NextPage<IHomeProps> = ({
         {/* E 标签列表 */}
       </div>
 
-      <Row gutter={16} className={style.articleList}>
-        {articles.map(article => (
-          <Col
-            md={8}
-            sm={12}
-            xs={24}
-            key={article.id}
-            className={style.articleListItem}
-          >
-            <div>
-              <Link href={`/article/` + article.id}>
-                <a>
-                  {article.cover && <img src={article.cover} alt="" />}
-                  <div className={style.info}>
-                    <p className={style.title}>{article.title}</p>
-                    <p className={style.desc}>{article.summary}</p>
-                    <p className={style.meta}>
-                      {dayjs
-                        .default(article.publishAt)
-                        .format("YYYY-MM-DD HH:mm:ss")}
-                    </p>
-                  </div>
-                </a>
-              </Link>
-            </div>
-          </Col>
-        ))}
+      <Row className={style.articleList}>
+        <List
+          className={style.listContainer}
+          grid={{
+            gutter: 16,
+            xs: 1,
+            sm: 2,
+            md: 2,
+            lg: 3,
+            xl: 3,
+            xxl: 4
+          }}
+          dataSource={articles}
+          pagination={
+            articles && articles.length > 12 ? { pageSize: 12 } : false
+          }
+          locale={{
+            emptyText: "暂无数据"
+          }}
+          renderItem={article => (
+            <List.Item className={style.articleListItem}>
+              <div>
+                <Link href={`/article/` + article.id}>
+                  <a>
+                    {article.cover && <img src={article.cover} alt="" />}
+                    <div className={style.info}>
+                      <p className={style.title}>{article.title}</p>
+                      <p className={style.desc}>{article.summary}</p>
+                      <p className={style.meta}>
+                        {dayjs
+                          .default(article.publishAt)
+                          .format("YYYY-MM-DD HH:mm:ss")}
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            </List.Item>
+          )}
+        />
       </Row>
     </Layout>
   );
