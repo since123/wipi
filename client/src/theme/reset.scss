@@ -70,11 +70,13 @@ body {
     border-color: $feMainColor !important;
   }
 
-  .ant-pagination-item-active {
+  .ant-pagination-item-active,
+  .ant-pagination-item:hover {
     border-color: $feMainColor !important;
   }
 
-  .ant-pagination-item-active a {
+  .ant-pagination-item-active a,
+  .ant-pagination-item:hover a {
     color: $feMainColor !important;
   }
 }
