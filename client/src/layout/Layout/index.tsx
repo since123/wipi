@@ -2,6 +2,7 @@ import React from "react";
 import { BackTop } from "antd";
 import { Helmet } from "react-helmet";
 import { useSetting } from "@/hooks/useSetting";
+import { useMenus } from "@/hooks/useMenus";
 import { Header } from "@components/Header";
 import { Footer } from "@components/Footer";
 import style from "./index.module.scss";
@@ -15,6 +16,7 @@ export const Layout: React.FC<Iprops> = ({
   children
 }) => {
   const setting = useSetting();
+  const menus = useMenus();
 
   return (
     <div>
@@ -28,7 +30,7 @@ export const Layout: React.FC<Iprops> = ({
           rel="stylesheet"
         ></link>
       </Helmet>
-      <Header setting={setting} />
+      <Header setting={setting} menus={menus} />
       <main
         style={{
           backgroundColor
