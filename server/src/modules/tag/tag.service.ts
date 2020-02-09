@@ -53,6 +53,7 @@ export class TagService {
       .orderBy('articles.updateAt', 'DESC')
       .where('tag.id=:id')
       .orWhere('tag.label=:id')
+      .orWhere('tag.value=:id')
       .setParameter('id', id)
       .getOne();
 
