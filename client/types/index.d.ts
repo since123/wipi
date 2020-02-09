@@ -36,6 +36,7 @@ interface IArticle {
 interface ITag {
   id: string;
   label: string;
+  value: string;
   icon: string;
   articles?: IArticle[];
 }

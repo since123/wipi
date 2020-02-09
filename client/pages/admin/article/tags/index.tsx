@@ -8,8 +8,8 @@ import {
   Button,
   Input,
   Popconfirm,
-  Tooltip,
   List,
+  Form,
   message
 } from "antd";
 import cls from "classnames";
@@ -27,8 +27,9 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
   const [tags, setTags] = useState(defaultTags);
   const [mode, setMode] = useState("create");
   const [currentTag, setCurrentTag] = useState(null);
-  const [newTag, setNewTag] = useState(null);
-  const [newIcon, setNewIcon] = useState(null);
+  const [label, setLabel] = useState(null);
+  const [value, setValue] = useState(null);
+  const [icon, setIcon] = useState(null);
 
   const isCreateMode = useMemo(() => mode === "create", [mode]);
 
@@ -41,8 +42,9 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
   const reset = useCallback(() => {
     setMode("create");
     setCurrentTag(null);
-    setNewIcon(null);
-    setNewTag(null);
+    setIcon(null);
+    setLabel(null);
+    setValue(null);
   }, []);
 
   const addTag = useCallback(data => {
@@ -82,31 +84,30 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
       <Row gutter={16} className={style.wrapper}>
         <Col xs={24} sm={24} md={9}>
           <Card title={isCreateMode ? "添加标签" : "管理标签"} bordered={true}>
-            <Row>
-              <Input.Group compact>
-                <Col sm={3} onClick={() => setVisible(true)}>
-                  <Tooltip placement="top" title={"选择 icon"}>
-                    <Avatar
-                      style={{ cursor: "pointer" }}
-                      shape="square"
-                      src={newIcon}
-                    />
-                  </Tooltip>
-                </Col>
-                <Col sm={21}>
-                  <Input
-                    value={newTag}
-                    placeholder={"输入标签名称"}
-                    onChange={e => {
-                      setNewTag(e.target.value);
-                    }}
-                  ></Input>
-                </Col>
-              </Input.Group>
-            </Row>
+            <Form.Item style={{ textAlign: "center" }}>
+              <Avatar style={{ cursor: "pointer" }} size={32} src={icon} />
+            </Form.Item>
+            <Form.Item>
+              <Input
+                value={label}
+                placeholder={"输入标签名称"}
+                onChange={e => {
+                  setLabel(e.target.value);
+                }}
+              ></Input>
+            </Form.Item>
+            <Form.Item>
+              <Input
+                value={value}
+                placeholder={"输入标签值（请输入英文，作为路由使用）"}
+                onChange={e => {
+                  setValue(e.target.value);
+                }}
+              ></Input>
+            </Form.Item>
             <FileSelectDrawer
               visible={visible}
-              onChange={icon => setNewIcon(icon)}
+              onChange={icon => setIcon(icon)}
               onClose={() => setVisible(false)}
             />
             <div
@@ -115,7 +116,7 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
               {isCreateMode ? (
                 <Button
                   type="primary"
-                  onClick={() => addTag({ label: newTag, icon: newIcon })}
+                  onClick={() => addTag({ label, value, icon })}
                 >
                   保存
                 </Button>
@@ -126,8 +127,9 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
                       type="primary"
                       onClick={() =>
                         updateTag(currentTag.id, {
-                          label: newTag,
-                          icon: newIcon
+                          label,
+                          value,
+                          icon
                         })
                       }
                     >
@@ -166,8 +168,9 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
                     onClick={() => {
                       setMode("edit");
                       setCurrentTag(tag);
-                      setNewTag(tag.label);
-                      setNewIcon(tag.icon);
+                      setLabel(tag.label);
+                      setValue(tag.value);
+                      setIcon(tag.icon);
                     }}
                   >
                     <span>

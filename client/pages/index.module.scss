@@ -1,41 +1,5 @@
 @import "../src/theme/var.scss";
 
-.banner {
-  background: url(https://thrive.app/images/titles/title-blog-index.svg)
-    no-repeat center center;
-  margin: 1.5rem 0 0 0;
-  height: 250px;
-}
-
-.tagList {
-  ul {
-    width: 100%;
-    display: inline-flex;
-    overflow-x: auto;
-    padding-bottom: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  li {
-    display: inline-flex;
-    align-items: center;
-    font-size: 14px;
-    padding: 4px 24px;
-    white-space: nowrap;
-
-    + li {
-      margin-left: 1.2em;
-    }
-
-    &.active {
-      color: $feMainColor;
-      border: 1px solid $feMainColor;
-      background-color: $feBgColor;
-      border-radius: 4px;
-    }
-  }
-}
-
 .loader {
   text-align: center;
   padding-bottom: 1.5rem;

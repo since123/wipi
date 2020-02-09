@@ -14,7 +14,6 @@ export const UserInfo = () => {
     } catch (e) {}
 
     if (!info) {
-      message.error("请登录");
       Router.replace("/admin/login");
     }
   }, []);

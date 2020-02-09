@@ -25,7 +25,7 @@ const _Login: React.FC<ILoginProps> = ({ form }) => {
 
   return (
     <AdminLayout>
-      <Form onSubmit={submit}>
+      <Form onSubmit={submit} style={{ maxWidth: 480, margin: "0 auto" }}>
         <Form.Item label={"用户名"}>
           {getFieldDecorator("name", {
             rules: [{ required: true, message: "请输入用户名！" }]

@@ -165,7 +165,7 @@ const Article: NextPage<IProps> = ({ article }) => {
                   {article.tags.map(tag => {
                     return (
                       <div className={style.tag} key={tag.id}>
-                        <Link href={"/?tag=" + tag.label}>
+                        <Link href={"/[tag]"} as={"/" + tag.value}>
                           <a>
                             <span>{tag.label}</span>
                           </a>

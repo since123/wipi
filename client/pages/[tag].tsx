@@ -3,8 +3,8 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { Row, List } from "antd";
 import * as dayjs from "dayjs";
+import { TagProvider } from "@/providers/tag";
 import { Layout } from "@/layout/Layout";
-import { ArticleProvider } from "@providers/article";
 import { TagMenus } from "@components/TagMenus";
 import style from "./index.module.scss";
 
@@ -62,8 +62,11 @@ const Home: NextPage<IHomeProps> = ({ articles = [] }) => {
 };
 
 // 服务端预取数据
-Home.getInitialProps = async () => {
-  const [articles] = await Promise.all([ArticleProvider.getArticles(true)]);
+Home.getInitialProps = async ctx => {
+  const { tag } = ctx.query;
+  const [articles] = await Promise.all([
+    TagProvider.getTagWithArticles(tag, true).then(res => res.articles)
+  ]);
 
   return { articles };
 };
