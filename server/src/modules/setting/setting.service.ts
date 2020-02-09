@@ -41,9 +41,9 @@ export class SettingService {
       return a;
     }, {}) as Setting;
 
-    if (user) {
+    if (user && user.id) {
       const ret = await this.userService.findById(user.id);
-      if (ret) {
+      if (ret && ret.id === user.id) {
         return res;
       } else {
         return filterRes;
