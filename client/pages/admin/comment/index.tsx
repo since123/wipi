@@ -104,7 +104,7 @@ const Comment: NextPage<IProps> = ({
       key: "articleId",
       render: articleId => {
         return articleId ? (
-          <Link href={`/article/` + articleId}>
+          <Link href={`/article/` + articleId} prefetch={false}>
             <a>前往查看</a>
           </Link>
         ) : (

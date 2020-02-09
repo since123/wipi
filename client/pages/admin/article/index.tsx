@@ -98,7 +98,7 @@ const Article: NextPage<IArticleProps> = ({
     key: "action",
     render: (_, record) => (
       <span>
-        <Link href={`/admin/article/editor/` + record.id}>
+        <Link href={`/admin/article/editor/` + record.id} prefetch={false}>
           <a>编辑</a>
         </Link>
         <Divider type="vertical" />

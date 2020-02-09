@@ -14,7 +14,7 @@ const columns = [
     dataIndex: "name",
     key: "name",
     render: (text, record) => (
-      <Link href={`/page/${record.path}`}>
+      <Link href={`/page/${record.path}`} prefetch={false}>
         <a>{text}</a>
       </Link>
     )
@@ -90,7 +90,7 @@ const Page: NextPage<IProps> = ({ pages: defaultPages = [] }) => {
             <a onClick={() => editPage(record.id, { status: "draft" })}>禁用</a>
           )}
           <Divider type="vertical" />
-          <Link href={`/admin/page/editor/` + record.id}>
+          <Link href={`/admin/page/editor/` + record.id} prefetch={false}>
             <a>编辑</a>
           </Link>
           <Divider type="vertical" />
