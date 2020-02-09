@@ -45,7 +45,7 @@ export const _Header = ({ setting, menus }) => {
                   [style.active]: pathname === menu.path || asPath === menu.path
                 })}
               >
-                <Link href={menu.path}>
+                <Link href={menu.path} prefetch={false}>
                   <a>{menu.label}</a>
                 </Link>
               </li>

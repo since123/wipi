@@ -159,7 +159,7 @@ const Home: NextPage<IHomeProps> = ({
           renderItem={article => (
             <List.Item className={style.articleListItem}>
               <div>
-                <Link href={`/article/` + article.id}>
+                <Link href={`/article/` + article.id} prefetch={false}>
                   <a>
                     {article.cover && <img src={article.cover} alt="" />}
                     <div className={style.info}>
