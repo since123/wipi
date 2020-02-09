@@ -146,7 +146,7 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
           {isReply && (
             <TextArea
               placeholder={"请输入您的评论"}
-              rows={2}
+              rows={5}
               onChange={e => {
                 setContent(e.target.value);
               }}
@@ -255,7 +255,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
             <TextArea
               style={{ marginBottom: 16 }}
               placeholder={"请输入评论"}
-              rows={2}
+              rows={5}
               onChange={e => {
                 setContent(e.target.value);
               }}

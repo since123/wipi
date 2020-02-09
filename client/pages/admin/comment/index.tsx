@@ -171,6 +171,7 @@ const Comment: NextPage<IProps> = ({
           onCancel={() => setSelectedComment(null)}
         >
           <Input.TextArea
+            rows={8}
             value={replyContent}
             onChange={e => {
               let val = e.target.value;
