@@ -11,12 +11,14 @@ interface ICommemtItemProps {
   articleId: string;
   comment: IComment;
   getComments: () => void;
+  isInPage?: boolean; // 为 true 时，评论组件在动态页面而非文章
 }
 const CommentItem: React.FC<ICommemtItemProps> = ({
   children,
   articleId,
   comment,
-  getComments
+  getComments,
+  isInPage = false
 }) => {
   const [isReply, setReply] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,8 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
       name,
       email,
       content,
-      parentCommentId: comment.id
+      parentCommentId: comment.id,
+      isInPage
     };
     setLoading(true);
     CommentProvider.addComment(data).then(() => {
@@ -144,9 +147,10 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
 
 interface IProps {
   articleId: string;
+  isInPage?: boolean; // 为 true 时，评论组件在动态页面而非文章
 }
 
-const renderCommentList = (articleId, comments = [], getComments) => {
+const renderCommentList = (articleId, comments = [], getComments, isInPage) => {
   return (
     <>
       {comments.map(comment => {
@@ -156,9 +160,15 @@ const renderCommentList = (articleId, comments = [], getComments) => {
             articleId={articleId}
             comment={comment}
             getComments={getComments}
+            isInPage={isInPage}
           >
             {comment.children
-              ? renderCommentList(articleId, comment.children, getComments)
+              ? renderCommentList(
+                  articleId,
+                  comment.children,
+                  getComments,
+                  isInPage
+                )
               : null}
           </CommentItem>
         );
@@ -167,7 +177,10 @@ const renderCommentList = (articleId, comments = [], getComments) => {
   );
 };
 
-export const MyComment: React.FC<IProps> = ({ articleId }) => {
+export const MyComment: React.FC<IProps> = ({
+  articleId,
+  isInPage = false
+}) => {
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState<IComment[]>([]);
   const [name, setName] = useState("");
@@ -192,7 +205,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
       return;
     }
 
-    const data = { articleId, name, email, content };
+    const data = { articleId, name, email, content, isInPage };
     setLoading(true);
     CommentProvider.addComment(data).then(() => {
       message.success("评论成功，已提交审核");
@@ -253,7 +266,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
           </div>
         }
       />
-      {renderCommentList(articleId, comments, getComments)}
+      {renderCommentList(articleId, comments, getComments, isInPage)}
     </div>
   );
 };

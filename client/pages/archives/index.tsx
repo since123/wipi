@@ -17,7 +17,7 @@ const ArchiveItem = ({ year, articles = [] }) => {
       <Timeline>
         {articles.map(article => (
           <Timeline.Item key={article.id}>
-            <Link href={`/article/` + article.id} prefetch={false}>
+            <Link href={`/article/[id]`} as={`/article/${article.id}`}>
               <a>{article.title}</a>
             </Link>
           </Timeline.Item>

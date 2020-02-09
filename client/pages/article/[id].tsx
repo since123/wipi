@@ -117,7 +117,10 @@ const Article: NextPage<IProps> = ({ article }) => {
             {setting.systemUrl && (
               <meta
                 itemProp="url"
-                content={url.resolve(setting.systemUrl, "article/", article.id)}
+                content={url.resolve(
+                  setting.systemUrl,
+                  `/article/${article.id}`
+                )}
               />
             )}
             <meta itemProp="headline" content={article.title} />

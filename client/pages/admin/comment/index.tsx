@@ -103,10 +103,13 @@ const Comment: NextPage<IProps> = ({
       title: "评论文章",
       dataIndex: "articleId",
       key: "articleId",
-      render: articleId => {
+      render: (articleId, record) => {
         return articleId ? (
-          <Link href={`/article/` + articleId} prefetch={false}>
-            <a>前往查看</a>
+          <Link
+            href={`/${record.isInPage ? "page" : "article"}/[id]`}
+            as={`/${record.isInPage ? "page" : "article"}/` + articleId}
+          >
+            <a target="_blank">前往查看</a>
           </Link>
         ) : (
           "文章不存在，可能已经被删除"

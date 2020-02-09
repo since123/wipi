@@ -64,4 +64,5 @@ interface IComment {
   pass: boolean;
   createAt: string;
   article?: IArticle;
+  isInPage: boolean;
 }

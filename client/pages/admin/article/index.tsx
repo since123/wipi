@@ -13,7 +13,11 @@ const columns = [
     title: "标题",
     dataIndex: "title",
     key: "title",
-    render: text => <a>{text}</a>
+    render: (text, record) => (
+      <Link href={`/article/[id]`} as={`/article/${record.id}`}>
+        <a target="_blank">{text}</a>
+      </Link>
+    )
   },
   {
     title: "状态",
@@ -98,7 +102,10 @@ const Article: NextPage<IArticleProps> = ({
     key: "action",
     render: (_, record) => (
       <span>
-        <Link href={`/admin/article/editor/` + record.id} prefetch={false}>
+        <Link
+          href={`/admin/article/editor/[id]` + record.id}
+          as={`/admin/article/editor/` + record.id}
+        >
           <a>编辑</a>
         </Link>
         <Divider type="vertical" />

@@ -45,9 +45,15 @@ export const _Header = ({ setting, menus }) => {
                   [style.active]: pathname === menu.path || asPath === menu.path
                 })}
               >
-                <Link href={menu.path} prefetch={false}>
-                  <a>{menu.label}</a>
-                </Link>
+                {/page/.test(menu.path) ? (
+                  <Link href={"/page/[id]"} as={menu.path}>
+                    <a>{menu.label}</a>
+                  </Link>
+                ) : (
+                  <Link href={menu.path}>
+                    <a>{menu.label}</a>
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

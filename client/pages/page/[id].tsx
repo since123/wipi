@@ -72,7 +72,7 @@ const Page: NextPage<IProps> = ({ page }) => {
               <div className={style.comments}>
                 <p className={style.title}>评论</p>
                 <div className={style.commentContainer}>
-                  <MyComment articleId={page.id} />
+                  <MyComment articleId={page.id} isInPage={true} />
                 </div>
               </div>
             </div>
