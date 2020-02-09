@@ -1,4 +1,3 @@
-#  https://github.com/nodesource/distributions
 node -v
 npm -v
 
@@ -18,6 +17,8 @@ cd server
 npm install
 npm run build
 pm2 start npm --name server -- run start:prod
+
+cd ../
 
 pm2 startup
 pm2 save
