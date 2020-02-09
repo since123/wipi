@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Row, Col, Comment, Avatar, Button, Input, Icon, message } from "antd";
-import * as dayjs from "dayjs";
+import { Row, Col, Comment, Button, Input, Icon, message } from "antd";
+import { format } from "timeago.js";
+import cls from "classnames";
 import { CommentProvider } from "@providers/comment";
 import style from "./index.module.scss";
 
@@ -11,18 +12,6 @@ interface ICommemtItemProps {
   comment: IComment;
   getComments: () => void;
 }
-
-const colors = [
-  "#eb2f96",
-  "#fadb14",
-  "#52c41a",
-  "#722ed1",
-  "#eb2f96",
-  "#faad14",
-  "#a0d911",
-  "pink"
-];
-
 const CommentItem: React.FC<ICommemtItemProps> = ({
   children,
   articleId,
@@ -100,25 +89,17 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
       }
       author={
         <a>
-          {comment.name}{" "}
-          {dayjs.default(comment.createAt).format("YYYY-MM-DD HH:mm:ss")}
+          <strong>{comment.name} • </strong>
+          {format(comment.createAt, "zh_CN")}
         </a>
       }
-      avatar={
-        null
-        // <Avatar
-        //   style={{
-        //     backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-        //     verticalAlign: "middle"
-        //   }}
-        //   size="small"
-        // >
-        //   {comment.name.charAt(0).toUpperCase()}
-        // </Avatar>
-      }
+      avatar={null}
       content={
         <div>
-          <div dangerouslySetInnerHTML={{ __html: comment.html }}></div>
+          <div
+            className={cls("markdown", style.commentContent)}
+            dangerouslySetInnerHTML={{ __html: comment.html }}
+          ></div>
           {isReply && (
             <Row gutter={16}>
               <Col span={12}>
@@ -145,7 +126,7 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
           )}
           {isReply && (
             <TextArea
-              placeholder={"请输入您的评论"}
+              placeholder={"请输入您的评论，支持 Markdown"}
               rows={4}
               onChange={e => {
                 setContent(e.target.value);
@@ -254,7 +235,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
             </Row>
             <TextArea
               style={{ marginBottom: 16 }}
-              placeholder={"请输入评论"}
+              placeholder={"请输入评论，支持 Markdown"}
               rows={4}
               onChange={e => {
                 setContent(e.target.value);
