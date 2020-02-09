@@ -60,22 +60,25 @@
       }
     }
   }
+}
 
-  .comments {
-    .title {
-      color: #8a9aa9;
-      font-size: 16px;
-      font-weight: 400;
-      text-align: center;
-      padding: 1.67rem 0 5px;
-    }
+.comments {
+  max-width: 800px;
+  margin: 0 auto;
 
-    .commentContainer {
-      background: #f1f6f9;
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 35px;
-    }
+  .title {
+    color: #8a9aa9;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    padding: 1.67rem 0 5px;
+  }
+
+  .commentContainer {
+    background: #f1f6f9;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 35px;
   }
 }
 

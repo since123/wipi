@@ -14,6 +14,7 @@ import { MyComment } from "@/components/Comment";
 // import { RecentArticles } from "@components/RecentArticles";
 import { ArticleProvider } from "@providers/article";
 import style from "./index.module.scss";
+const url = require("url");
 
 interface IProps {
   article: IArticle;
@@ -111,54 +112,79 @@ const Article: NextPage<IProps> = ({ article }) => {
           <Helmet>
             <title>{article.title + " - " + setting.systemTitle}</title>
           </Helmet>
-          <div className={style.meta}>
-            {article.cover && (
-              <img className={style.cover} src={article.cover} alt="文章封面" />
-            )}
-            <h1 className={style.title}>{article.title}</h1>
-            <p className={style.desc}>
-              <span>
-                发布于{" "}
-                {dayjs.default(article.createAt).format("YYYY-MM-DD HH:mm:ss")}
-              </span>
-              <span> • </span>
-              <span>阅读量 {article.views}</span>
-            </p>
-          </div>
 
-          <div className={style.content}>
-            <div
-              ref={ref}
-              className={cls("markdown", style.markdown)}
-              dangerouslySetInnerHTML={{ __html: article.html }}
-            ></div>
-            <div className={style.tags}>
-              <div>
-                <span>标签：</span>
-                {article.tags.map(tag => {
-                  return (
-                    <div className={style.tag} key={tag.id}>
-                      <Link href={"/?tag=" + tag.label}>
-                        <a>
-                          <span>{tag.label}</span>
-                        </a>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
+          <article>
+            {setting.systemUrl && (
+              <meta
+                itemProp="url"
+                content={url.resolve(setting.systemUrl, "article/", article.id)}
+              />
+            )}
+            <meta itemProp="headline" content={article.title} />
+            {article.tags && (
+              <meta
+                itemProp="keywords"
+                content={article.tags.map(tag => tag.label).join(" ")}
+              />
+            )}
+            <meta itemProp="dataPublished" content={article.updateAt} />
+            {article.cover && <meta itemProp="image" content={article.cover} />}
+            <div className={style.meta}>
+              {article.cover && (
+                <img
+                  className={style.cover}
+                  src={article.cover}
+                  alt="文章封面"
+                />
+              )}
+              <h1 className={style.title}>{article.title}</h1>
+              <p className={style.desc}>
+                <span>
+                  发布于{" "}
+                  {dayjs
+                    .default(article.createAt)
+                    .format("YYYY-MM-DD HH:mm:ss")}
+                </span>
+                <span> • </span>
+                <span>阅读量 {article.views}</span>
+              </p>
             </div>
-            {/* S 评论 */}
-            {article.isCommentable && (
-              <div className={style.comments}>
-                <p className={style.title}>评论</p>
-                <div className={style.commentContainer}>
-                  <MyComment articleId={article.id} />
+
+            <div className={style.content}>
+              <div
+                ref={ref}
+                className={cls("markdown", style.markdown)}
+                dangerouslySetInnerHTML={{ __html: article.html }}
+              ></div>
+              <div className={style.tags}>
+                <div>
+                  <span>标签：</span>
+                  {article.tags.map(tag => {
+                    return (
+                      <div className={style.tag} key={tag.id}>
+                        <Link href={"/?tag=" + tag.label}>
+                          <a>
+                            <span>{tag.label}</span>
+                          </a>
+                        </Link>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            )}
-            {/* E 评论 */}
-          </div>
+            </div>
+          </article>
+
+          {/* S 评论 */}
+          {article.isCommentable && (
+            <div className={style.comments}>
+              <p className={style.title}>评论</p>
+              <div className={style.commentContainer}>
+                <MyComment articleId={article.id} />
+              </div>
+            </div>
+          )}
+          {/* E 评论 */}
 
           {/* S 文章目录 */}
           {/* {Array.isArray(tocs) && (
