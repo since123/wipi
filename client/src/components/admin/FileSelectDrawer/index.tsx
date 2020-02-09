@@ -67,6 +67,7 @@ export const FileSelectDrawer: React.FC<IFileProps> = ({
           sm: 3
         }}
         dataSource={files}
+        pagination={{ pageSize: 9 }}
         renderItem={file => (
           <List.Item>
             <Card

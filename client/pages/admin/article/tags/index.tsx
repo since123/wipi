@@ -80,7 +80,7 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
   return (
     <AdminLayout padding={0} background={"transparent"}>
       <Row gutter={16} className={style.wrapper}>
-        <Col sm={9}>
+        <Col xs={24} sm={24} md={9}>
           <Card title={isCreateMode ? "添加标签" : "管理标签"} bordered={true}>
             <Row>
               <Input.Group compact>
@@ -150,12 +150,12 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
             </div>
           </Card>
         </Col>
-        <Col sm={15}>
+        <Col xs={24} sm={24} md={15}>
           <Card title="所有标签" bordered={true}>
             <List
               grid={{
                 gutter: 16,
-                sm: 4,
+                sm: 3,
                 md: 4
               }}
               dataSource={tags}
@@ -170,10 +170,14 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
                       setNewIcon(tag.icon);
                     }}
                   >
-                    <span className={style.icon}>
-                      <img src={tag.icon} alt={tag.label} />
+                    <span>
+                      {tag.icon && (
+                        <span className={style.icon}>
+                          <img src={tag.icon} alt={tag.label} />
+                        </span>
+                      )}
+                      <span>{tag.label}</span>
                     </span>
-                    <span>{tag.label}</span>
                   </a>
                 </List.Item>
               )}

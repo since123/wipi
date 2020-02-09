@@ -35,6 +35,7 @@ export const SEOSetting = ({ setting }) => {
       <Form.Item label="描述信息">
         <Input.TextArea
           placeholder="请输入描述信息"
+          rows={6}
           value={seoDesc}
           onChange={e => {
             setSeoDesc(e.target.value);

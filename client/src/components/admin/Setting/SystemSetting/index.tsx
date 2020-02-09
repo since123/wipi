@@ -55,7 +55,7 @@ export const SystemSetting = ({ setting }) => {
       </Form.Item>
       <Form.Item label="Logo">
         <Input
-          placeholder="请输入 logo 链接或选择文件"
+          placeholder="请输入 logo 链接或选择文件，也可输入 html"
           addonAfter={
             <Icon
               type="file-image"
@@ -92,7 +92,7 @@ export const SystemSetting = ({ setting }) => {
       <Form.Item label="页脚信息">
         <Input.TextArea
           placeholder="请输入页脚信息"
-          rows={6}
+          rows={8}
           value={systemFooterInfo}
           onChange={e => {
             setSystemFooterInfo(e.target.value);

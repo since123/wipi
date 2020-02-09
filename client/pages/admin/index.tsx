@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPage } from "next";
 import Link from "next/link";
-import { Row, Col, Statistic, List, Card, Avatar } from "antd";
+import { Row, Col, Statistic, List, Card } from "antd";
 import { AdminLayout } from "@/layout/AdminLayout";
 import { ArticleProvider } from "@providers/article";
 import { CommentProvider } from "@providers/comment";

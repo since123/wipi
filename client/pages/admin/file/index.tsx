@@ -192,14 +192,24 @@ const File: NextPage<IFileProps> = ({ files: defaultFiles = [] }) => {
               <DescriptionItem
                 title="访问链接"
                 content={
-                  <div
-                    className={style.urlContainer}
-                    onClick={() => {
-                      copy(currentFile && currentFile.url);
-                    }}
-                  >
-                    {currentFile && currentFile.url}
-                  </div>
+                  <>
+                    <div
+                      className={style.urlContainer}
+                      onClick={() => {
+                        copy(currentFile && currentFile.url);
+                      }}
+                    >
+                      {currentFile && currentFile.url}
+                    </div>
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        copy(currentFile && currentFile.url);
+                      }}
+                    >
+                      复制
+                    </Button>
+                  </>
                 }
               />
             </Col>
