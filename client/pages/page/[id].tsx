@@ -50,35 +50,35 @@ const Page: NextPage<IProps> = ({ page }) => {
     }
   }, []);
 
-  return !page ? (
+  return (
     <Layout backgroundColor="#fff">
-      <p>页面不存在</p>
-    </Layout>
-  ) : (
-    <Layout backgroundColor="#fff">
-      <Row gutter={16}>
-        <Col sm={24} className={style.container}>
-          <div className={style.meta}>
-            {page.cover && (
-              <img className={style.cover} src={page.cover} alt="文章封面" />
-            )}
-          </div>
-          <div className={style.content}>
-            <div
-              ref={ref}
-              className={"markdown"}
-              dangerouslySetInnerHTML={{ __html: page.html }}
-            ></div>
+      {!page ? (
+        <p>页面不存在</p>
+      ) : (
+        <Row gutter={16}>
+          <Col sm={24} className={style.container}>
+            <div className={style.meta}>
+              {page.cover && (
+                <img className={style.cover} src={page.cover} alt="文章封面" />
+              )}
+            </div>
+            <div className={style.content}>
+              <div
+                ref={ref}
+                className={"markdown"}
+                dangerouslySetInnerHTML={{ __html: page.html }}
+              ></div>
 
-            <div className={style.comments}>
-              <p className={style.title}>评论</p>
-              <div className={style.commentContainer}>
-                <MyComment articleId={page.id} />
+              <div className={style.comments}>
+                <p className={style.title}>评论</p>
+                <div className={style.commentContainer}>
+                  <MyComment articleId={page.id} />
+                </div>
               </div>
             </div>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      )}
     </Layout>
   );
 };
