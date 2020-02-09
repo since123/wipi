@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { PageProvider } from "@providers/page";
 
-export const defaultMenus = [
+const defaultMenus = [
   {
     label: "首页",
     path: "/"
@@ -12,11 +13,22 @@ export const defaultMenus = [
   }
 ];
 
-const defaultValue: { menus: any } = { menus: defaultMenus };
-export const context = React.createContext(defaultValue);
-export const { Provider, Consumer } = context;
+let cache = null;
 
 export const useMenus = () => {
-  const { menus } = useContext(context);
-  return menus;
+  const [, setMounted] = useState(false);
+  const value = useRef(cache);
+
+  useEffect(() => {
+    if (!cache) {
+      PageProvider.getAllPublisedPages().then(res => {
+        const arr = res.map(r => ({ path: `/page/` + r.path, label: r.name }));
+        value.current = arr;
+        cache = arr;
+        setMounted(true);
+      });
+    }
+  }, []);
+
+  return value.current ? [...defaultMenus, ...value.current] : defaultMenus;
 };
