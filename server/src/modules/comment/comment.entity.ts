@@ -32,6 +32,9 @@ export class Comment {
   @Column({ type: 'boolean', default: false })
   pass: boolean; // 是否审核通过
 
+  @Column({ type: 'boolean', default: false })
+  isInPage: boolean; // 是否评论动态页面
+
   @CreateDateColumn({
     type: 'datetime',
     comment: '创建时间',

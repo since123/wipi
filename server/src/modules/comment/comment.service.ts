@@ -58,7 +58,7 @@ export class CommentService {
   async create(
     comment: Partial<Comment> & { reply?: string }
   ): Promise<Comment> {
-    const { articleId, name, email, content, reply } = comment;
+    const { articleId, name, email, content, reply, isInPage } = comment;
 
     if (!articleId || !name || !email || !content) {
       throw new HttpException('缺失参数', HttpStatus.BAD_REQUEST);
@@ -103,13 +103,11 @@ export class CommentService {
             <div>
               <p><a href="${url.resolve(
                 systemUrl,
-                '/article/' + articleId
-              )}">${url.resolve(systemUrl, '/article/' + articleId)}</a></p>
-              <p>或者</p>
-              <p><a href="${url.resolve(
-                systemUrl,
-                '/article/' + articleId
-              )}">${url.resolve(systemUrl, '/page/' + articleId)}</a></p>
+                `/${isInPage ? 'page' : 'article'}/` + articleId
+              )}">${url.resolve(
+              systemUrl,
+              `/${isInPage ? 'page' : 'article'}/` + articleId
+            )}</a></p>
             </div>
           </div>
         </div>
