@@ -60,6 +60,7 @@ const Comment: NextPage<IProps> = ({
     CommentProvider.addComment(data).then(() => {
       setSelectedComment(null);
       message.success("回复成功");
+      setReplyContent("");
       getComments();
     });
   }, [selectedComment, replyContent]);
@@ -171,7 +172,8 @@ const Comment: NextPage<IProps> = ({
           onCancel={() => setSelectedComment(null)}
         >
           <Input.TextArea
-            rows={8}
+            rows={10}
+            placeholder="支持 Markdown"
             value={replyContent}
             onChange={e => {
               let val = e.target.value;
