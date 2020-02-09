@@ -27,7 +27,7 @@ export const RecentArticles = () => {
       <ul>
         {articles.current.slice(0, 5).map(article => (
           <li key={article.id}>
-            <Link href={`/article/` + article.id}>
+            <Link href={`/article/` + article.id} prefetch={false}>
               <a>{article.title}</a>
             </Link>
           </li>
