@@ -1,5 +1,6 @@
 import App from "next/app";
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
+import "@/theme/antd.less";
 import "@/theme/reset.scss";
 import "@/theme/markdown.scss";
 
