@@ -97,7 +97,7 @@ export class CommentService {
         ? {
             subject: '评论回复通知',
             html: `
-        <div style="text-align: center; background: rgb(246, 246, 246);">
+        <div style="padding: 15px; background: rgb(246, 246, 246);">
           <div style="width: 640px; background: '#fff;">
             <p style="color: #009a61; ">您的评论已被回复，前往以下链接查看：</p>
             <div>
@@ -118,7 +118,7 @@ export class CommentService {
         : {
             subject: '新评论通知',
             html: `
-        <div style="text-align: center; background: rgb(246, 246, 246);">
+        <div style="padding: 16px; background: rgb(246, 246, 246);">
           <div style="width: 640px; background: '#fff;">
             <p>评论人：${comment.name}</p>
             <p>评论内容：${comment.content}</p>
