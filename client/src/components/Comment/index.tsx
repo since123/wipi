@@ -40,6 +40,7 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
 
     if (!regexp.test(email)) {
       message.error("请输入合法邮箱地址");
+      return;
     }
 
     const data = {
@@ -207,6 +208,7 @@ export const MyComment: React.FC<IProps> = ({ articleId }) => {
 
     if (!regexp.test(email)) {
       message.error("请输入合法邮箱地址");
+      return;
     }
 
     const data = { articleId, name, email, content };
