@@ -103,7 +103,7 @@ const Article: NextPage<IArticleProps> = ({
     render: (_, record) => (
       <span>
         <Link
-          href={`/admin/article/editor/[id]` + record.id}
+          href={`/admin/article/editor/[id]`}
           as={`/admin/article/editor/` + record.id}
         >
           <a>编辑</a>
