@@ -1,12 +1,9 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React from "react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { Row, Col, Timeline } from "antd";
 import { Layout } from "@/layout/Layout";
 import { ArticleProvider } from "@providers/article";
-import { RecentArticles } from "@components/RecentArticles";
-import { Tags } from "@components/Tags";
 import style from "./index.module.scss";
 
 interface IProps {
@@ -20,7 +17,7 @@ const ArchiveItem = ({ year, articles = [] }) => {
       <Timeline>
         {articles.map(article => (
           <Timeline.Item key={article.id}>
-            <Link href={`/article/` + article.id}>
+            <Link href={`/article/` + article.id} prefetch={false}>
               <a>{article.title}</a>
             </Link>
           </Timeline.Item>
@@ -43,21 +40,13 @@ const Archives: NextPage<IProps> = ({ articles }) => {
             })}
           </div>
         </Col>
-        {/* <Col sm={8}>
-          <div className={style.widget}>
-            <RecentArticles />
-          </div>
-          <div className={style.widget}>
-            <Tags />
-          </div>
-        </Col> */}
       </Row>
     </Layout>
   );
 };
 
 // 服务端预取数据
-Archives.getInitialProps = async ctx => {
+Archives.getInitialProps = async () => {
   const articles = await ArticleProvider.getArchives();
   return { articles };
 };
