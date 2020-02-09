@@ -8,6 +8,8 @@ import { UserService } from '../user/user.service';
 import { marked } from '../article/markdown.util';
 import { Comment } from './comment.entity';
 
+const url = require('url');
+
 /**
  * 扁平接口评论转为树形评论
  * @param list
@@ -95,13 +97,20 @@ export class CommentService {
         ? {
             subject: '评论回复通知',
             html: `
-        <div>
-          <p>您的评论已被回复。</p>
-          <p>前往以下链接查看：</p>
-          <div>
-          ${systemUrl + '/article/' + articleId}
-          <br />
-          ${systemUrl + '/page/' + articleId}
+        <div style="text-align: center; background: rgb(246, 246, 246);">
+          <div style="width: 640px; background: '#fff;">
+            <p style="color: #009a61; ">您的评论已被回复，前往以下链接查看：</p>
+            <div>
+              <p><a href="${url.resolve(
+                systemUrl,
+                '/article/' + articleId
+              )}">${url.resolve(systemUrl, '/article/' + articleId)}</a></p>
+              <p>或者</p>
+              <p><a href="${url.resolve(
+                systemUrl,
+                '/article/' + articleId
+              )}">${url.resolve(systemUrl, '/page/' + articleId)}</a></p>
+            </div>
           </div>
         </div>
       `,
@@ -109,10 +118,15 @@ export class CommentService {
         : {
             subject: '新评论通知',
             html: `
-        <div>
-          <p>评论人：${comment.name}</p>
-          <p>评论内容：${comment.content}</p>
-          <a href="${systemUrl}/admin/comment" target="_blank">前往审核</a>
+        <div style="text-align: center; background: rgb(246, 246, 246);">
+          <div style="width: 640px; background: '#fff;">
+            <p>评论人：${comment.name}</p>
+            <p>评论内容：${comment.content}</p>
+            <p><a href="${url.resolve(
+              systemUrl,
+              'admin/comment'
+            )}" target="_blank">前往审核</a></p>
+          </div>
         </div>
       `,
           }),
