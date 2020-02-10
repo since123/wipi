@@ -26,6 +26,9 @@ import { SMTP } from './modules/smtp/smtp.entity';
 // 页面模块
 import { PageModule } from './modules/page/page.module';
 import { Page } from './modules/page/page.entity';
+// 访问统计模块
+import { ViewModule } from './modules/view/view.module';
+import { View } from './modules/view/view.entity';
 
 // docker run --name wipi-redis -p 6379:6379 -d  --restart=always redis redis-server --appendonly yes --requirepass 'wipi'
 // docker exec -it wipi-redis redis-cli -a wipi
@@ -40,7 +43,7 @@ import { Page } from './modules/page/page.entity';
       password: 'root',
       database: 'wipi',
       charset: 'utf8mb4',
-      entities: [User, File, Tag, Article, Comment, Setting, SMTP, Page],
+      entities: [User, File, Tag, Article, Comment, Setting, SMTP, Page, View],
       synchronize: true,
     }),
     UserModule,
@@ -52,6 +55,7 @@ import { Page } from './modules/page/page.entity';
     SMTPModule,
     AuthModule,
     PageModule,
+    ViewModule,
   ],
   controllers: [],
   providers: [],
