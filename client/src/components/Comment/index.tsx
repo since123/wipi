@@ -12,13 +12,15 @@ interface ICommemtItemProps {
   comment: IComment;
   getComments: () => void;
   isInPage?: boolean; // 为 true 时，评论组件在动态页面而非文章
+  depth?: number; // 第几层嵌套
 }
 const CommentItem: React.FC<ICommemtItemProps> = ({
   children,
   articleId,
   comment,
   getComments,
-  isInPage = false
+  isInPage = false,
+  depth = 1
 }) => {
   const [isReply, setReply] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,6 +58,7 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
 
   return (
     <Comment
+      style={depth > 1 ? { marginLeft: -44 } : {}}
       actions={
         isReply
           ? [
@@ -150,7 +153,13 @@ interface IProps {
   isInPage?: boolean; // 为 true 时，评论组件在动态页面而非文章
 }
 
-const renderCommentList = (articleId, comments = [], getComments, isInPage) => {
+const renderCommentList = (
+  articleId,
+  comments = [],
+  getComments,
+  isInPage,
+  depth = 0
+) => {
   return (
     <>
       {comments.map(comment => {
@@ -161,13 +170,15 @@ const renderCommentList = (articleId, comments = [], getComments, isInPage) => {
             comment={comment}
             getComments={getComments}
             isInPage={isInPage}
+            depth={depth}
           >
             {comment.children
               ? renderCommentList(
                   articleId,
                   comment.children,
                   getComments,
-                  isInPage
+                  isInPage,
+                  depth + 1
                 )
               : null}
           </CommentItem>

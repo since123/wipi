@@ -1,7 +1,16 @@
 import React, { useState, useCallback } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
-import { Table, Divider, Badge, Popconfirm, Modal, Input, message } from "antd";
+import {
+  Table,
+  Divider,
+  Badge,
+  Button,
+  Popconfirm,
+  Modal,
+  Input,
+  message
+} from "antd";
 import * as dayjs from "dayjs";
 import { AdminLayout } from "@/layout/AdminLayout";
 import { CommentProvider } from "@/providers/comment";
@@ -20,6 +29,9 @@ const Comment: NextPage<IProps> = ({
   const [comments, setComments] = useState<IComment[]>(defaultComments);
   const [selectedComment, setSelectedComment] = useState(null);
   const [replyContent, setReplyContent] = useState(null);
+
+  // 查看 html
+  const [htmlVisible, setHTMLVisible] = useState(false);
 
   // 获取评论
   const getComments = useCallback(() => {
@@ -86,9 +98,21 @@ const Comment: NextPage<IProps> = ({
     },
     {
       title: "内容",
-      dataIndex: "content",
-      key: "content",
-      width: 160
+      dataIndex: "html",
+      key: "html",
+      width: 160,
+      render: (_, record) => (
+        <Button
+          type="link"
+          style={{ paddingLeft: 0 }}
+          onClick={() => {
+            setSelectedComment(record);
+            setHTMLVisible(true);
+          }}
+        >
+          点击查看
+        </Button>
+      )
     },
     {
       title: "父级评论",
@@ -168,7 +192,7 @@ const Comment: NextPage<IProps> = ({
         />
         <Modal
           title={"回复评论"}
-          visible={selectedComment}
+          visible={selectedComment && !htmlVisible}
           cancelText={"取消"}
           okText={"回复"}
           onOk={reply}
@@ -183,6 +207,22 @@ const Comment: NextPage<IProps> = ({
               setReplyContent(val);
             }}
           ></Input.TextArea>
+        </Modal>
+        <Modal
+          title={"评论详情"}
+          visible={htmlVisible}
+          footer={null}
+          onCancel={() => {
+            setSelectedComment(null);
+            setHTMLVisible(false);
+          }}
+        >
+          <div
+            className="markdown"
+            dangerouslySetInnerHTML={{
+              __html: selectedComment && selectedComment.html
+            }}
+          ></div>
         </Modal>
       </div>
     </AdminLayout>
