@@ -65,6 +65,18 @@ const menus = [
   },
 
   {
+    icon: "project",
+    label: "访问统计",
+    path: "/admin/view"
+  },
+
+  {
+    icon: "mail",
+    label: "邮件管理",
+    path: "/admin/mail"
+  },
+
+  {
     icon: "setting",
     label: "系统设置",
     path: "/admin/setting"
@@ -74,12 +86,6 @@ const menus = [
     label: "个人中心",
     icon: "user",
     path: "/admin/ownspace"
-  },
-
-  {
-    icon: "project",
-    label: "访问统计",
-    path: "/admin/view"
   }
 ];
 

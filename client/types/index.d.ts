@@ -76,3 +76,13 @@ interface IView {
   createAt: string;
   updateAt: string;
 }
+
+interface IMail {
+  id: string;
+  from: string;
+  to: string;
+  subject: number;
+  text: string;
+  html: string;
+  createAt: string;
+}

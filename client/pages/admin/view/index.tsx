@@ -59,7 +59,7 @@ const Views: NextPage = () => {
   // 删除评论
   const deleteView = useCallback(id => {
     ViewProvider.deleteView(id).then(() => {
-      message.success("评论删除成功");
+      message.success("访问删除成功");
       getViews();
     });
   }, []);
