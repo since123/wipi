@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { Row, List } from "antd";
 import * as dayjs from "dayjs";
+import LazyLoad from "react-lazyload";
 import { TagProvider } from "@/providers/tag";
 import { Layout } from "@/layout/Layout";
 import { TagMenus } from "@components/TagMenus";
@@ -40,7 +41,11 @@ const Home: NextPage<IHomeProps> = ({ articles = [] }) => {
               <div>
                 <Link href={`/article/[id]`} as={`/article/${article.id}`}>
                   <a>
-                    {article.cover && <img src={article.cover} alt="" />}
+                    {article.cover && (
+                      <LazyLoad height={180}>
+                        <img src={article.cover} alt="cover" />
+                      </LazyLoad>
+                    )}
                     <div className={style.info}>
                       <p className={style.title}>{article.title}</p>
                       <p className={style.desc}>{article.summary}</p>
