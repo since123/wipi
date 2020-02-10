@@ -55,7 +55,7 @@ const Home: NextPage<IHomeProps> = ({
         </Col>
       </Row>
       <Row gutter={16} style={{ marginTop: 16 }}>
-        <Col xs={24} sm={16}>
+        <Col xs={24} sm={14}>
           <Card title="最新文章" bordered={false}>
             <List
               itemLayout="horizontal"
@@ -82,14 +82,16 @@ const Home: NextPage<IHomeProps> = ({
           </Card>
         </Col>
 
-        <Col xs={24} sm={8}>
+        <Col xs={24} sm={10}>
           <Card title="最新评论" bordered={false}>
             <List
               itemLayout="horizontal"
-              dataSource={comments.slice(0, 5)}
+              pagination={{ pageSize: 8 }}
+              dataSource={comments}
               renderItem={comment => (
-                <List.Item>
+                <List.Item style={{ width: "100%" }}>
                   <List.Item.Meta
+                    style={{ width: "100%" }}
                     title={
                       <Link href={`/admin/comment/`}>
                         <a>
@@ -97,7 +99,11 @@ const Home: NextPage<IHomeProps> = ({
                         </a>
                       </Link>
                     }
-                    description={comment.content}
+                    description={
+                      <div className={style.commentContent}>
+                        {comment.content}
+                      </div>
+                    }
                   />
                 </List.Item>
               )}
