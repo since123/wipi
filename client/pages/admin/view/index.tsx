@@ -78,7 +78,7 @@ const Views: NextPage = () => {
       width: "30%"
     },
     {
-      title: "联系方式",
+      title: "URL",
       dataIndex: "url",
       key: "url",
       width: "20%"
