@@ -99,7 +99,7 @@ export class CommentService {
             html: `
         <div style="padding: 15px; background: rgb(246, 246, 246);">
           <div style="width: 640px; background: '#fff;">
-            <p style="color: #009a61; ">您的评论已被回复，前往以下链接查看：</p>
+            <p style="color: #009a61; ">您的评论已被回复，点击链接前往查看：</p>
             <div>
               <p><a href="${url.resolve(
                 systemUrl,
