@@ -77,8 +77,8 @@ export class ArticleService {
    */
   async getArchives(): Promise<{ [key: string]: Article[] }> {
     const data = await this.articleRepository.find({
-      status: 'publish',
-      order: { updateAt: 'DESC' },
+      where: { status: 'publish' },
+      order: { createAt: 'DESC' },
     } as any);
     let ret = {};
 
