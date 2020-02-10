@@ -136,15 +136,20 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
               <strong>{parentComment.name}</strong>
             </>
           ) : null}
-          {" • "}
+          {"  "}
           <span>{format(comment.createAt, "zh_CN")}</span>
         </a>
       }
       avatar={null}
       content={
-        <div>
+        <div
+          className={cls(
+            style.commentContent,
+            !isReply ? style.addLine : false
+          )}
+        >
           <div
-            className={cls("markdown", style.commentContent)}
+            className={cls("markdown")}
             dangerouslySetInnerHTML={{ __html: comment.html }}
           ></div>
           {isReply ? (
@@ -168,7 +173,6 @@ const CommentItem: React.FC<ICommemtItemProps> = ({
                     >
                       收起
                     </Button>
-                    ,
                     <Button
                       type="primary"
                       size="small"

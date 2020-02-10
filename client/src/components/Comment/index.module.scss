@@ -7,7 +7,25 @@
 }
 
 .commentContent {
-  background-color: transparent !important;
+  position: relative;
+
+  &.addLine {
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      pointer-events: none;
+      border-bottom: 1px solid rgba(217, 217, 217, 0.5);
+    }
+  }
+
+  :global {
+    .markdown {
+      background-color: transparent !important;
+    }
+  }
 
   p {
     margin: 0;
