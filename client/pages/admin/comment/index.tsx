@@ -65,6 +65,7 @@ const Comment: NextPage<IProps> = ({
     const reply = selectedComment.email;
     const data = {
       reply,
+      isInPage: selectedComment.isInPage,
       parentCommentId: selectedComment.id,
       articleId: selectedComment.articleId,
       name: userInfo.name || "作者",
