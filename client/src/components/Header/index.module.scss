@@ -39,6 +39,7 @@ header {
     height: $height;
     line-height: $height;
     text-align: left;
+    color: #333;
 
     img {
       width: 32px;
@@ -82,6 +83,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: #333;
 
     ul {
       li {
