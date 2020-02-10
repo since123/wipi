@@ -1,6 +1,6 @@
 import App from "next/app";
 import { ViewProvider } from "@providers/view";
-import "antd/dist/antd.less";
+// import "antd/dist/antd.less";
 import "@/theme/antd.less";
 import "@/theme/reset.scss";
 import "@/theme/markdown.scss";
