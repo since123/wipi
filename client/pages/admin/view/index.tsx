@@ -28,7 +28,7 @@ const Views: NextPage = () => {
   }, []);
 
   const [uvs, totalUV] = useMemo(() => {
-    let total = views.length;
+    let total = Array.from(new Set(views.map(view => view.userAgent))).length;
     let uvs = views.reduce((a, c) => {
       if (!a[c.url]) {
         a[c.url] = 0;
