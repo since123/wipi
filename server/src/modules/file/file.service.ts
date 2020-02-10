@@ -30,6 +30,7 @@ export class FileService {
       ossAccessKeyId,
       ossBucket,
       ossAccessKeySecret,
+      ossHttps,
     } = await this.settingService.findAll(null, true);
     if (!ossRegion || !ossAccessKeyId || !ossBucket || !ossAccessKeySecret) {
       throw new HttpException('请完善 OSS 配置', HttpStatus.BAD_REQUEST);
@@ -39,6 +40,7 @@ export class FileService {
       accessKeyId: ossAccessKeyId,
       accessKeySecret: ossAccessKeySecret,
       bucket: ossBucket,
+      secure: ossHttps,
     });
     const { url } = await client.put(filename, buffer);
     const newFile = await this.fileRepository.create({
@@ -82,6 +84,7 @@ export class FileService {
       ossAccessKeyId,
       ossBucket,
       ossAccessKeySecret,
+      ossHttps,
     } = await this.settingService.findAll(null, true);
     if (!ossRegion || !ossAccessKeyId || !ossBucket || !ossAccessKeySecret) {
       throw new HttpException('请完善 OSS 配置', HttpStatus.BAD_REQUEST);
@@ -91,6 +94,7 @@ export class FileService {
       accessKeyId: ossAccessKeyId,
       accessKeySecret: ossAccessKeySecret,
       bucket: ossBucket,
+      secure: ossHttps,
     });
     await client.delete(tag.filename);
     return this.fileRepository.remove(tag);

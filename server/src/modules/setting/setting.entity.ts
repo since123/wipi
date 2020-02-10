@@ -41,6 +41,9 @@ export class Setting {
   @Column({ type: 'text', default: null })
   ossAccessKeySecret: string; // 阿里云  accessKeySecret
 
+  @Column({ type: 'boolean', default: false })
+  ossHttps: boolean; // 阿里云 oss 是否开启 https
+
   @Column({ type: 'text', default: null })
   ossBucket: string; // 阿里云 bucket
 
