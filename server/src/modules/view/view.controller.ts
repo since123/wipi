@@ -13,12 +13,16 @@ import { ViewService } from './view.service';
 import { View } from './view.entity';
 
 function getClientIP(req) {
-  return (
+  const ip =
+    req.ip ||
     req.headers['x-forwarded-for'] || // 判断是否有反向代理 IP
-    req.connection.remoteAddress || // 判断 connection 的远程 IP
-    req.socket.remoteAddress || // 判断后端的 socket 的 IP
-    req.connection.socket.remoteAddress
-  );
+    (req.connection && req.connection.remoteAddress) || // 判断 connection 的远程 IP
+    (req.socket && req.socket.remoteAddress) || // 判断后端的 socket 的 IP
+    (req.connection &&
+      req.connection.socket &&
+      req.connection.socket.remoteAddress);
+
+  return ip.split(':').pop();
 }
 
 @Controller('view')

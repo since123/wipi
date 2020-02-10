@@ -14,10 +14,10 @@ export class View {
   @Column()
   ip: string;
 
-  @Column()
+  @Column({ type: 'text', default: null })
   userAgent: string;
 
-  @Column()
+  @Column({ type: 'text', default: null })
   url: string;
 
   @Column({ default: 1 })
