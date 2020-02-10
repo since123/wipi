@@ -2,10 +2,12 @@ import React, { useState, useCallback } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
 import {
+  Row,
+  Col,
+  Button,
   Table,
   Divider,
   Badge,
-  Button,
   Popconfirm,
   Modal,
   Input,
@@ -185,6 +187,13 @@ const Comment: NextPage<IProps> = ({
   return (
     <AdminLayout>
       <div className={style.wrapper}>
+        <Row style={{ marginBottom: 16 }}>
+          <Col sm={24} style={{ textAlign: "right" }}>
+            <Button onClick={getComments} icon="reload">
+              刷新
+            </Button>
+          </Col>
+        </Row>
         <Table
           columns={[...columns, actionColumn]}
           dataSource={comments}
