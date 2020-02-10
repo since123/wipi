@@ -85,7 +85,9 @@ const TagPage: NextPage<ITagProps> = ({ tags: defaultTags = [] }) => {
         <Col xs={24} sm={24} md={9}>
           <Card title={isCreateMode ? "添加标签" : "管理标签"} bordered={true}>
             <Form.Item style={{ textAlign: "center" }}>
-              <Avatar style={{ cursor: "pointer" }} size={32} src={icon} />
+              <div onClick={() => setVisible(true)}>
+                <Avatar style={{ cursor: "pointer" }} size={32} src={icon} />
+              </div>
             </Form.Item>
             <Form.Item>
               <Input
