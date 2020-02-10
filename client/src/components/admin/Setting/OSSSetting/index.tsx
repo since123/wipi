@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, Switch, message } from "antd";
 import { FileSelectDrawer } from "@components/admin/FileSelectDrawer";
 import { SettingProvider } from "@providers/setting";
 
@@ -10,12 +10,14 @@ export const OSSSetting = ({ setting }) => {
   const [ossAccessKeyId, setOssAccessKeyId] = useState(null);
   const [ossAccessKeySecret, setOssAccessKeySecret] = useState(null);
   const [ossBucket, setOssBucket] = useState(null);
+  const [ossHttps, setOssHttps] = useState(false);
 
   useEffect(() => {
     setOssRegion((setting && setting.ossRegion) || null);
     setOssAccessKeyId((setting && setting.ossAccessKeyId) || null);
     setOssAccessKeySecret((setting && setting.ossAccessKeySecret) || null);
     setOssBucket((setting && setting.ossBucket) || null);
+    setOssHttps((setting && setting.ossHttps) || false);
   }, [setting]);
 
   const save = () => {
@@ -23,7 +25,8 @@ export const OSSSetting = ({ setting }) => {
       ossRegion,
       ossAccessKeyId,
       ossAccessKeySecret,
-      ossBucket
+      ossBucket,
+      ossHttps
     };
     SettingProvider.updateSetting(data).then(res => {
       message.success("保存成功");
@@ -67,6 +70,9 @@ export const OSSSetting = ({ setting }) => {
             setOssBucket(e.target.value);
           }}
         />
+      </Form.Item>
+      <Form.Item label="HTTPS">
+        <Switch checked={ossHttps} onChange={setOssHttps} />
       </Form.Item>
       <FileSelectDrawer
         visible={visible}
