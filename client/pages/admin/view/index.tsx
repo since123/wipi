@@ -164,6 +164,7 @@ const Views: NextPage = () => {
                 <Badge
                   count={totalUV}
                   showZero={true}
+                  overflowCount={Infinity}
                   style={{ backgroundColor: "#f50" }}
                 />
               </Form.Item>
@@ -171,6 +172,7 @@ const Views: NextPage = () => {
                 <Badge
                   count={totalPV}
                   showZero={true}
+                  overflowCount={Infinity}
                   style={{ backgroundColor: "#2db7f5" }}
                 />
               </Form.Item>
