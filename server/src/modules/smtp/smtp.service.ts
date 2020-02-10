@@ -45,7 +45,7 @@ export class SMTPService {
    * 获取所有邮件
    */
   async findAll(): Promise<SMTP[]> {
-    return this.smtpRepository.find();
+    return this.smtpRepository.find({ order: { createAt: 'DESC' } });
   }
 
   /**
