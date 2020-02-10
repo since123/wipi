@@ -169,6 +169,7 @@ export class CommentService {
       .createQueryBuilder('comment')
       .where('comment.articleId=:articleId')
       .andWhere('comment.pass=:pass')
+      .orderBy('comment.createAt', 'DESC')
       .setParameter('articleId', articleId)
       .setParameter('pass', true)
       .getMany();
