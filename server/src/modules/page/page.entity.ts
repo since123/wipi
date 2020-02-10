@@ -20,10 +20,10 @@ export class Page {
   @Column()
   path: string; // 页面路径
 
-  @Column({ type: 'text', default: null })
+  @Column({ type: 'mediumtext', default: null, charset: 'utf8mb4' })
   content: string; // 原始内容
 
-  @Column({ type: 'text', default: null })
+  @Column({ type: 'mediumtext', default: null, charset: 'utf8mb4' })
   html: string; // 格式化内容，自动生成
 
   @Column({ type: 'text', default: null })

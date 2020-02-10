@@ -23,10 +23,10 @@ export class Comment {
   @Column()
   email: string; // 联系方式
 
-  @Column({ type: 'text', default: null }) // 评论内容
+  @Column({ type: 'mediumtext', default: null, charset: 'utf8mb4' }) // 评论内容
   content: string;
 
-  @Column({ type: 'text', default: null }) // 评论内容
+  @Column({ type: 'mediumtext', default: null, charset: 'utf8mb4' }) // 评论内容
   html: string;
 
   @Column({ type: 'boolean', default: false })
