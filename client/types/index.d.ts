@@ -67,3 +67,12 @@ interface IComment {
   article?: IArticle;
   isInPage: boolean;
 }
+
+interface IView {
+  id: string;
+  userAgent: string;
+  url: string;
+  count: number;
+  createAt: string;
+  updateAt: string;
+}

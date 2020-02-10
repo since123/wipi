@@ -1,7 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
 import Router from "next/router";
-import { showLogin } from "@/layout/AdminLayout";
 
 export const httpProvider = axios.create({
   baseURL:
@@ -32,7 +31,8 @@ httpProvider.interceptors.request.use(
 httpProvider.interceptors.response.use(
   data => {
     if (data.status && data.status == 200 && data.data.status == "error") {
-      message.error({ message: data.data.msg });
+      typeof window !== "undefined" &&
+        message.error({ message: data.data.msg });
       return;
     }
 
@@ -52,20 +52,21 @@ httpProvider.interceptors.response.use(
       switch (status) {
         case 504:
         case 404:
-          message.error("服务器异常");
+          typeof window !== "undefined" && message.error("服务器异常");
           break;
 
         case 403:
         case 401:
-          message.info("请重新登录");
+          typeof window !== "undefined" && message.info("请重新登录");
           Router.push("/admin/login");
           break;
 
         default:
-          message.error(
-            (err.response && err.response.data && err.response.data.msg) ||
-              "未知错误!"
-          );
+          typeof window !== "undefined" &&
+            message.error(
+              (err.response && err.response.data && err.response.data.msg) ||
+                "未知错误!"
+            );
       }
     }
 

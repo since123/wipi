@@ -1,8 +1,19 @@
 import App from "next/app";
+import { ViewProvider } from "@providers/view";
 import "antd/dist/antd.less";
 import "@/theme/antd.less";
 import "@/theme/reset.scss";
 import "@/theme/markdown.scss";
+
+let lastUrl;
+
+const addView = url => {
+  if (/admin/.test(url)) {
+    return;
+  }
+
+  ViewProvider.addView({ url });
+};
 
 class MyApp extends App {
   componentDidMount() {
@@ -10,6 +21,21 @@ class MyApp extends App {
       const el = document.querySelector("#holderStyle");
       el.parentNode.removeChild(el);
     } catch (e) {}
+
+    const url = window.location.href;
+    lastUrl = url;
+    addView(url);
+  }
+
+  componentDidUpdate() {
+    const url = window.location.href;
+
+    if (url === lastUrl) {
+      return;
+    }
+
+    lastUrl = url;
+    addView(url);
   }
 
   render() {

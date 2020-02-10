@@ -60,7 +60,7 @@ const menus = [
 
   {
     icon: "folder-open",
-    label: "文件",
+    label: "文件库",
     path: "/admin/file"
   },
 
@@ -74,6 +74,12 @@ const menus = [
     label: "个人中心",
     icon: "user",
     path: "/admin/ownspace"
+  },
+
+  {
+    icon: "project",
+    label: "访问统计",
+    path: "/admin/view"
   }
 ];
 
