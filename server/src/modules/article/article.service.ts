@@ -167,4 +167,16 @@ export class ArticleService {
     const article = await this.articleRepository.findOne(id);
     return this.articleRepository.remove(article);
   }
+
+  async search(keyword) {
+    const res = await this.articleRepository
+      .createQueryBuilder('article')
+      .where('article.title LIKE :keyword')
+      .orWhere('article.summary LIKE :keyword')
+      .orWhere('article.content LIKE :keyword')
+      .setParameter('keyword', `%${keyword}%`)
+      .getMany();
+
+    return res;
+  }
 }

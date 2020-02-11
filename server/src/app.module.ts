@@ -29,21 +29,32 @@ import { Page } from './modules/page/page.entity';
 // 访问统计模块
 import { ViewModule } from './modules/view/view.module';
 import { View } from './modules/view/view.entity';
-
-// docker run --name wipi-redis -p 6379:6379 -d  --restart=always redis redis-server --appendonly yes --requirepass 'wipi'
-// docker exec -it wipi-redis redis-cli -a wipi
+// 搜索模块
+import { Search } from './modules/search/search.entity';
+import { SearchModule } from './modules/search/search.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '0.0.0.0',
+      host: '47.103.42.49',
       port: 33721,
       username: 'root',
       password: 'root',
       database: 'wipi',
       charset: 'utf8mb4',
-      entities: [User, File, Tag, Article, Comment, Setting, SMTP, Page, View],
+      entities: [
+        User,
+        File,
+        Tag,
+        Article,
+        Comment,
+        Setting,
+        SMTP,
+        Page,
+        View,
+        Search,
+      ],
       synchronize: true,
     }),
     UserModule,
@@ -56,6 +67,7 @@ import { View } from './modules/view/view.entity';
     AuthModule,
     PageModule,
     ViewModule,
+    SearchModule,
   ],
   controllers: [],
   providers: [],

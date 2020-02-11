@@ -1,0 +1,9 @@
+http.host: '0.0.0.0'
+
+path.config: /usr/share/logstash/conf.d/*.conf
+path.logs: /var/log/logstash
+
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts: 'wipi-elasticsearch:9200'
+# xpack.monitoring.elasticsearch.username: elastic
+# xpack.monitoring.elasticsearch.password: changeme
