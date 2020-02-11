@@ -4,7 +4,8 @@ import { PageProvider } from "@providers/page";
 const defaultMenus = [
   {
     label: "首页",
-    path: "/"
+    path: "/",
+    originPath: "/[tag]"
   },
 
   {

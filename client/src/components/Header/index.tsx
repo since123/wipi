@@ -44,7 +44,10 @@ export const _Header = ({ setting, menus }) => {
               <li
                 key={menu.label}
                 className={cls({
-                  [style.active]: pathname === menu.path || asPath === menu.path
+                  [style.active]:
+                    pathname === menu.path ||
+                    asPath === menu.path ||
+                    (menu.originPath && pathname === menu.originPath)
                 })}
               >
                 {/page/.test(menu.path) ? (
