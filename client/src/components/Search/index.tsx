@@ -22,9 +22,7 @@ export const Search: React.FC<IProps> = ({ visible = false, onClose }) => {
     setLoading(true);
     SearchProvider.searchArticles(keyword)
       .then(res => {
-        console.log(res);
         const ret = res.filter(r => r.status === "publish" && !r.needPassword);
-        console.log(ret);
         setHasSearch(true);
         setArticles(ret);
         timer = setTimeout(() => {
