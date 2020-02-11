@@ -4,6 +4,7 @@ import {
   Post,
   Delete,
   Param,
+  Query,
   UseGuards,
   Body,
   Request,
@@ -47,6 +48,15 @@ export class ViewController {
   @UseGuards(JwtAuthGuard)
   findAll(): Promise<View[]> {
     return this.viewService.findAll();
+  }
+
+  /**
+   * 获取指定访问
+   * @param id
+   */
+  @Get('/url')
+  findByUrl(@Query('url') url) {
+    return this.viewService.findByUrl(url);
   }
 
   /**

@@ -41,6 +41,14 @@ export class ViewService {
   }
 
   /**
+   * 查找指定路径访问统计
+   * @param url
+   */
+  async findByUrl(url): Promise<View[]> {
+    return this.viewRepository.find({ where: { url } });
+  }
+
+  /**
    * 获取指定访问
    * @param id
    */
