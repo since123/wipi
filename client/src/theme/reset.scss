@@ -39,3 +39,26 @@ body {
   line-height: 1.75em;
   overflow-x: hidden;
 }
+
+:global {
+  * {
+    transition: background-color 0.1s linear, margin 0.25s linear,
+      opacity 0.25s linear, filter 0.25s linear, visibility 0.25s linear,
+      transform 0.25s linear, border-color 0.25s linear;
+  }
+
+  .page-transition-enter {
+    opacity: 0.1;
+    transform: translate3d(0, 20px, 0);
+  }
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .page-transition-exit {
+    opacity: 1;
+  }
+  .page-transition-exit-active {
+    opacity: 0.1;
+  }
+}

@@ -1,6 +1,6 @@
 import App from "next/app";
 import { ViewProvider } from "@providers/view";
-// import "antd/dist/antd.less";
+import { PageTransition } from "next-page-transitions";
 import "@/theme/antd.less";
 import "@/theme/reset.scss";
 import "@/theme/markdown.scss";
@@ -51,7 +51,18 @@ class MyApp extends App {
     }`
           }}
         ></style>
-        <Component {...pageProps} />
+        <PageTransition
+          timeout={250}
+          classNames="page-transition"
+          loadingComponent={null}
+          loadingDelay={500}
+          loadingTimeout={{
+            enter: 250,
+            exit: 0
+          }}
+        >
+          <Component {...pageProps} />
+        </PageTransition>
       </div>
     );
   }
