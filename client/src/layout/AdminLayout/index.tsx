@@ -28,7 +28,8 @@ const menus = [
       },
       {
         label: "新建文章",
-        path: "/admin/article/editor"
+        path: "/admin/article/editor",
+        dynamicPath: "/admin/article/editor/[id]"
       },
       {
         label: "标签管理",
@@ -47,7 +48,8 @@ const menus = [
       },
       {
         label: "新建页面",
-        path: "/admin/page/editor"
+        path: "/admin/page/editor",
+        dynamicPath: "/admin/page/editor/[id]"
       }
     ]
   },
@@ -100,7 +102,11 @@ const resolveBreadcrumbs = pathname => {
 
   for (let menu of menus) {
     if (menu.children) {
-      let idx = menu.children.findIndex(item => item.path === pathname);
+      let idx = menu.children.findIndex(
+        item =>
+          item.path === pathname ||
+          (item.dynamicPath && item.dynamicPath === pathname)
+      );
       if (idx > -1) {
         breadcrumbs.push(menu);
         breadcrumbs.push(menu.children[idx]);
@@ -134,7 +140,6 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
   const setting = useSetting();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
-  const [loginVisible, setLoginVisible] = useState(false);
   const { pathname } = router;
   const breadcrumbs = resolveBreadcrumbs(pathname);
 
