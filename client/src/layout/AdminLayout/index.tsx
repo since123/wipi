@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Helmet } from "react-helmet";
 import { useSetting } from "@/hooks/useSetting";
 import { useRouter } from "next/router";
-import { Login } from "@components/Login";
+import { Search } from "@components/admin/Search";
 import { UserInfo } from "@components/admin/UserInfo";
 import style from "./index.module.scss";
 
@@ -20,7 +20,7 @@ const menus = [
 
   {
     icon: "form",
-    label: "文章",
+    label: "文章管理",
     children: [
       {
         label: "所有文章",
@@ -39,7 +39,7 @@ const menus = [
 
   {
     icon: "form",
-    label: "页面",
+    label: "页面管理",
     children: [
       {
         label: "所有页面",
@@ -54,14 +54,20 @@ const menus = [
 
   {
     icon: "message",
-    label: "评论",
+    label: "评论管理",
     path: "/admin/comment"
   },
 
   {
     icon: "folder-open",
-    label: "文件库",
+    label: "文件管理",
     path: "/admin/file"
+  },
+
+  {
+    icon: "search",
+    label: "搜索记录",
+    path: "/admin/search"
   },
 
   {
@@ -198,14 +204,15 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
       <Layout>
         <Header style={{ background: "#fff", padding: "0 24px" }}>
           <Row>
-            <Col span={6}>
+            <Col span={6} xs={2}>
               <Icon
                 className="trigger"
                 type={collapsed ? "menu-unfold" : "menu-fold"}
                 onClick={() => setCollapsed(!collapsed)}
               />
             </Col>
-            <Col span={18} style={{ textAlign: "right" }}>
+            <Col span={18} xs={22} style={{ textAlign: "right" }}>
+              <Search />
               <UserInfo />
             </Col>
           </Row>

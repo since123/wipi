@@ -35,13 +35,15 @@ export const UserInfo = () => {
       <div
         style={{
           display: "inline-block",
-          cursor: "pointer"
+          cursor: "pointer",
+          height: 64,
+          fontSize: 14
         }}
       >
         {user && user.avatar ? (
-          <Avatar src={user.avatar} />
+          <Avatar size={"small"} src={user.avatar} />
         ) : (
-          <Avatar icon="user" />
+          <Avatar size={"small"} icon="user" />
         )}
         {user ? <span style={{ marginLeft: 8 }}>Hi, {user.name}</span> : null}
       </div>

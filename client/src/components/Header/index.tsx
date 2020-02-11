@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import cls from "classnames";
+import { Search } from "@/components/Search";
 import style from "./index.module.scss";
 
 export const _Header = ({ setting, menus }) => {
@@ -9,6 +10,7 @@ export const _Header = ({ setting, menus }) => {
   const asPath = router.asPath;
   const pathname = router.pathname;
   const [visible, setVisible] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <header>
@@ -56,8 +58,13 @@ export const _Header = ({ setting, menus }) => {
                 )}
               </li>
             ))}
+            <li onClick={() => setShowSearch(true)}>
+              <a className={style.search}></a>
+            </li>
           </ul>
         </nav>
+
+        <Search visible={showSearch} onClose={() => setShowSearch(false)} />
       </div>
     </header>
   );

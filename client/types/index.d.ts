@@ -25,6 +25,7 @@ interface IArticle {
   toc: string;
   views: number;
   tags?: [any];
+  status: string;
   password?: string; // 访问密码
   needPassword: boolean;
   isCommentable?: boolean; // 是否可评论
@@ -84,5 +85,13 @@ interface IMail {
   subject: number;
   text: string;
   html: string;
+  createAt: string;
+}
+
+interface ISearch {
+  id: string;
+  type: string;
+  keyword: string;
+  count: number;
   createAt: string;
 }
