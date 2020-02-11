@@ -47,7 +47,7 @@ export const _Header = ({ setting, menus }) => {
                   [style.active]:
                     pathname === menu.path ||
                     asPath === menu.path ||
-                    (menu.originPath && pathname === menu.originPath)
+                    (menu.dynamicPath && pathname === menu.dynamicPath)
                 })}
               >
                 {/page/.test(menu.path) ? (

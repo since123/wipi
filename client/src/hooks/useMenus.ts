@@ -5,7 +5,7 @@ const defaultMenus = [
   {
     label: "首页",
     path: "/",
-    originPath: "/[tag]"
+    dynamicPath: "/[tag]"
   },
 
   {
