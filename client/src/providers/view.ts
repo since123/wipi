@@ -16,6 +16,10 @@ export class ViewProvider {
     return httpProvider.post("/view", data);
   }
 
+  static async getViewsByUrl(url): Promise<IView[]> {
+    return httpProvider.get("/view/url", { params: { url } });
+  }
+
   static async deleteView(id): Promise<IView> {
     return httpProvider.delete("/view/" + id);
   }

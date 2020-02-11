@@ -7,6 +7,7 @@ import {
   Select,
   Badge,
   Button,
+  Radio,
   Form,
   Popconfirm,
   message
@@ -18,51 +19,63 @@ import style from "./index.module.scss";
 
 const Views: NextPage = () => {
   const [views, setViews] = useState<IView[]>([]);
+  const [loading, setLoaidng] = useState(false);
+  const [urls, setURLs] = useState([]);
   const [url, setURL] = useState(null);
 
   // 获取评论
   const getViews = useCallback(() => {
-    ViewProvider.getViews().then(res => {
-      setViews(res);
-    });
+    if (loading) {
+      return;
+    }
+
+    setLoaidng(true);
+    ViewProvider.getViews()
+      .then(res => {
+        setViews(res);
+        setURLs(Array.from(new Set(res.map(r => r.url))));
+        setLoaidng(false);
+      })
+      .catch(() => setLoaidng(false));
   }, []);
 
-  const [uvs, totalUV] = useMemo(() => {
-    let total = Array.from(new Set(views.map(view => view.userAgent))).length;
-    let uvs = views.reduce((a, c) => {
-      if (!a[c.url]) {
-        a[c.url] = 0;
-      }
+  const getViewsByUrl = useCallback(url => {
+    if (!url || loading) {
+      return;
+    }
 
-      a[c.url] += 1;
-      return a;
-    }, {});
-    return [uvs, total];
-  }, [views]);
-  const [pvs, totalPV] = useMemo(() => {
-    let total = 0;
-    let pvs = views.reduce((a, c) => {
-      if (!a[c.url]) {
-        a[c.url] = 0;
-      }
-      total += c.count;
-      a[c.url] += c.count;
-      return a;
-    }, {});
-    return [pvs, total];
-  }, [views]);
+    setLoaidng(true);
+    ViewProvider.getViewsByUrl(url)
+      .then(res => {
+        setViews(res);
 
-  useEffect(() => {
-    getViews();
+        setLoaidng(false);
+      })
+      .catch(() => setLoaidng(false));
   }, []);
 
   // 删除评论
   const deleteView = useCallback(id => {
     ViewProvider.deleteView(id).then(() => {
       message.success("访问删除成功");
-      getViews();
+      url ? getViewsByUrl(url) : getViews();
     });
   }, []);
+
+  useEffect(() => {
+    getViews();
+  }, []);
+
+  useEffect(() => {
+    getViewsByUrl(url);
+  }, [url]);
+
+  const uvs = useMemo(() => {
+    return Array.from(new Set(views.map(view => view.userAgent))).length;
+  }, [views]);
+  const pvs = useMemo(() => {
+    return views.length;
+  }, [views]);
 
   const columns = [
     {
@@ -108,7 +121,7 @@ const Views: NextPage = () => {
     title: "操作",
     key: "action",
     render: (_, record) => (
-      <span>
+      <span className={style.action}>
         <Popconfirm
           title="确认删除这个访问？"
           onConfirm={() => deleteView(record.id)}
@@ -121,18 +134,41 @@ const Views: NextPage = () => {
     )
   };
 
+  const VPV = () => {
+    return (
+      <Form layout="inline">
+        <Form.Item label={"UV"}>
+          <Badge
+            count={uvs}
+            showZero={true}
+            overflowCount={Infinity}
+            style={{ backgroundColor: "#f50" }}
+          />
+        </Form.Item>
+        <Form.Item label={"PV"}>
+          <Badge
+            count={pvs}
+            showZero={true}
+            overflowCount={Infinity}
+            style={{ backgroundColor: "#2db7f5" }}
+          />
+        </Form.Item>
+      </Form>
+    );
+  };
+
   return (
     <AdminLayout>
       <div className={style.wrapper}>
         <Row style={{ marginBottom: 16 }}>
-          <Col sm={20}>
+          <Col xs={24} sm={18}>
             <Select
-              style={{ width: 240 }}
+              style={{ width: "100%" }}
               placeholder="查看指定页面统计"
               onChange={setURL}
               {...(url ? { value: url } : {})}
             >
-              {Object.keys(pvs).map(url => {
+              {urls.map(url => {
                 return (
                   <Select.Option key={url} value={url}>
                     {url}
@@ -140,44 +176,39 @@ const Views: NextPage = () => {
                 );
               })}
             </Select>
-            {url && (
-              <span style={{ marginLeft: 16 }}>
-                <span>uv: {uvs[url]}</span>
-                {" , "}
-                <span>pv: {pvs[url]}</span>
-              </span>
-            )}
           </Col>
-          <Col sm={4} style={{ textAlign: "right" }}>
-            <Button onClick={getViews} icon="reload">
-              刷新
-            </Button>
+          <Col xs={24} sm={6} className={style.btns}>
+            <Button.Group>
+              <Button
+                loading={loading}
+                icon="reload"
+                onClick={() => {
+                  url ? getViewsByUrl(url) : getViews();
+                }}
+              >
+                刷新
+              </Button>
+              <Button
+                icon="rollback"
+                onClick={() => {
+                  setURL(null);
+                  getViews();
+                }}
+                disabled={loading}
+              >
+                重置
+              </Button>
+            </Button.Group>
           </Col>
         </Row>
+        <div className={style.upv}>
+          <VPV />
+        </div>
         <Table
           columns={[...columns, actionColumn]}
           dataSource={views}
           rowKey={"id"}
-          footer={() => (
-            <Form layout="inline">
-              <Form.Item label={"UV"}>
-                <Badge
-                  count={totalUV}
-                  showZero={true}
-                  overflowCount={Infinity}
-                  style={{ backgroundColor: "#f50" }}
-                />
-              </Form.Item>
-              <Form.Item label={"PV"}>
-                <Badge
-                  count={totalPV}
-                  showZero={true}
-                  overflowCount={Infinity}
-                  style={{ backgroundColor: "#2db7f5" }}
-                />
-              </Form.Item>
-            </Form>
-          )}
+          footer={() => <VPV />}
         />
       </div>
     </AdminLayout>
