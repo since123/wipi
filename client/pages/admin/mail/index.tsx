@@ -84,7 +84,7 @@ const Mail: NextPage = () => {
     title: "操作",
     key: "action",
     render: (_, record) => (
-      <span>
+      <span className={style.action}>
         <Popconfirm
           title="确认删除这个邮件？"
           onConfirm={() => deleteView(record.id)}

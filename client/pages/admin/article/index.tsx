@@ -101,7 +101,7 @@ const Article: NextPage<IArticleProps> = ({
     title: "操作",
     key: "action",
     render: (_, record) => (
-      <span>
+      <span className={style.action}>
         <Link
           href={`/admin/article/editor/[id]`}
           as={`/admin/article/editor/` + record.id}

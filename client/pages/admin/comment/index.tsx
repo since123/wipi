@@ -166,7 +166,7 @@ const Comment: NextPage<IProps> = ({
     title: "操作",
     key: "action",
     render: (_, record) => (
-      <span>
+      <span className={style.action}>
         <a onClick={() => updateComment(record, true)}>通过</a>
         <Divider type="vertical" />
         <a onClick={() => updateComment(record, false)}>拒绝</a>

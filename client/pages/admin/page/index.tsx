@@ -81,7 +81,7 @@ const Page: NextPage<IProps> = ({ pages: defaultPages = [] }) => {
       const isDraft = record.status === "draft";
 
       return (
-        <span>
+        <span className={style.action}>
           {isDraft ? (
             <a onClick={() => editPage(record.id, { status: "publish" })}>
               启用
