@@ -18,6 +18,11 @@ export class SearchService {
    */
   async searchArticle(type, keyword) {
     const articles = await this.articleService.search(keyword);
+    await this.addRecord(type, keyword);
+    return articles;
+  }
+
+  async addRecord(type, keyword) {
     const exist = await this.searchRepository.findOne({
       where: { type, keyword },
     });
@@ -33,7 +38,6 @@ export class SearchService {
 
     const newData = await this.searchRepository.create({ type, keyword });
     await this.searchRepository.save(newData);
-    return articles;
   }
 
   /**
