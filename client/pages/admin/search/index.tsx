@@ -28,7 +28,7 @@ const Search: NextPage = () => {
   // 删除
   const deleteItem = useCallback(id => {
     SearchProvider.deleteRecord(id).then(() => {
-      message.success("搜索记录仪删除成功");
+      message.success("搜索记录删除成功");
       getData();
     });
   }, []);

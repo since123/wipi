@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import cls from "classnames";
 import { Spin } from "antd";
 import { SearchProvider } from "@providers/search";
@@ -12,6 +12,7 @@ interface IProps {
 let timer = null;
 
 export const Search: React.FC<IProps> = ({ visible = false, onClose }) => {
+  const ref = useRef(null);
   const [articles, setArticles] = useState<IArticle[] | null>(null);
   const [keyword, setKeyword] = useState("");
   const [hasSearch, setHasSearch] = useState(null);
@@ -21,7 +22,9 @@ export const Search: React.FC<IProps> = ({ visible = false, onClose }) => {
     setLoading(true);
     SearchProvider.searchArticles(keyword)
       .then(res => {
+        console.log(res);
         const ret = res.filter(r => r.status === "publish" && !r.needPassword);
+        console.log(ret);
         setHasSearch(true);
         setArticles(ret);
         timer = setTimeout(() => {
@@ -37,6 +40,14 @@ export const Search: React.FC<IProps> = ({ visible = false, onClose }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!visible || !ref.current) {
+      return;
+    }
+
+    ref.current.focus();
+  }, [visible]);
+
   return (
     <div
       className={cls(
@@ -48,6 +59,7 @@ export const Search: React.FC<IProps> = ({ visible = false, onClose }) => {
       <div className={cls(style.wrapper, hasSearch ? style.active : false)}>
         <div className={cls(style.search, hasSearch ? style.active : false)}>
           <input
+            ref={ref}
             type="search"
             placeholder="keywords"
             value={keyword}
