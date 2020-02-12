@@ -22,7 +22,7 @@ export const ViewChart: React.FC<IProps> = ({ data = [] }) => {
         const target = d && d[0] && data[d[0].dataIndex];
 
         return `日期：${dayjs
-          .default(target.createAt)
+          .default(target.updateAt)
           .format("YYYY-MM-DD HH:mm:ss")}<br />URL: ${
           target.url
         }<br /> 访问量：${target.count}`;
@@ -32,7 +32,7 @@ export const ViewChart: React.FC<IProps> = ({ data = [] }) => {
       type: "category",
       boundaryGap: false,
       data: data.map(d =>
-        dayjs.default(d.createAt).format("YYYY-MM-DD HH:mm:ss")
+        dayjs.default(d.updateAt).format("YYYY-MM-DD HH:mm:ss")
       )
     },
     yAxis: {
