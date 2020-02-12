@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { config } from '../../config';
 import { User } from './user.entity';
 
 @Injectable()
@@ -9,7 +10,22 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>
   ) {
-    this.createUser({ name: 'wipi', password: 'wipi' });
+    const { name, password } = config.admin;
+    this.createUser({ name, password })
+      .then(_ => {
+        console.log();
+        console.log(
+          `管理员账户创建成功，用户名：${name}，密码：${password}，请及时登录系统修改默认密码`
+        );
+        console.log();
+      })
+      .catch(_ => {
+        console.log();
+        console.log(
+          `管理员账户已经存在，用户名：${name}，密码：${password}，请及时登录系统修改默认密码`
+        );
+        console.log();
+      });
   }
 
   async findAll(): Promise<User[]> {

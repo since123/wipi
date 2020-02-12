@@ -32,17 +32,14 @@ import { View } from './modules/view/view.entity';
 // 搜索模块
 import { Search } from './modules/search/search.entity';
 import { SearchModule } from './modules/search/search.module';
+// 配置文件
+import { config } from './config';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '0.0.0.0',
-      port: 33721,
-      username: 'root',
-      password: 'root',
-      database: 'wipi',
-      charset: 'utf8mb4',
+      ...config.mysql,
       entities: [
         User,
         File,
