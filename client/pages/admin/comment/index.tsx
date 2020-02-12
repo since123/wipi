@@ -11,7 +11,8 @@ import {
   Popconfirm,
   Modal,
   Input,
-  message
+  message,
+  notification
 } from "antd";
 import * as dayjs from "dayjs";
 import { AdminLayout } from "@/layout/AdminLayout";
@@ -61,23 +62,49 @@ const Comment: NextPage<IProps> = ({
     }
 
     const userInfo = JSON.parse(window.sessionStorage.getItem("userInfo"));
+    const email = userInfo.mail || (setting && setting.smtpFromUser);
 
-    const reply = selectedComment.email;
-    const data = {
-      reply,
-      isInPage: selectedComment.isInPage,
-      parentCommentId: selectedComment.id,
-      articleId: selectedComment.articleId,
-      name: userInfo.name || "作者",
-      email: userInfo.mail || (setting && setting.smtpFromUser),
-      content: replyContent
+    const notify = () => {
+      notification.error({
+        message: "回复评论失败",
+        description: "请前往系统设置完善 SMTP 设置，前往个人中心更新个人邮箱。"
+      });
     };
-    CommentProvider.addComment(data).then(() => {
-      setSelectedComment(null);
-      message.success("回复成功");
-      setReplyContent("");
-      getComments();
-    });
+
+    const handle = email => {
+      const reply = selectedComment.email;
+      const data = {
+        reply,
+        isInPage: selectedComment.isInPage,
+        parentCommentId: selectedComment.id,
+        articleId: selectedComment.articleId,
+        name: userInfo.name,
+        email,
+        content: replyContent
+      };
+      CommentProvider.addComment(data)
+        .then(() => {
+          setSelectedComment(null);
+          message.success("回复成功");
+          setReplyContent("");
+          getComments();
+        })
+        .catch(_ => notify());
+    };
+
+    if (!email) {
+      SettingProvider.getSetting()
+        .then(res => {
+          if (res && res.smtpFromUser) {
+            handle(res.smtpFromUser);
+          } else {
+            notify();
+          }
+        })
+        .catch(() => notify());
+    } else {
+      handle(email);
+    }
   }, [selectedComment, replyContent]);
 
   // 删除评论
