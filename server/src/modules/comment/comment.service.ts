@@ -72,7 +72,6 @@ export class CommentService {
 
     // 发送通知邮件
     const { smtpFromUser: from, systemUrl } = await this.settingService.findAll(
-      null,
       true
     );
 

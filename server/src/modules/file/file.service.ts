@@ -31,7 +31,7 @@ export class FileService {
       ossBucket,
       ossAccessKeySecret,
       ossHttps,
-    } = await this.settingService.findAll(null, true);
+    } = await this.settingService.findAll(true);
     if (!ossRegion || !ossAccessKeyId || !ossBucket || !ossAccessKeySecret) {
       throw new HttpException('请完善 OSS 配置', HttpStatus.BAD_REQUEST);
     }
@@ -85,7 +85,7 @@ export class FileService {
       ossBucket,
       ossAccessKeySecret,
       ossHttps,
-    } = await this.settingService.findAll(null, true);
+    } = await this.settingService.findAll(true);
     if (!ossRegion || !ossAccessKeyId || !ossBucket || !ossAccessKeySecret) {
       throw new HttpException('请完善 OSS 配置', HttpStatus.BAD_REQUEST);
     }

@@ -14,9 +14,13 @@ export class SettingService {
   ) {}
 
   /**
+   *
    * 获取系统设置
+   * @param user
+   * @param innerInvoke
+   * @param isTokenValid
    */
-  async findAll(user?: User, innerInvoke = false): Promise<Setting> {
+  async findAll(innerInvoke = false, isTokenValid = false): Promise<Setting> {
     const data = await this.settingRepository.find();
     const res = data[0];
 
@@ -41,13 +45,8 @@ export class SettingService {
       return a;
     }, {}) as Setting;
 
-    if (user && user.id) {
-      const ret = await this.userService.findById(user.id);
-      if (ret && ret.id === user.id) {
-        return res;
-      } else {
-        return filterRes;
-      }
+    if (isTokenValid) {
+      return res;
     } else {
       return filterRes;
     }
