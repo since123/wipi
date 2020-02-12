@@ -39,7 +39,9 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, router } = this.props;
+    const pathname = router.pathname;
+    const isAdmin = /admin/.test(pathname);
 
     return (
       <div>
@@ -51,18 +53,22 @@ class MyApp extends App {
     }`
           }}
         ></style>
-        <PageTransition
-          timeout={250}
-          classNames="page-transition"
-          loadingComponent={null}
-          loadingDelay={500}
-          loadingTimeout={{
-            enter: 250,
-            exit: 0
-          }}
-        >
+        {isAdmin ? (
           <Component {...pageProps} />
-        </PageTransition>
+        ) : (
+          <PageTransition
+            timeout={250}
+            classNames="page-transition"
+            loadingComponent={null}
+            loadingDelay={500}
+            loadingTimeout={{
+              enter: 250,
+              exit: 0
+            }}
+          >
+            <Component {...pageProps} />
+          </PageTransition>
+        )}
       </div>
     );
   }
