@@ -95,7 +95,10 @@ const Home: NextPage<IHomeProps> = ({
                 >
                   <List.Item.Meta
                     title={
-                      <Link href={`/admin/article/editor/` + article.id}>
+                      <Link
+                        href={`/admin/article/editor/[id]`}
+                        as={`/admin/article/editor/` + article.id}
+                      >
                         <a>{article.title}</a>
                       </Link>
                     }
