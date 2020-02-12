@@ -6,18 +6,30 @@ A blog system write by nestjs, nextjs, and MySQL.
 
 ## 线上预览
 
-- 前台页面：https://custw.qifengle1412.cn/
-- 后台管理：https://custw.qifengle1412.cn/
+### 前台页面
+
+https://custw.qifengle1412.cn/
+
+### 后台管理页面截图
+
+<ul style="display: flex; flex-wrap: no-wrap; list-style: none; padding: 0">
+  <li><img style="width: 180px; height: 120px" src="https://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-13/PMHJN7AB7S95TU83JGRZW0/wipi-login.png" alt="登录页面" /></li>
+  <li><img style="width: 180px; height: 120px; margin-left: 10px" src="https://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-13/PMHJN7AB7S95TU83JGRZR2/wipi-admin-index.png" alt="后台首页" /></li>
+  <li  ><img style="width: 180px; height: 120px; margin-left: 10px" src="https://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-13/PMHJN7AB7S95TU83JGRZOL/wipi-admin-article.png" alt="文章管理" /></li>
+  <li  ><img style="width: 180px; height: 120px; margin-left: 10px" src="https://wipi.oss-cn-shanghai.aliyuncs.com/2020-02-13/PMHJN7AB7S95TU83JGRZTJ/wipi-admin-page.png" alt="页面管理" /></li>
+</ul>
+
+更多页面及特性可以本地启动使用。
 
 ## 本地启动
 
-1. clone 本项目。
+### clone 本项目。
 
 ```shell
 git clone --depth=1 https://github.com/zhxuc/wipi.git ypur-project-name
 ```
 
-2. 安装依赖
+### 安装依赖
 
 首先安装 `MySQL`，推荐使用 docker 进行安装。
 
@@ -32,7 +44,7 @@ cd client && yarn
 cd server && yarn
 ```
 
-3. 启动项目
+### 启动项目
 
 分别启动前台页面和服务端。
 
