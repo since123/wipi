@@ -40,8 +40,8 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps, router } = this.props;
-    const pathname = router.pathname;
-    const isAdmin = /admin/.test(pathname);
+    // const pathname = router.pathname;
+    // const isAdmin = /admin/.test(pathname);
 
     return (
       <div>
@@ -53,7 +53,7 @@ class MyApp extends App {
     }`
           }}
         ></style>
-        {isAdmin ? (
+        {/* {isAdmin ? (
           <Component {...pageProps} />
         ) : (
           <PageTransition
@@ -68,7 +68,8 @@ class MyApp extends App {
           >
             <Component {...pageProps} />
           </PageTransition>
-        )}
+        )} */}
+        <Component {...pageProps} />
       </div>
     );
   }
