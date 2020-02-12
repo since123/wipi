@@ -71,6 +71,7 @@ interface IComment {
 
 interface IView {
   id: string;
+  ip: string;
   userAgent: string;
   url: string;
   count: number;

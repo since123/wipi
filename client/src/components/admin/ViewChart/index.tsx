@@ -23,9 +23,9 @@ export const ViewChart: React.FC<IProps> = ({ data = [] }) => {
 
         return `日期：${dayjs
           .default(target.updateAt)
-          .format("YYYY-MM-DD HH:mm:ss")}<br />URL: ${
-          target.url
-        }<br /> 访问量：${target.count}`;
+          .format("YYYY-MM-DD HH:mm:ss")}<br />
+          IP: ${target.ip} <br />
+          URL: ${target.url}<br /> 访问量：${target.count}`;
       }
     },
     xAxis: {
