@@ -18,9 +18,6 @@ export const ViewChart: React.FC<IProps> = ({ data = [] }) => {
     },
     tooltip: {
       trigger: "axis",
-      position: function(pt) {
-        return [pt[0], "10%"];
-      },
       formatter(d) {
         const target = d && d[0] && data[d[0].dataIndex];
 
