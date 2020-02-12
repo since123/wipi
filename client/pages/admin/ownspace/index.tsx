@@ -13,7 +13,8 @@ import {
   Tabs,
   message
 } from "antd";
-import { AdminLayout, showLogin } from "@/layout/AdminLayout";
+import Router from "next/router";
+import { AdminLayout } from "@/layout/AdminLayout";
 import { FileSelectDrawer } from "@components/admin/FileSelectDrawer";
 import { ArticleProvider } from "@providers/article";
 import { CommentProvider } from "@providers/comment";
@@ -83,7 +84,7 @@ const Ownspace: NextPage<IOwnspaceProps> = ({
     UserProvider.updatePassword(data).then(() => {
       message.success("密码已更新，请重新登录");
       window.sessionStorage.clear();
-      showLogin();
+      Router.replace("/admin/login");
     });
   };
 
