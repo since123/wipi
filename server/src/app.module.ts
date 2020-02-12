@@ -37,7 +37,7 @@ import { SearchModule } from './modules/search/search.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '47.103.42.49',
+      host: '0.0.0.0',
       port: 33721,
       username: 'root',
       password: 'root',
