@@ -7,7 +7,6 @@ import {
   Select,
   Badge,
   Button,
-  Radio,
   Form,
   Popconfirm,
   message
@@ -23,7 +22,6 @@ const Views: NextPage = () => {
   const [urls, setURLs] = useState([]);
   const [url, setURL] = useState(null);
 
-  // 获取评论
   const getViews = useCallback(() => {
     if (loading) {
       return;

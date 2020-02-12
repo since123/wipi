@@ -2,11 +2,25 @@ import React, { useState, useCallback } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Table, Button, Tag, Divider, Badge, Popconfirm, message } from "antd";
+import {
+  Table,
+  Button,
+  Tag,
+  Divider,
+  Badge,
+  Popconfirm,
+  Modal,
+  Spin,
+  message
+} from "antd";
 import * as dayjs from "dayjs";
 import { AdminLayout } from "@/layout/AdminLayout";
 import { ArticleProvider } from "@providers/article";
 import style from "./index.module.scss";
+import { useSetting } from "@/hooks/useSetting";
+import { ViewProvider } from "@/providers/view";
+import { ViewChart } from "@/components/admin/ViewChart";
+const url = require("url");
 
 const columns = [
   {
@@ -82,7 +96,21 @@ const Article: NextPage<IArticleProps> = ({
   articles: defaultArticles = []
 }) => {
   const router = useRouter();
+  const setting = useSetting();
   const [articles, setArticles] = useState<IArticle[]>(defaultArticles);
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [views, setViews] = useState<IView[]>([]);
+
+  const getViews = useCallback(url => {
+    setLoading(true);
+    ViewProvider.getViewsByUrl(url).then(res => {
+      setViews(res);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    });
+  }, []);
 
   const getArticles = useCallback(() => {
     ArticleProvider.getArticles().then(articles => {
@@ -108,6 +136,15 @@ const Article: NextPage<IArticleProps> = ({
         >
           <a>编辑</a>
         </Link>
+        <Divider type="vertical" />
+        <span
+          onClick={() => {
+            setVisible(true);
+            getViews(url.resolve(setting.systemUrl, "/article/" + record.id));
+          }}
+        >
+          <a>查看访问</a>
+        </span>
         <Divider type="vertical" />
         <Popconfirm
           title="确认删除这个文章？"
@@ -137,6 +174,25 @@ const Article: NextPage<IArticleProps> = ({
           dataSource={articles}
           rowKey={"id"}
         />
+        <Modal
+          title="访问统计"
+          visible={visible}
+          width={640}
+          onCancel={() => {
+            setVisible(false);
+            setViews([]);
+          }}
+          maskClosable={false}
+          footer={null}
+        >
+          {loading ? (
+            <div style={{ textAlign: "center" }}>
+              <Spin spinning={loading}></Spin>
+            </div>
+          ) : (
+            <ViewChart data={views} />
+          )}
+        </Modal>
       </div>
     </AdminLayout>
   );
