@@ -1,0 +1,31 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  color: #fff;
+  background-color: #001529;
+
+  display: flex;
+  justify-content: center;
+
+  .container {
+    width: 520px;
+    margin-top: 30vh;
+
+    h2 {
+      color: #fff;
+      font-size: 26px;
+      color: #eee;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      max-width: 90%;
+    }
+  }
+}

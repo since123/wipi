@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Router from "next/router";
-import { Menu, Dropdown, Avatar, message } from "antd";
+import { Menu, Dropdown, Avatar } from "antd";
 
 export const UserInfo = () => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -24,6 +24,11 @@ export const UserInfo = () => {
         <Menu.Item>
           <Link href="/admin/ownspace">
             <a>个人中心</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link href="/admin/login">
+            <a>退出登录</a>
           </Link>
         </Menu.Item>
       </Menu>

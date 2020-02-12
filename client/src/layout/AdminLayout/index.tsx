@@ -217,7 +217,7 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
               />
             </Col>
             <Col span={18} xs={22} style={{ textAlign: "right" }}>
-              <Search />
+              {/* <Search /> */}
               <UserInfo />
             </Col>
           </Row>

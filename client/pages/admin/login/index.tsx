@@ -4,6 +4,7 @@ import Router from "next/router";
 import { FormComponentProps } from "antd/es/form";
 import { UserProvider } from "@providers/user";
 import { AdminLayout } from "@/layout/AdminLayout";
+import style from "./index.module.scss";
 
 interface ILoginProps extends FormComponentProps {}
 
@@ -24,36 +25,50 @@ const _Login: React.FC<ILoginProps> = ({ form }) => {
   }, []);
 
   return (
-    <AdminLayout>
-      <Form onSubmit={submit} style={{ maxWidth: 480, margin: "0 auto" }}>
-        <Form.Item label={"用户名"}>
-          {getFieldDecorator("name", {
-            rules: [{ required: true, message: "请输入用户名！" }]
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="请输入用户名"
-            />
-          )}
-        </Form.Item>
-        <Form.Item label={"密码"}>
-          {getFieldDecorator("password", {
-            rules: [{ required: true, message: "请输入密码！" }]
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="password"
-              placeholder="请输入密码"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-            登录
-          </Button>
-        </Form.Item>
-      </Form>
-    </AdminLayout>
+    <div className={style.wrapper}>
+      <div className={style.container}>
+        <h2>系统登录</h2>
+        <Form onSubmit={submit}>
+          <Form.Item>
+            {getFieldDecorator("name", {
+              rules: [{ required: true, message: "请输入用户名！" }]
+            })(
+              <Input
+                prefix={
+                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                size="large"
+                placeholder="请输入用户名"
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
+            {getFieldDecorator("password", {
+              rules: [{ required: true, message: "请输入密码！" }]
+            })(
+              <Input
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                type="password"
+                size="large"
+                placeholder="请输入密码"
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              style={{ width: "100%" }}
+            >
+              登录
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
   );
 };
 
