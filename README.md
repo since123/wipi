@@ -42,8 +42,11 @@ cd server && yarn start:dev
 ```
 
 打开浏览器，访问 `http://localhost:3000` 即可访问前台页面，`http://localhost:3000/admin` 为后台管理页面。
+
 服务端接口运行在 `http://localhost:4000`。
+
 首次启动，默认创建用户：wipi，密码：wipi（可在 `server/src/config` 文件中进行修改）。
+
 [PS] 如服务端配置启动失败，请先确认 MySQL 的配置是否正确，配置文件在 `server/src/config`。
 
 ## 项目部署
